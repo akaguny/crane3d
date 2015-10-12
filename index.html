@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Интерактивное приложение - манипулятор</title>
+    <!-- Загружаем минифицированный движок -->
+    <script src="lib/b4w.min.js"></script>
+    <!-- Загружаем наш скрипт -->
+    <script src="app/crane.js"></script>
+    <!-- UniCss http://unicss.maxsite.com.ua -->
+    <link rel="stylesheet" href="css/style.css"/>
+    <style>
+        #canvas3d {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<!--layout-center-wrap - весь сайт на ширину экрана -->
+<div class="layout-center">
+<header class="mar20-t pad10 t-white bg-gray500">
+<h1>Интерактивное приложение - манипулятор</h1>
+</header>
+<div id="content" class="flex flex-wrap-phone">
+    <div id="canvas3d" class="w40 w100-phone h300px-min"></div>
+    <div id="ui-div" class="w60 w100-phone pad10 t-black bg-gray100 h300px-min">
+        <p class="t-gray500 bold upper t14px">obj1Unit</p>
+        <button id="obj1UnitR18" >Вправо на 18</button>
+        <button id="obj1UnitL18">Влево на 18</button>
+
+        <p class="t-gray500 bold upper t14px">obj2Unit</p>
+        <button id="obj2UnitR18" >Вправо на 18</button>
+        <button id="obj2UnitL18">Влево на 18</button>
+
+        <p class="t-gray500 bold upper t14px">obj4Unit</p>
+        <button id="obj4UnitR18" >Вправо на 18</button>
+        <button id="obj4UnitL18">Влево на 18</button>
+
+        <!--<form class="w-100">-->
+            <!--<legend>-->
+                <!--Ввведите текст управляющей программы</legend>-->
+            <!--<textarea class="w100 h100px">code</textarea>-->
+            <!--<button class="button bg-gray200 i-cloud-upload t-24px t-blue">Загрузить</button>-->
+            <!--<button class="button bg-gray200 i-caret-right t-24px t-blue">Выполнить</button>-->
+
+        <!--</form>-->
+
+    </div>
+    <!--<div id="information"></div>-->
+</div>
+<footer class="pad10 t-white bg-blue300">
+    <div id="logs">
+        <p>логи и прочая лабудень</p>
+    </div>
+</footer>
+</div>
+</body>
+</html>
