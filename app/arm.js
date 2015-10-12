@@ -5,11 +5,12 @@
 function Arm(name,modules){
     this.name = name;
     this.htmlElement = document.getElementById(name);
-    this.element3D = m_scene.get_object_by_name(name);
-    this.quatNew = Float32Array(4);
-    this.quatOld = Float32Array(4);
     this.modules = modules; // указывает на переменную modules в crane.js, а переменная объект, являющееся хэш таблицей
     // элементы которой указывают на модули движка
+    this.element3D = this.modules.m_scenes.get_object_by_name(name);
+    this.quatNew = Float32Array(4);
+    this.quatOld = Float32Array(4);
+
 
 }
 
