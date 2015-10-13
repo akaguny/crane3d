@@ -7,20 +7,16 @@ function Manipulator(modules)
     // Возможно пригодится указание на текущую сцену, но пока она всего 1 - m_scenes.get_active_scene();
     // в перспективе можно добавлять элементы на активную сцену с неактивной.
     this.scene = this.modules.m_scenes.get_active_scene();
-    this.arms = manipulatorObjects('Arm');
-    this.fingers = manipulatorObjects('Finger');
-    this.hand = manipulatorObjects('Hand');
+    this.arms = {};
+    this.fingers = {};
+    this.hand = {};
 }
 
-
-var manipulatorObjects = function(unitType){get_ManipulatorObjects(unitType)};
-
-Manipulator.prototype.get_ManipulatorObjects = function(unitType)
-{
-    var i = 0;
+var i;
   do {
-      name + "_" + i: this.modules.get_object_by_name(name + "_" + i);
+      this.arms['arm_'+i]=this.modules.get_object_by_name('arm_'+i);
+      if (((this.arms['arm_'+i])==null) && (i==0))
+      {console.log("ничего не найдено")}
       i++
   }
-  while(this.modules.get_object_by_name());
-};
+  while(this.modules.get_object_by_name()!==null);
