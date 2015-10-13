@@ -2,7 +2,7 @@
  * Created by alexey on 07.10.15.
  */
 // Конструктор(класс-объект), другими словами объявление класса
-function Arm(name,modules){
+function Arm(name,modules,AXIS){
     this.name = name;
     this.htmlElement = document.getElementById(name);
     this.modules = modules; // указывает на переменную modules в crane.js, а переменная объект, являющееся хэш таблицей
@@ -10,13 +10,15 @@ function Arm(name,modules){
     this.element3D = this.modules.m_scenes.get_object_by_name(name);
     this.quatNew = Float32Array(4);
     this.quatOld = Float32Array(4);
+    // вызываем хэшированную таблицу с осями
+    this.axis = AXIS;
 
 
 }
-
 // Внутренняя функция(метод) класса eventListener, в неё передаётся тип события(eventName) и действие(func), которое должно быть
 // выполнено по события
 Arm.prototype.eventListener = function (eventName,func){
+    // сдесь надо бы передать ось
     this.htmlElement.addEventListener(eventName,func);
 };
 Arm.prototype.degToRad = function (deg){
