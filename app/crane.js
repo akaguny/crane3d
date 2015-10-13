@@ -10,7 +10,7 @@ b4w.register("crane", function(exports, require) {
     var m_quat = require("quat");
     var m_arm = require("armature");
 
-var modules =
+    var modules =
     {
         m_app : m_app,
         m_data : m_data,
@@ -20,12 +20,18 @@ var modules =
         m_quat : m_quat,
         m_arm : m_arm
     };
-var AXIS =
+    var AXIS =
     {
-      X:[1, 0, 0],
-      Y:[0, 1, 0],
-      Z:[0, 0, 1]
+        X:[1, 0, 0],
+        Y:[0, 1, 0],
+        Z:[0, 0, 1]
     };
+
+    // Создание объектa arm
+    var FirstArm = new Arm("Arm_1",modules,AXIS);
+    var SecondArm = new Arm("Arm_2",modules,AXIS);
+    var ThirdArm = new Arm("Arm_2",modules,AXIS);
+
     exports.init = function() {
         m_app.init({
             canvas_container_id: "canvas3d",

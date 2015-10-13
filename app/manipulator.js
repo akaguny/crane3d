@@ -15,10 +15,10 @@ function Manipulator(modules)
 var i;
 // не потеряется ли this из-за того что он находится в цикле?
 // как в примере https://learn.javascript.ru/object-methods#ссылочный-тип
-  do {
-      this.arms['arm_'+i]=this.modules.get_object_by_name('arm_'+i);
-      if (((this.arms['arm_'+i])==null) && (i==0))
-      {console.log("ничего не найдено")}
-      i++
-  }
-  while(this.modules.get_object_by_name()!==null);
+do {
+    this.arms['arm_'+i]=this.modules.get_object_by_name('arm_'+i);
+    if (((this.arms['arm_'+i])==null) && (i==0))
+    {console.log("ничего не найдено")}
+    i++
+}
+while(this.modules.get_object_by_name()!==null);

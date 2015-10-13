@@ -22,7 +22,7 @@ Arm.prototype.eventListener = function (eventName,func){
     this.htmlElement.addEventListener(eventName,func);
 };
 Arm.prototype.degToRad = function (deg){
-   return deg * (Math.PI / 180);
+    return deg * (Math.PI / 180);
 };
 Arm.prototype.rotate = function (axis, deg){
     this.modules.m_quat.setAxisAngle(axis,this.degToRad(deg), this.quatNew);
