@@ -5,6 +5,10 @@
     <title>Интерактивное приложение - манипулятор</title>
     <!-- Загружаем минифицированный движок -->
     <script src="lib/b4w.min.js"></script>
+    <!-- Подгружаем класс arm.js -->
+    <script src="app/arm.js"></script>
+    <!-- Подгружаем класс manipulator.js -->
+    <script src="app/manipulator.js"></script>
     <!-- Загружаем наш скрипт -->
     <script src="app/crane.js"></script>
     <!-- UniCss http://unicss.maxsite.com.ua -->
@@ -27,17 +31,17 @@
 <div id="content" class="flex flex-wrap-phone">
     <div id="canvas3d" class="w40 w100-phone h300px-min"></div>
     <div id="ui-div" class="w60 w100-phone pad10 t-black bg-gray100 h300px-min">
-        <p class="t-gray500 bold upper t14px">obj1Unit</p>
-        <button id="" >Вправо на 18</button>
-        <button id="">Влево на 18</button>
+        <p class="t-gray500 bold upper t14px">Arm_0</p>
+        <button id="Arm_0_right" >Вправо на 18</button>
+        <button id="Arm_0_left">Влево на 18</button>
 
-        <p class="t-gray500 bold upper t14px">obj2Unit</p>
-        <button id="" >Вправо на 18</button>
-        <button id="">Влево на 18</button>
+        <!--<p class="t-gray500 bold upper t14px">obj2Unit</p>-->
+        <!--<button id="" >Вправо на 18</button>-->
+        <!--<button id="">Влево на 18</button>-->
 
-        <p class="t-gray500 bold upper t14px">obj4Unit</p>
-        <button id="nitR18" >Вправо на 18</button>
-        <button id="">Влево на 18</button>
+        <!--<p class="t-gray500 bold upper t14px">obj4Unit</p>-->
+        <!--<button id="nitR18" >Вправо на 18</button>-->
+        <!--<button id="">Влево на 18</button>-->
 
         <!--<form class="w-100">-->
             <!--<legend>-->

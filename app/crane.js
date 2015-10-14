@@ -20,17 +20,9 @@ b4w.register("crane", function(exports, require) {
         m_quat : m_quat,
         m_arm : m_arm
     };
-    var AXIS =
-    {
-        X:[1, 0, 0],
-        Y:[0, 1, 0],
-        Z:[0, 0, 1]
-    };
 
-    // Создание объектa arm
-    var FirstArm = new Arm("Arm_1",modules,AXIS);
-    var SecondArm = new Arm("Arm_2",modules,AXIS);
-    var ThirdArm = new Arm("Arm_2",modules,AXIS);
+
+
 
     exports.init = function() {
         m_app.init({
@@ -66,6 +58,7 @@ b4w.register("crane", function(exports, require) {
      * callback executed when the scene is loaded
      */
     function load_cb(data_id) {
+        var manipulator = new Manipulator(modules);
         m_app.enable_controls();
         m_app.enable_camera_controls();
     }
