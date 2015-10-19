@@ -7,6 +7,10 @@
     <script src="lib/b4w.min.js"></script>
     <!-- Подгружаем класс arm.js -->
     <script src="app/arm.js"></script>
+    <!-- Подгружаем класс particles.js -->
+    <script src="app/particles.js"></script>
+    <!-- Подгружаем класс hand.js -->
+    <script src="app/hand.js"></script>
     <!-- Подгружаем класс manipulator.js -->
     <script src="app/manipulator.js"></script>
     <!-- Загружаем наш скрипт -->
@@ -23,7 +27,7 @@
     </style>
 </head>
 <body>
-<!--layout-center-wrap - весь сайт на ширину экрана -->
+
 <div class="layout-center">
 <header class="mar20-t pad10 t-white bg-gray500">
 <h1>Интерактивное приложение - манипулятор</h1>
@@ -32,28 +36,27 @@
     <div id="canvas3d" class="w40 w100-phone h300px-min"></div>
     <div id="ui-div" class="w60 w100-phone pad10 t-black bg-gray100 h300px-min">
         <p class="t-gray500 bold upper t14px">Arm_0</p>
-        <button id="Arm_0_right" >Вправо на 18</button>
-        <button id="Arm_0_left">Влево на 18</button>
+        <button id="Arm_0_right" class="button">Arm_0_right</button>
+        <button id="Arm_0_left" class="button">Arm_0_left</button>
 
-        <!--<p class="t-gray500 bold upper t14px">obj2Unit</p>-->
-        <!--<button id="" >Вправо на 18</button>-->
-        <!--<button id="">Влево на 18</button>-->
+        <p class="t-gray500 bold upper t14px">Arm_1</p>
+        <button id="Arm_1_right" class="button">Arm_1_right</button>
+        <button id="Arm_1_left" class="button">Arm_1_left</button>
 
-        <!--<p class="t-gray500 bold upper t14px">obj4Unit</p>-->
-        <!--<button id="nitR18" >Вправо на 18</button>-->
-        <!--<button id="">Влево на 18</button>-->
+        <p class="t-gray500 bold upper t14px">Arm_2</p>
+        <button id="Arm_2_right" class="button">Arm_2_right</button>
+        <button id="Arm_2_left" class="button">Arm_2_left</button>
 
-        <!--<form class="w-100">-->
-            <!--<legend>-->
-                <!--Ввведите текст управляющей программы</legend>-->
-            <!--<textarea class="w100 h100px">code</textarea>-->
-            <!--<button class="button bg-gray200 i-cloud-upload t-24px t-blue">Загрузить</button>-->
-            <!--<button class="button bg-gray200 i-caret-right t-24px t-blue">Выполнить</button>-->
+        <p class="t-gray500 bold upper t14px">Hand_0</p>
+        <button id="Hand_0_right" class="button">Hand_0_right</button>
+        <button id="Hand_0_left" class="button">Hand_0_left</button>
 
-        <!--</form>-->
+        <p class="t-gray500 bold upper t14px">Fingers</p>
+        <button id="Clench" class="button">Clench</button>
+        <button id="Unclench" class="button">Unclench</button>
 
     </div>
-    <!--<div id="information"></div>-->
+
 </div>
 <footer class="pad10 t-white bg-blue300">
     <div id="logs">
