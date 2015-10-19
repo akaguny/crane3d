@@ -8,6 +8,7 @@ function Arm(name,modules,AXIS){
     this.modules = modules; // указывает на переменную modules в crane.js, а переменная объект, являющееся хэш таблицей
     // элементы которой указывают на модули движка
     this.element3D = this.modules.m_scenes.get_object_by_name(name);
+
     this.quatNew = new Float32Array(4);
     this.quatOld = new Float32Array(4);
     // вызываем хэшированную таблицу с осями
@@ -18,10 +19,9 @@ function Arm(name,modules,AXIS){
 
 
 
-// Внутренняя функция(метод) класса eventListener, в неё передаётся тип события(eventName) и действие(func), которое должно быть
+// Внутренняя функция(метод) eventListener класса Arm, в неё передаётся тип события(eventName) и действие(func), которое должно быть
 // выполнено по события
 Arm.prototype.eventListener = function (eventName,func){
-    // сдесь надо бы передать ось
     this.htmlElement.addEventListener(eventName,func);
 };
 Arm.prototype.degToRad = function (deg){
