@@ -19,5 +19,5 @@ Hand.prototype.eventListener = function (eventName,func) {
 };
 
 Hand.prototype.rotate = function(deg, axis) {
-    Particles.prototype.rotate(this,arguments);
+    Particles.prototype.rotate.apply(this,arguments);
 };
