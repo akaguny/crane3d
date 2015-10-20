@@ -1,35 +1,23 @@
-/**
- * Created by alexey on 07.10.15.
- */
-// Конструктор(класс-объект), другими словами объявление класса
+// 2. Конструктор Arm
 function Arm(name,modules,AXIS){
-    this.name = name;
-    this.htmlElement = document.getElementById(name);
-    this.modules = modules; // указывает на переменную modules в crane.js, а переменная объект, являющееся хэш таблицей
-    // элементы которой указывают на модули движка
-    this.element3D = this.modules.m_scenes.get_object_by_name(name);
-
-    this.quatNew = new Float32Array(4);
-    this.quatOld = new Float32Array(4);
-    // вызываем хэшированную таблицу с осями
-    this.axis = AXIS;
-
-
+    // не добавляет никакой особенной логики при создании, которой не было в Particles
+    // поэтому просто получим аргументы.
+    Particles.apply(this,arguments);
+    // Свойства, которые не должны наследоваться, собственные
+    // Нет
 }
+// 2.1 Наследование
+Arm.prototype = Object.create(Particles.prototype);
+// 2.1.1 Сохраняем конструктор
+Arm.prototype.constructor = Arm;
 
+// 2.2 Методы
 
-
-// Внутренняя функция(метод) eventListener класса Arm, в неё передаётся тип события(eventName) и действие(func), которое должно быть
-// выполнено по события
-Arm.prototype.eventListener = function (eventName,func){
-    this.htmlElement.addEventListener(eventName,func);
+// Вызов родительского метода из дочернего
+Arm.prototype.eventListener = function (eventName,func) {
+    Particles.prototype.eventListener.apply(this,arguments);
 };
-Arm.prototype.degToRad = function (deg){
-    return deg * (Math.PI / 180);
-};
-Arm.prototype.rotate = function (axis, deg){
-    this.modules.m_quat.setAxisAngle(axis,this.degToRad(deg), this.quatNew);
-    this.modules.m_trans.get_rotation(this.element3D, this.quatOld);
-    this.modules.m_quat.multiply(this.quatNew, this.quatOld, this.quatNew);
-    this.modules.m_trans.set_rotation_v(this.element3D, this.quatNew);
+
+Arm.prototype.rotate = function(deg, axis) {
+    Particles.prototype.rotate(this,arguments);
 };

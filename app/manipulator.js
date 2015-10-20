@@ -33,7 +33,7 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
         case "arm":
             this.arms[names[i]] = new Arm(names[i],this.modules,this.AXIS);
             var arm = this.arms[names[i]];
-
+            console.log(arm);
             arm.button_left =  document.getElementById(names[i]+"_left");
             arm.button_left.addEventListener("click", function(){
                 arm.rotate(arm.axis.Y, 18)
@@ -43,13 +43,12 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
             arm.button_right.addEventListener("click", function(){
                 arm.rotate(arm.axis.Y, -18)
             });
-
             break;
-        case "finger":
-            this.fingers[names[i]] = new Finger(names[i],this.modules,this.AXIS);
-            break;
+        //case "finger":
+        //    this.fingers[names[i]] = new Finger(names[i],this.modules,this.AXIS);
+        //    break;
         case "hand":
-            this.hand[names[i]] = new hand(names[i],this.modules,this.AXIS);
+            this.hand[names[i]] = new Hand(names[i],this.modules,this.AXIS);
             var hand = this.hand[names[i]];
 
             hand.button_left =  document.getElementById(names[i]+"_left");
@@ -57,8 +56,8 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
                 hand.rotate(hand.axis.Y, 18)
             });
 
-            arm.button_right =  document.getElementById(names[i]+"_right");
-            arm.button_right.addEventListener("click", function(){
+            hand.button_right =  document.getElementById(names[i]+"_right");
+            hand.button_right.addEventListener("click", function(){
                 hand.rotate(hand.axis.Y, -18)
             });
             break;

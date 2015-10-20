@@ -1,27 +1,29 @@
 /**
  * Created by alexey on 14.10.15.
  */
-// 1. Конструктор Part
-function Part(name,modules,AXIS){
+// 1. Конструктор Particles
+function Particles(name,modules,AXIS){
     this.name = name;
     this.htmlElement = document.getElementById(name);
-    this.modules = modules;
+    this.modules = modules; // указывает на переменную modules в crane.js, а переменная объект, являющееся хэш таблицей
+    // элементы которой указывают на модули движка
     this.element3D = this.modules.m_scenes.get_object_by_name(name);
 
     this.quatNew = new Float32Array(4);
     this.quatOld = new Float32Array(4);
+    // вызываем хэшированную таблицу с осями
     this.axis = AXIS;
 }
 
 // 1.1 Методы в прототип
-Part.prototype.eventListener = function (eventName,func){
+Particles.prototype.eventListener = function (eventName,func){
     this.htmlElement.addEventListener(eventName,func);
 };
-Part.prototype.degToRad = function (deg){
+Particles.prototype.degToRad = function (deg){
     return deg * (Math.PI / 180);
 };
 
-Part.prototype.rotate = function(deg,axis)
+Particles.prototype.rotate = function(deg,axis)
 {
     this.modules.m_quat.setAxisAngle(axis,this.degToRad(deg), this.quatNew);
     this.modules.m_trans.get_rotation(this.element3D, this.quatOld);
