@@ -25,8 +25,8 @@ Arm.prototype.degToRad = function (deg){
     return deg * (Math.PI / 180);
 };
 Arm.prototype.rotate = function (axis, deg){
-    this.modules.m_quat.setAxisAngle(axis,this.degToRad(deg), this.quatNew);
-    this.modules.m_trans.get_rotation(this.element3D, this.quatOld);
-    this.modules.m_quat.multiply(this.quatNew, this.quatOld, this.quatNew);
+    this.modules.m_quat.setAxisAngle(axis,this.degToRad(deg), this.quatNew); // setAxisAngle(axis, rad, out) → {Quat}
+    this.modules.m_trans.get_rotation(this.element3D, this.quatOld); // получение с записью в виде кватериона старого положения
+    this.modules.m_quat.multiply(this.quatNew, this.quatOld, this.quatNew); // multiply(a, b, out) → {Quat}
     this.modules.m_trans.set_rotation_v(this.element3D, this.quatNew);
 };
