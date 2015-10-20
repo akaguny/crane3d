@@ -1,6 +1,3 @@
-/**
- * Created by alexey on 07.10.15.
- */
 // Конструктор(класс-объект), другими словами объявление класса
 function Arm(name,modules,AXIS){
     this.name = name;
