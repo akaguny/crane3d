@@ -25,7 +25,9 @@ Particles.prototype.degToRad = function (deg){
 
 Particles.prototype.rotate = function(deg,axis)
 {
+    console.log(this.quatNew);
     this.modules.m_quat.setAxisAngle(axis,this.degToRad(deg), this.quatNew);
+    console.log(this.quatNew);
     this.modules.m_trans.get_rotation(this.element3D, this.quatOld);
     this.modules.m_quat.multiply(this.quatNew, this.quatOld, this.quatNew);
     this.modules.m_trans.set_rotation_v(this.element3D, this.quatNew);
