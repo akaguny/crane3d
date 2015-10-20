@@ -37,6 +37,7 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
             arm.button_left =  document.getElementById(names[i]+"_left");
             arm.button_left.addEventListener("click", function(){
                 arm.rotate(arm.axis.Y, 18)
+                console.log(arm);
             });
 
             arm.button_right =  document.getElementById(names[i]+"_right");
@@ -44,9 +45,7 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
                 arm.rotate(arm.axis.Y, -18)
             });
             break;
-        //case "finger":
-        //    this.fingers[names[i]] = new Finger(names[i],this.modules,this.AXIS);
-        //    break;
+
         case "hand":
             this.hand[names[i]] = new Hand(names[i],this.modules,this.AXIS);
             var hand = this.hand[names[i]];
@@ -54,7 +53,7 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
 
             hand.button_left =  document.getElementById(names[i]+"_left");
             hand.button_left.addEventListener("click", function(){
-                hand.rotate(hand.axis.Y, 18)
+                hand.rotate(hand.axis.X, 18)
             });
 
             hand.button_right =  document.getElementById(names[i]+"_right");
@@ -64,6 +63,9 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
             break;
         //case "rotationArea":
         //    //this.rotationAreaNames[names[i]] = new Arm(names[i],this.modules,this.AXIS);
+        //    break;
+        //case "finger":
+        //    this.fingers[names[i]] = new Finger(names[i],this.modules,this.AXIS);
         //    break;
     }
   }
