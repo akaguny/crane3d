@@ -50,6 +50,7 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
         case "hand":
             this.hand[names[i]] = new Hand(names[i],this.modules,this.AXIS);
             var hand = this.hand[names[i]];
+            console.log(hand);
 
             hand.button_left =  document.getElementById(names[i]+"_left");
             hand.button_left.addEventListener("click", function(){
