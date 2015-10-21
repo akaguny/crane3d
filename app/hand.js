@@ -6,6 +6,7 @@ function Hand(name,modules,AXIS){
     // Свойства, которые не должны наследоваться, собственные
     // Нет
 }
+
 // 2.1 Наследование
 Hand.prototype = Object.create(Particle.prototype);
 // 2.1.1 Сохраняем конструктор

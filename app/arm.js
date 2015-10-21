@@ -39,4 +39,4 @@ function Arm(name,modules,AXIS){
 
 Arm.prototype = Object.create(Particle.prototype);
 
-Arm.prototype.constructor = Particle;
+Arm.prototype.constructor = Arm;

@@ -35,7 +35,7 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
             var arm = this.arms[names[i]];
             console.log(arm);
             arm.button_left =  document.getElementById(names[i]+"_left");
-            _this = arm;
+            var _this = arm;
             arm.button_left.addEventListener("click", function(){
                 _this.rotate(_this.axis.Y, 18);
                 console.log(_this);
