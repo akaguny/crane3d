@@ -4,7 +4,7 @@
 function Manipulator(modules)
 {
     this.AXIS ={X:[1, 0, 0],Y:[0, 1, 0],Z:[0, 0, 1]};
-    var armsNames = ["Arm_0"/*,"Arm_1","Arm_2"*/];
+    var armsNames = ["Arm_0","Arm_1","Arm_2"];
     //var fingersNames = ["Finger_0","Finger_1","Finger_2","Finger_3"];
     var handNames = ["Hand_0"];
     //var rotationAreaNames = ["rotationArea_0"];
@@ -45,6 +45,13 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
             arm.button_right.addEventListener("click", function(){
                 _this.rotate(_this.axis.Y, -18)
             });
+            // Если _
+            switch (_this) {
+                case "Arm_1":
+                    _this.rotate(_this.axis.Z, 90);
+                    console.log(_this);
+                    break;
+            }
             break;
 
         case "hand":
@@ -70,5 +77,4 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
         //    break;
     }
   }
-
   };
