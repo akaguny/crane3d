@@ -31,11 +31,11 @@ Particle.degToRad = function (deg){
 Particle.getCurrentAxis = function(axises){
 
     //Написать с помощью и разобраться функции "знак вопроса"
-    if(axises[0]){
-
-      }else if(axises[1]){
-
-      }
+    //if(axises[0]){
+    //
+    //  }else if(axises[1]){
+    //
+    //  }
 };
 
 Particle.prototype.rotate = function(axises, deg)
