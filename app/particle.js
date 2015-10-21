@@ -7,7 +7,6 @@
 //limit = {x:10, y:20, z:30};
 function Particle(name,modules, AXISES, limit ){
     this.name = name;
-    this.htmlElement = document.getElementById(name);
     this.modules = modules; // указывает на переменную modules в crane.js, а переменная объект, являющееся хэш таблицей
     // элементы которой указывают на модули движка
     this.element3D = this.modules.m_scenes.get_object_by_name(name);
@@ -31,7 +30,11 @@ Particle.degToRad = function (deg){
 Particle.getCurrentAxis = function(axises){
 
     //Написать с помощью и разобраться функции "знак вопроса"
-    //if(axises[0]){
+    // (условие ? если true : если false)
+    (axises[0] ? (console.log("\tx"),"x") :
+        ((axises[1] ? (console.log("\ty"),"y") :
+            (axises[2] ? (console.log("\tz"),"z") :
+        console.log("Ошибка")))));
     //
     //  }else if(axises[1]){
     //
@@ -45,7 +48,6 @@ Particle.prototype.rotate = function(axises, deg)
     this.modules.m_trans.get_rotation(this.element3D, this.quatOld);
     this.modules.m_quat.multiply(this.quatNew, this.quatOld, this.quatNew);
     this.modules.m_trans.set_rotation_v(this.element3D, this.quatNew);
-
 
     //this.currentDegrees[] += deg;
 };

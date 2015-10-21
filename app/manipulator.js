@@ -45,13 +45,20 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
             arm.button_right.addEventListener("click", function(){
                 _this.rotate(_this.axis.Y, -18)
             });
+
+            arm.button_up =  document.getElementById(names[i]+"_up");
+            arm.button_up.addEventListener("click", function(){
+                _this.rotate(_this.axis.Z, 18);
+                console.log(_this);
+            });
+
+            arm.button_down =  document.getElementById(names[i]+"_down");
+            arm.button_down.addEventListener("click", function(){
+                _this.rotate(_this.axis.Z, -18)
+            });
+
             // Если _
-            switch (_this) {
-                case "Arm_1":
-                    _this.rotate(_this.axis.Z, 90);
-                    console.log(_this);
-                    break;
-            }
+            if (_this == "Arm_1"){_this.rotate(_this.axis.Z, 90)};
             break;
 
         case "hand":
