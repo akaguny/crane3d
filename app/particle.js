@@ -1,8 +1,8 @@
 /**
  * Created by alexey on 14.10.15.
  */
-// 1. Конструктор Particles
-function Particles(name,modules,AXIS){
+// 1. Конструктор Particle
+function Particle(name,modules,AXIS){
     this.name = name;
     this.htmlElement = document.getElementById(name);
     this.modules = modules; // указывает на переменную modules в crane.js, а переменная объект, являющееся хэш таблицей
@@ -16,18 +16,19 @@ function Particles(name,modules,AXIS){
 }
 
 // 1.1 Методы в прототип
-Particles.prototype.eventListener = function (eventName,func){
+Particle.prototype.eventListener = function (eventName,func){
     this.htmlElement.addEventListener(eventName,func);
 };
-Particles.prototype.degToRad = function (deg){
-    return deg * (Math.PI / 180);
+
+Particle.prototype.degToRad = function (deg){
+
+    return (deg * (Math.PI / 180));
 };
 
-Particles.prototype.rotate = function(deg,axis)
+Particle.prototype.rotate = function(axis, deg)
 {
-    console.log(this.quatNew);
-    this.modules.m_quat.setAxisAngle(axis,this.degToRad(deg), this.quatNew);
-    console.log(this.quatNew);
+
+    this.modules.m_quat.setAxisAngle(axis, this.degToRad(deg), this.quatNew);
     this.modules.m_trans.get_rotation(this.element3D, this.quatOld);
     this.modules.m_quat.multiply(this.quatNew, this.quatOld, this.quatNew);
     this.modules.m_trans.set_rotation_v(this.element3D, this.quatNew);

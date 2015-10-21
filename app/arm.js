@@ -1,3 +1,4 @@
+/*
 // Конструктор(класс-объект), другими словами объявление класса
 function Arm(name,modules,AXIS){
     this.name = name;
@@ -29,4 +30,13 @@ Arm.prototype.rotate = function (axis, deg){
     this.modules.m_trans.get_rotation(this.element3D, this.quatOld); // получение с записью в виде кватериона старого положения
     this.modules.m_quat.multiply(this.quatNew, this.quatOld, this.quatNew); // multiply(a, b, out) → {Quat}
     this.modules.m_trans.set_rotation_v(this.element3D, this.quatNew);
-};
+};*/
+
+
+function Arm(name,modules,AXIS){
+    Particle.apply(this, arguments);
+}
+
+Arm.prototype = Object.create(Particle.prototype);
+
+Arm.prototype.constructor = Particle;

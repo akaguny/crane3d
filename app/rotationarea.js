@@ -1,9 +1,9 @@
 // 2. Конструктор Hand
 function RotationArea(name,modules,AXIS){
-    Particles.apply(this,arguments);
+    Particle.apply(this,arguments);
 }
 // 2.1 Наследование
-RotationArea.prototype = Object.create(Particles.prototype);
+RotationArea.prototype = Object.create(Particle.prototype);
 RotationArea.prototype.constructor = RotationArea;
 
 // 2.2 Методы
