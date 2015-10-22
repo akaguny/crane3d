@@ -29,20 +29,25 @@ Particle.degToRad = function (deg){
 
 Particle.getCurrentAxis = function(axises){
 
+    var axis = (axises[0]) ? "x" :
+        (axises[1]) ? "y":
+            (axises[2]) ? "z":  undefined;
     //Написать с помощью и разобраться функции "знак вопроса"
     // (условие ? если true : если false)
-    (axises[0] ? (console.log("\tx"),"x") :
+/*    (axises[0] ? (console.log("\tx"), "x") :
         ((axises[1] ? (console.log("\ty"),"y") :
             (axises[2] ? (console.log("\tz"),"z") :
-        console.log("Ошибка")))));
+        console.log("Ошибка")))));*/
     //
     //  }else if(axises[1]){
     //
     //  }
+    return axis;
 };
 
 Particle.prototype.rotate = function(axises, deg)
 {
+    console.log(Particle.getCurrentAxis(axises));
 
     this.modules.m_quat.setAxisAngle(axises, Particle.degToRad(deg), this.quatNew);
     this.modules.m_trans.get_rotation(this.element3D, this.quatOld);
