@@ -13,14 +13,15 @@ function Particle(name,modules, AXISES, limit ){
 
     this.quatNew = new Float32Array(4);
     this.quatOld = new Float32Array(4);
-    this.currentDegrees = {x:0, y:0, z:0};
+    this.rotationGlobal = {x:0, y:0, z:0};
     // вызываем хэшированную таблицу с осями
     this.axis = AXISES;
 }
 
 // 1.1 Методы в прототип
-Particle.prototype.eventListener = function (eventName,func){
-    this.htmlElement.addEventListener(eventName,func);
+Particle.prototype.eventListener = function (objectName,action,eventName,func){
+    var htmlElement = document.getElementById(objectName+action);
+    htmlElement.addEventListener(eventName,func);
 };
 
 Particle.degToRad = function (deg){
@@ -28,17 +29,11 @@ Particle.degToRad = function (deg){
 };
 
 Particle.getCurrentAxis = function(axises){
-
-    //Написать с помощью и разобраться функции "знак вопроса"
     // (условие ? если true : если false)
-    (axises[0] ? (console.log("\tx"),"x") :
-        ((axises[1] ? (console.log("\ty"),"y") :
-            (axises[2] ? (console.log("\tz"),"z") :
-        console.log("Ошибка")))));
-    //
-    //  }else if(axises[1]){
-    //
-    //  }
+    return axises[0] ? "x" :
+        axises[1] ? "y" :
+            axises[2] ? "z":
+        console.log("Ошибка");
 };
 
 Particle.prototype.rotate = function(axises, deg)
@@ -49,6 +44,7 @@ Particle.prototype.rotate = function(axises, deg)
     this.modules.m_quat.multiply(this.quatNew, this.quatOld, this.quatNew);
     this.modules.m_trans.set_rotation_v(this.element3D, this.quatNew);
 
-    //this.currentDegrees[] += deg;
+    // получим текущую ось и прибавим к ней текущий угол поворота
+    this.rotationGlobal[Particle.getCurrentAxis(axises)] += deg;
 };
 
