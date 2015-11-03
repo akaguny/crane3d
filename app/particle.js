@@ -13,38 +13,54 @@ function Particle(name,modules, AXISES, limit ){
 
     this.quatNew = new Float32Array(4);
     this.quatOld = new Float32Array(4);
-    this.rotationGlobal = {x:0, y:0, z:0};
+    this.rotationSum = {x:0, y:0, z:0};
+    this.rotationLimit = limit;
     // вызываем хэшированную таблицу с осями
     this.axis = AXISES;
 }
 
 // 1.1 Методы в прототип
-Particle.prototype.eventListener = function (objectName,action,eventName,func){
-    var htmlElement = document.getElementById(objectName+action);
-    htmlElement.addEventListener(eventName,func);
+// функция eventListener - находит html элемент, вешает на него событие
+Particle.prototype.eventListener = function (name,button,event,func){
+    var htmlElement = document.getElementById(name+button);
+    console.log(htmlElement);
+    htmlElement.addEventListener(event,func);
 };
 
+// degToRad градусы в радианы
 Particle.degToRad = function (deg){
     return (deg * (Math.PI / 180));
 };
 
+// getCurrentAxis преобразовать массив вида
+// [1 0 0] => 'x'
+// [0 1 0] => 'y'
+// [0 0 1] => 'z'
+// в символ, означающий ось
 Particle.getCurrentAxis = function(axises){
     // (условие ? если true : если false)
     return axises[0] ? "x" :
         axises[1] ? "y" :
             axises[2] ? "z":
-        console.log("Ошибка");
+        undefined;
 };
 
 Particle.prototype.rotate = function(axises, deg)
 {
-
+    // проучить общее вращение по оси, ограничение по оси
+    // если сумма общего вращения и текущего вращения не превышает лимит по оси, то выполнить перемещение
+    if ((this.rotationSum[Particle.getCurrentAxis(axises)]+ deg)<=this.rotationLimit[Particle.getCurrentAxis(axises)]){
     this.modules.m_quat.setAxisAngle(axises, Particle.degToRad(deg), this.quatNew);
     this.modules.m_trans.get_rotation(this.element3D, this.quatOld);
     this.modules.m_quat.multiply(this.quatNew, this.quatOld, this.quatNew);
     this.modules.m_trans.set_rotation_v(this.element3D, this.quatNew);
 
     // получим текущую ось и прибавим к ней текущий угол поворота
-    this.rotationGlobal[Particle.getCurrentAxis(axises)] += deg;
+    this.rotationSum[Particle.getCurrentAxis(axises)] += deg;
+    console.log(this.rotationSum);
+    }
+    else{
+        window.alert(this.name + ' не может быть повёрнут на ' +deg)
+    }
 };
 
