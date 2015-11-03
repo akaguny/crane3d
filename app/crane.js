@@ -59,6 +59,14 @@ b4w.register("crane", function(exports, require) {
      */
     function load_cb(data_id) {
         var manipulator = new Manipulator(modules);
+        document.getElementById("finger_clench").addEventListener("click",function(){
+            console.log("work");
+            console.log(manipulator.fingers);
+            for (var i = 0; i < manipulator.fingersNames.length; i++){
+                var finger = manipulator.fingers[manipulator.fingersNames[i]];
+                finger.rotateFinger(finger.axis.Z,18)
+            }
+        });
         m_app.enable_controls();
         m_app.enable_camera_controls();
     }

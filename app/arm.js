@@ -1,4 +1,4 @@
-function Arm(name,modules,AXIS){
+function Arm(name,modules,AXISES,limits){
     Particle.apply(this, arguments);
 }
 

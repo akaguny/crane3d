@@ -5,7 +5,7 @@ function Manipulator(modules)
 {
     this.AXIS ={X:[1, 0, 0],Y:[0, 1, 0],Z:[0, 0, 1]};
     var armsNames = ["Arm_0","Arm_1","Arm_2"];
-    //var fingersNames = ["Finger_0","Finger_1","Finger_2","Finger_3"];
+    this.fingersNames = ["finger_0","finger_1","finger_2","finger_3"];
     var handNames = ["Hand_0"];
     //var rotationAreaNames = ["rotationArea_0"];
 
@@ -14,7 +14,7 @@ function Manipulator(modules)
     // Создадим хеш-таблицу(хеш/словарь/ассоцаативный массив, состоящий из
     // объектов соответствующих классов)
     this.arms = {};
-    //this.fingers = {};
+    this.fingers = {};
     this.hand = {};
     //this.rotationAreaNames = {};
 
@@ -25,7 +25,14 @@ function Manipulator(modules)
 
     this.createObjectsByArray(handNames, "hand");
     console.log(this.hand);
+
+    this.createObjectsByArray(this.fingersNames, "finger");
+    console.log(this.fingers);
 }
+
+Manipulator.prototype.clenchFingers = function (){
+
+};
 
 Manipulator.prototype.createObjectsByArray = function (names, type){
     for (var i = 0; i<names.length; i++){
@@ -62,26 +69,41 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
                 break;
 
             case "hand":
-                this.hand[names[i]] = new Hand(names[i],this.modules,this.AXIS);
+                this.hand[names[i]] = new Hand(names[i],this.modules,this.AXIS,{x:90, y:90, z:5});
                 var hand = this.hand[names[i]];
-                console.log(hand);
+                var _this = hand;
+                console.log(_this);
 
-                hand.button_left =  document.getElementById(names[i]+"_left");
-                hand.button_left.addEventListener("click", function(){
-                    hand.rotate(hand.axis.X, 18)
+                _this.button_left =  document.getElementById(names[i]+"_left");
+                _this.button_left.addEventListener("click", function(){
+                    _this.rotate(_this.axis.X, 18)
                 });
 
-                hand.button_right =  document.getElementById(names[i]+"_right");
-                hand.button_right.addEventListener("click", function(){
-                    hand.rotate(hand.axis.Y, -18)
+                _this.button_right =  document.getElementById(names[i]+"_right");
+                _this.button_right.addEventListener("click", function(){
+                    _this.rotate(_this.axis.Y, -18)
                 });
                 break;
             //case "rotationArea":
             //    //this.rotationAreaNames[names[i]] = new Arm(names[i],this.modules,this.AXIS);
             //    break;
-            //case "finger":
-            //    this.fingers[names[i]] = new Finger(names[i],this.modules,this.AXIS);
-            //    break;
+            case "finger":
+
+                this.fingers[names[i]] = new Finger(names[i],this.modules,this.AXIS,{x:0, y:0, z:90},i);
+                    //// если чётный
+                    //if (!(i % 2)){
+                    //    _this.button_clench = document.getElementById("finger"+"_clench");
+                    //    _this.button_clench.addEventListener("click", function () {
+                    //        _this.rotate(_this.axis.Z, 18);
+                    //    });
+                    //}
+                    //else{
+                    //    _this.button_clench = document.getElementById("finger"+"_unclench");
+                    //    _this.button_clench.addEventListener("click", function () {
+                    //        _this.rotate(_this.axis.Z, -18);
+                    //    });
+                    //}
+                break;
         }
     }
 };

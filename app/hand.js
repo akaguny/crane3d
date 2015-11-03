@@ -1,5 +1,5 @@
 // 2. Конструктор Hand
-function Hand(name,modules,AXIS){
+function Hand(name,modules,AXISES, limits){
     // не добавляет никакой особенной логики при создании, которой не было в Particle
     // поэтому просто получим аргументы.
     Particle.apply(this,arguments);
