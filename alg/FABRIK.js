@@ -26,7 +26,7 @@
 
 
     for (var i = 0; i< d.length;i++){
-        d[i] = Math.abs(Math.sqrt((p[i + 1][2]-p[i][2])^2+(p[i + 1][1]-p[i][1])^2));
+        d[i] = Math.abs(Math.sqrt(Math.pow(((p[i + 1][2]-p[i][2])),(2))+Math.pow(((p[i + 1][1]-p[i][1])),(2))));
     } // можно запихнуть вычисление длины в функцию, и использовать метод forEach
     // для перебора
     console.log(d);
@@ -34,7 +34,7 @@
     // Расстояние между 2 отрезками выч. по формуле
     // (x1-x2)^2+(y1-y2)^2 - теорема пифагора
     // Math.abs(x) - модуль x
-    dist = Math.abs(Math.sqrt((t[1]-p[0][2])^2+(t[0]-p[0][1])^2));
+    dist = Math.abs(Math.sqrt(Math.pow(((t[1]-p[0][2])),(2))+Math.pow(((t[0]-p[0][1])),(2))));
 
     sum = d.forEach(function(){sum += d[i];});
     if (dist > sum)
@@ -44,23 +44,23 @@
     else
     {
         b=p[0];
-        DIFa =  Math.abs(Math.sqrt((p[3][2]-t[2])^2+(p[3][1]-t[1])^2));
+        DIFa =  Math.abs(Math.sqrt(Math.pow(((p[3][2]-t[2])),(2))+Math.pow(((p[3][1]-t[1])),(2))));
         while (DIFa > tol){
             p[3]=t;
             for (var i = p.length-1; i>=1; i--){
                 var r;
-                r[i] = Math.abs(Math.sqrt((p[i + 1][2]-p[i][2])^2+(p[i + 1][1]-p[i][1])^2));
+                r[i] = Math.abs(Math.sqrt(Math.pow(((p[i + 1][2]-p[i][2])),(2))+Math.pow(((p[i + 1][1]-p[i][1])),(2))));
                 lambda[i] = d[i] / r[i];
                 p[i] = (1-lambda[i])*p[i + 1]+lambda[i]*p[i];
                 }
             p[i]=b;
             for (var i = 0;i< p.length; i++){
                 var r;
-                r[i] = Math.abs(Math.sqrt((p[i + 1][2]-p[i][2])^2+(p[i + 1][1]-p[i][1])^2));
+                r[i] = Math.abs(Math.sqrt(Math.pow(((p[i + 1][2]-p[i][2])),(2))+Math.pow(((p[i + 1][1]-p[i][1])),(2))));
                 lambda[i] = d[i] / r[i];
                 p[i + 1] = (1-lambda[i])*p[i]+lambda[i]*p[i + 1];
             }
-            DIFa = Math.abs(Math.sqrt((p[3][2]-t[2])^2+(p[3][1]-t[1])^2));
+            DIFa = Math.abs(Math.sqrt(Math.pow(((p[3][2]-t[2])),(2))+Math.pow(((p[3][1]-t[1]))(2))));
         }
     }
     // тестирование, выведем в консоль новые значения координат
