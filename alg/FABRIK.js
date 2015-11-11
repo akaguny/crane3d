@@ -9,7 +9,7 @@
             [2,1] //p[2]
         ],
         t = [1.5,0.5], // цель t = [x,y]
-        d = [0, 0, 0, 0], // длины звеньев
+        d = [0, 0, 0], // длины звеньев
         dist = 0, // дистанция
         lambda = 0, // ???
         tol = 1, // максимально допустимое растояние между конечным узлом и целью
@@ -25,7 +25,7 @@
     console.warn(p);
 
 
-    for (var i = 0; i< d.length;i++){
+    for (var i = 0; i< p.length;i++){
         d[i] = Math.abs(Math.sqrt(Math.pow(((p[i + 1][2]-p[i][2])),(2))+Math.pow(((p[i + 1][1]-p[i][1])),(2))));
     } // можно запихнуть вычисление длины в функцию, и использовать метод forEach
     // для перебора
@@ -47,7 +47,7 @@
         DIFa =  Math.abs(Math.sqrt(Math.pow(((p[3][2]-t[2])),(2))+Math.pow(((p[3][1]-t[1])),(2))));
         while (DIFa > tol){
             p[3]=t;
-            for (var i = p.length-1; i>=1; i--){
+            for (var i = p.length-1; i>=0; i--){
                 var r;
                 r[i] = Math.abs(Math.sqrt(Math.pow(((p[i + 1][2]-p[i][2])),(2))+Math.pow(((p[i + 1][1]-p[i][1])),(2))));
                 lambda[i] = d[i] / r[i];
