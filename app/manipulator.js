@@ -4,7 +4,7 @@
 function Manipulator(modules)
 {
     this.AXIS ={X:[1, 0, 0],Y:[0, 1, 0],Z:[0, 0, 1]};
-    var armsNames = ["Arm_0","Arm_1","Arm_2"];
+    var armsNames = ["Arm_0","Arm_1","Arm_2","Arm_3"];
     this.fingersNames = ["finger_0","finger_1","finger_2","finger_3"];
     var handNames = ["Hand_0"];
     //var rotationAreaNames = ["rotationArea_0"];
@@ -23,6 +23,10 @@ function Manipulator(modules)
     this.createObjectsByArray(armsNames, "arm");
     console.log(this.arms);
 
+    // После формирования объекта arms выставим начальную позицию манипулятора, повернув Arm_2 и ARM_3 на 90 градусов
+    this.arms.Arm_2.rotate(this.AXIS.Z, 60);
+    this.arms.Arm_3.rotate(this.AXIS.Z, 120);
+
     this.createObjectsByArray(handNames, "hand");
     console.log(this.hand);
 
@@ -35,10 +39,10 @@ Manipulator.prototype.clenchFingers = function (){
 };
 
 Manipulator.prototype.createObjectsByArray = function (names, type){
-    for (var i = 0; i<names.length; i++){
+    for (var i = 0; i < names.length; i++){
         switch (type){
             case "arm":
-                this.arms[names[i]] = new Arm(names[i],this.modules,this.AXIS,{x:90, y:90, z:5});
+                this.arms[names[i]] = new Arm(names[i],this.modules,this.AXIS,{x:90, y:90, z:180});
                 var arm = this.arms[names[i]];
                 console.log(arm);
                 arm.button_left =  document.getElementById(names[i]+"_left");
@@ -64,8 +68,6 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
                     _this.rotate(_this.axis.Z, -18)
                 });
 
-                // Если _
-                if (_this == "Arm_1"){_this.rotate(_this.axis.Z, 90)};
                 break;
 
             case "hand":
@@ -107,3 +109,4 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
         }
     }
 };
+
