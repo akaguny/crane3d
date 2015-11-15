@@ -24,7 +24,8 @@ var angleBetweenTwoVectors = function(vector1, vector2) {
     console.log("cos(" + cosA + ")");
     return Math.acos(cosA);
 
-}
+};
+// Тест
 var v1 = [4, 3, 4];
 var v2 = [4, 4, 4];
 console.log(angleBetweenTwoVectors(v1, v2) + " радиан");
