@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>rotationarea.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); font-style: italic; }
+.s1 { }
+.s2 { color: rgb(0,0,128); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+rotationarea.js</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">// 2. Конструктор Hand</span><span class="s1"> 
+</span><span class="s2">function </span><span class="s1">RotationArea(name,modules,AXIS){ 
+    Particle.apply(</span><span class="s2">this</span><span class="s1">,arguments); 
+} 
+</span><span class="s0">// 2.1 Наследование</span><span class="s1"> 
+RotationArea.prototype = Object.create(Particle.prototype); 
+RotationArea.prototype.constructor = RotationArea; 
+ 
+</span><span class="s0">// 2.2 Методы</span><span class="s1"> 
+ 
+</span><span class="s0">// Вызов родительского метода из дочернего</span><span class="s1"> 
+RotationArea.prototype.eventListener = </span><span class="s2">function </span><span class="s1">(eventName,func) { 
+    RotationArea.prototype.eventListener.apply(</span><span class="s2">this</span><span class="s1">,arguments); 
+}; 
+ 
+RotationArea.prototype.rotate = </span><span class="s2">function</span><span class="s1">(deg, axis) { 
+    RotationArea.prototype.rotate.apply(</span><span class="s2">this</span><span class="s1">,arguments); 
+};</span></pre>
+</body>
+</html>

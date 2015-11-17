@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>particle.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); font-style: italic; }
+.s1 { }
+.s2 { color: rgb(0,0,128); font-weight: bold; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+particle.js</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">/** 
+ * Created by alexey on 14.10.15. 
+ */</span><span class="s1"> 
+</span><span class="s0">// 1. Конструктор Particle</span><span class="s1"> 
+ 
+ 
+</span><span class="s0">//limit = {x:10, y:20, z:30};</span><span class="s1"> 
+</span><span class="s2">function </span><span class="s1">Particle(name,modules, AXISES, limit ){ 
+    </span><span class="s2">this</span><span class="s1">.name = name; 
+    </span><span class="s2">this</span><span class="s1">.modules = modules; </span><span class="s0">// указывает на переменную modules в crane.js, а переменная объект, являющееся хэш таблицей</span><span class="s1"> 
+    </span><span class="s0">// элементы которой указывают на модули движка</span><span class="s1"> 
+    </span><span class="s2">this</span><span class="s1">.element3D = </span><span class="s2">this</span><span class="s1">.modules.m_scenes.get_object_by_name(name); 
+ 
+    </span><span class="s2">this</span><span class="s1">.quatNew = </span><span class="s2">new </span><span class="s1">Float32Array(</span><span class="s3">4</span><span class="s1">); 
+    </span><span class="s2">this</span><span class="s1">.quatOld = </span><span class="s2">new </span><span class="s1">Float32Array(</span><span class="s3">4</span><span class="s1">); 
+    </span><span class="s2">this</span><span class="s1">.rotationSum = {x:</span><span class="s3">0</span><span class="s1">, y:</span><span class="s3">0</span><span class="s1">, z:</span><span class="s3">0</span><span class="s1">}; 
+    </span><span class="s2">this</span><span class="s1">.rotationLimit = limit; 
+    </span><span class="s0">// вызываем хэшированную таблицу с осями</span><span class="s1"> 
+    </span><span class="s2">this</span><span class="s1">.axis = AXISES; 
+} 
+ 
+</span><span class="s0">// 1.1 Методы в прототип</span><span class="s1"> 
+</span><span class="s0">// функция eventListener - находит html элемент, вешает на него событие</span><span class="s1"> 
+Particle.prototype.eventListener = </span><span class="s2">function </span><span class="s1">(name,button,event,func){ 
+    </span><span class="s2">var </span><span class="s1">htmlElement = document.getElementById(name+button); 
+    console.log(htmlElement); 
+    htmlElement.addEventListener(event,func); 
+}; 
+ 
+</span><span class="s0">// degToRad градусы в радианы</span><span class="s1"> 
+Particle.degToRad = </span><span class="s2">function </span><span class="s1">(deg){ 
+    </span><span class="s2">return </span><span class="s1">(deg * (Math.PI / </span><span class="s3">180</span><span class="s1">)); 
+}; 
+ 
+</span><span class="s0">// getCurrentAxis преобразовать массив вида</span><span class="s1"> 
+</span><span class="s0">// [1 0 0] =&gt; 'x'</span><span class="s1"> 
+</span><span class="s0">// [0 1 0] =&gt; 'y'</span><span class="s1"> 
+</span><span class="s0">// [0 0 1] =&gt; 'z'</span><span class="s1"> 
+</span><span class="s0">// в символ, означающий ось</span><span class="s1"> 
+Particle.getCurrentAxis = </span><span class="s2">function</span><span class="s1">(axises){ 
+    </span><span class="s0">// (условие ? если true : если false)</span><span class="s1"> 
+    </span><span class="s2">return </span><span class="s1">axises[</span><span class="s3">0</span><span class="s1">] ? </span><span class="s4">&quot;x&quot; </span><span class="s1">: 
+        axises[</span><span class="s3">1</span><span class="s1">] ? </span><span class="s4">&quot;y&quot; </span><span class="s1">: 
+            axises[</span><span class="s3">2</span><span class="s1">] ? </span><span class="s4">&quot;z&quot;</span><span class="s1">: 
+        undefined; 
+}; 
+ 
+Particle.prototype.rotate = </span><span class="s2">function</span><span class="s1">(axises, deg) 
+{ 
+    </span><span class="s0">// проучить общее вращение по оси, ограничение по оси</span><span class="s1"> 
+    </span><span class="s0">// если сумма общего вращения и текущего вращения не превышает лимит по оси, то выполнить перемещение</span><span class="s1"> 
+    </span><span class="s2">if </span><span class="s1">((</span><span class="s2">this</span><span class="s1">.rotationSum[Particle.getCurrentAxis(axises)]+ deg)&lt;=</span><span class="s2">this</span><span class="s1">.rotationLimit[Particle.getCurrentAxis(axises)]){ 
+    </span><span class="s2">this</span><span class="s1">.modules.m_quat.setAxisAngle(axises, Particle.degToRad(deg), </span><span class="s2">this</span><span class="s1">.quatNew); 
+    </span><span class="s2">this</span><span class="s1">.modules.m_trans.get_rotation(</span><span class="s2">this</span><span class="s1">.element3D, </span><span class="s2">this</span><span class="s1">.quatOld); 
+    </span><span class="s2">this</span><span class="s1">.modules.m_quat.multiply(</span><span class="s2">this</span><span class="s1">.quatNew, </span><span class="s2">this</span><span class="s1">.quatOld, </span><span class="s2">this</span><span class="s1">.quatNew); 
+    </span><span class="s2">this</span><span class="s1">.modules.m_trans.set_rotation_v(</span><span class="s2">this</span><span class="s1">.element3D, </span><span class="s2">this</span><span class="s1">.quatNew); 
+ 
+    </span><span class="s0">// получим текущую ось и прибавим к ней текущий угол поворота</span><span class="s1"> 
+    </span><span class="s2">this</span><span class="s1">.rotationSum[Particle.getCurrentAxis(axises)] += deg; 
+    console.log(</span><span class="s2">this</span><span class="s1">.rotationSum); 
+    } 
+    </span><span class="s2">else</span><span class="s1">{ 
+        window.alert(</span><span class="s2">this</span><span class="s1">.name + </span><span class="s4">' не может быть повёрнут на ' </span><span class="s1">+deg) 
+    } 
+}; 
+ 
+</span></pre>
+</body>
+</html>

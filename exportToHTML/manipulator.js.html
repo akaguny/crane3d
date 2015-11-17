@@ -1,0 +1,136 @@
+<html>
+<head>
+<title>manipulator.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); font-style: italic; }
+.s1 { }
+.s2 { color: rgb(0,0,128); font-weight: bold; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+manipulator.js</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">/** 
+ * Created by alexey on 12.10.15. 
+ */</span><span class="s1"> 
+</span><span class="s2">function </span><span class="s1">Manipulator(modules) 
+{ 
+    </span><span class="s2">this</span><span class="s1">.AXIS ={X:[</span><span class="s3">1</span><span class="s1">, </span><span class="s3">0</span><span class="s1">, </span><span class="s3">0</span><span class="s1">],Y:[</span><span class="s3">0</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, </span><span class="s3">0</span><span class="s1">],Z:[</span><span class="s3">0</span><span class="s1">, </span><span class="s3">0</span><span class="s1">, </span><span class="s3">1</span><span class="s1">]}; 
+    </span><span class="s2">var </span><span class="s1">armsNames = [</span><span class="s4">&quot;Arm_0&quot;</span><span class="s1">,</span><span class="s4">&quot;Arm_1&quot;</span><span class="s1">,</span><span class="s4">&quot;Arm_2&quot;</span><span class="s1">,</span><span class="s4">&quot;Arm_3&quot;</span><span class="s1">]; 
+    </span><span class="s2">this</span><span class="s1">.fingersNames = [</span><span class="s4">&quot;finger_0&quot;</span><span class="s1">,</span><span class="s4">&quot;finger_1&quot;</span><span class="s1">,</span><span class="s4">&quot;finger_2&quot;</span><span class="s1">,</span><span class="s4">&quot;finger_3&quot;</span><span class="s1">]; 
+    </span><span class="s2">var </span><span class="s1">handNames = [</span><span class="s4">&quot;Hand_0&quot;</span><span class="s1">]; 
+    </span><span class="s0">//var rotationAreaNames = [&quot;rotationArea_0&quot;];</span><span class="s1"> 
+ 
+    </span><span class="s2">this</span><span class="s1">.modules = modules; 
+    </span><span class="s0">//this.scene = this.modules.m_scenes.get_active_scene;</span><span class="s1"> 
+    </span><span class="s0">// Создадим хеш-таблицу(хеш/словарь/ассоцаативный массив, состоящий из</span><span class="s1"> 
+    </span><span class="s0">// объектов соответствующих классов)</span><span class="s1"> 
+    </span><span class="s2">this</span><span class="s1">.arms = {}; 
+    </span><span class="s2">this</span><span class="s1">.fingers = {}; 
+    </span><span class="s2">this</span><span class="s1">.hand = {}; 
+    </span><span class="s0">//this.rotationAreaNames = {};</span><span class="s1"> 
+ 
+    </span><span class="s0">// Вызываем функцию для заполнения объекта arm</span><span class="s1"> 
+    </span><span class="s0">// Первый аргумент - массив имён, второй - тип/имя объекта</span><span class="s1"> 
+    </span><span class="s2">this</span><span class="s1">.createObjectsByArray(armsNames, </span><span class="s4">&quot;arm&quot;</span><span class="s1">); 
+    console.log(</span><span class="s2">this</span><span class="s1">.arms); 
+ 
+    </span><span class="s0">// После формирования объекта arms выставим начальную позицию манипулятора, повернув Arm_2 и ARM_3 на 90 градусов</span><span class="s1"> 
+    </span><span class="s2">this</span><span class="s1">.arms.Arm_2.rotate(</span><span class="s2">this</span><span class="s1">.AXIS.Z, </span><span class="s3">60</span><span class="s1">); 
+    </span><span class="s2">this</span><span class="s1">.arms.Arm_3.rotate(</span><span class="s2">this</span><span class="s1">.AXIS.Z, </span><span class="s3">120</span><span class="s1">); 
+ 
+    </span><span class="s2">this</span><span class="s1">.createObjectsByArray(handNames, </span><span class="s4">&quot;hand&quot;</span><span class="s1">); 
+    console.log(</span><span class="s2">this</span><span class="s1">.hand); 
+ 
+    </span><span class="s2">this</span><span class="s1">.createObjectsByArray(</span><span class="s2">this</span><span class="s1">.fingersNames, </span><span class="s4">&quot;finger&quot;</span><span class="s1">); 
+    console.log(</span><span class="s2">this</span><span class="s1">.fingers); 
+} 
+ 
+Manipulator.prototype.clenchFingers = </span><span class="s2">function </span><span class="s1">(){ 
+ 
+}; 
+ 
+Manipulator.prototype.createObjectsByArray = </span><span class="s2">function </span><span class="s1">(names, type){ 
+    </span><span class="s2">for </span><span class="s1">(</span><span class="s2">var </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; names.length; i++){ 
+        </span><span class="s2">switch </span><span class="s1">(type){ 
+            </span><span class="s2">case </span><span class="s4">&quot;arm&quot;</span><span class="s1">: 
+                </span><span class="s2">this</span><span class="s1">.arms[names[i]] = </span><span class="s2">new </span><span class="s1">Arm(names[i],</span><span class="s2">this</span><span class="s1">.modules,</span><span class="s2">this</span><span class="s1">.AXIS,{x:</span><span class="s3">90</span><span class="s1">, y:</span><span class="s3">90</span><span class="s1">, z:</span><span class="s3">180</span><span class="s1">}); 
+                </span><span class="s2">var </span><span class="s1">arm = </span><span class="s2">this</span><span class="s1">.arms[names[i]]; 
+                console.log(arm); 
+                arm.button_left =  document.getElementById(names[i]+</span><span class="s4">&quot;_left&quot;</span><span class="s1">); 
+                </span><span class="s2">var </span><span class="s1">_this = arm; 
+                arm.button_left.addEventListener(</span><span class="s4">&quot;click&quot;</span><span class="s1">, </span><span class="s2">function</span><span class="s1">(){ 
+                    _this.rotate(_this.axis.Y, </span><span class="s3">18</span><span class="s1">); 
+                    console.log(_this); 
+                }); 
+ 
+                arm.button_right =  document.getElementById(names[i]+</span><span class="s4">&quot;_right&quot;</span><span class="s1">); 
+                arm.button_right.addEventListener(</span><span class="s4">&quot;click&quot;</span><span class="s1">, </span><span class="s2">function</span><span class="s1">(){ 
+                    _this.rotate(_this.axis.Y, -</span><span class="s3">18</span><span class="s1">) 
+                }); 
+ 
+                arm.button_up =  document.getElementById(names[i]+</span><span class="s4">&quot;_up&quot;</span><span class="s1">); 
+                arm.button_up.addEventListener(</span><span class="s4">&quot;click&quot;</span><span class="s1">, </span><span class="s2">function</span><span class="s1">(){ 
+                    _this.rotate(_this.axis.Z, </span><span class="s3">18</span><span class="s1">); 
+                    console.log(_this); 
+                }); 
+ 
+                arm.button_down =  document.getElementById(names[i]+</span><span class="s4">&quot;_down&quot;</span><span class="s1">); 
+                arm.button_down.addEventListener(</span><span class="s4">&quot;click&quot;</span><span class="s1">, </span><span class="s2">function</span><span class="s1">(){ 
+                    _this.rotate(_this.axis.Z, -</span><span class="s3">18</span><span class="s1">) 
+                }); 
+ 
+                </span><span class="s2">break</span><span class="s1">; 
+ 
+            </span><span class="s2">case </span><span class="s4">&quot;hand&quot;</span><span class="s1">: 
+                </span><span class="s2">this</span><span class="s1">.hand[names[i]] = </span><span class="s2">new </span><span class="s1">Hand(names[i],</span><span class="s2">this</span><span class="s1">.modules,</span><span class="s2">this</span><span class="s1">.AXIS,{x:</span><span class="s3">90</span><span class="s1">, y:</span><span class="s3">90</span><span class="s1">, z:</span><span class="s3">5</span><span class="s1">}); 
+                </span><span class="s2">var </span><span class="s1">hand = </span><span class="s2">this</span><span class="s1">.hand[names[i]]; 
+                </span><span class="s2">var </span><span class="s1">_this = hand; 
+                console.log(_this); 
+ 
+                _this.button_left =  document.getElementById(names[i]+</span><span class="s4">&quot;_left&quot;</span><span class="s1">); 
+                _this.button_left.addEventListener(</span><span class="s4">&quot;click&quot;</span><span class="s1">, </span><span class="s2">function</span><span class="s1">(){ 
+                    _this.rotate(_this.axis.X, </span><span class="s3">18</span><span class="s1">) 
+                }); 
+ 
+                _this.button_right =  document.getElementById(names[i]+</span><span class="s4">&quot;_right&quot;</span><span class="s1">); 
+                _this.button_right.addEventListener(</span><span class="s4">&quot;click&quot;</span><span class="s1">, </span><span class="s2">function</span><span class="s1">(){ 
+                    _this.rotate(_this.axis.Y, -</span><span class="s3">18</span><span class="s1">) 
+                }); 
+                </span><span class="s2">break</span><span class="s1">; 
+            </span><span class="s0">//case &quot;rotationArea&quot;:</span><span class="s1"> 
+            </span><span class="s0">//    //this.rotationAreaNames[names[i]] = new Arm(names[i],this.modules,this.AXIS);</span><span class="s1"> 
+            </span><span class="s0">//    break;</span><span class="s1"> 
+            </span><span class="s2">case </span><span class="s4">&quot;finger&quot;</span><span class="s1">: 
+ 
+                </span><span class="s2">this</span><span class="s1">.fingers[names[i]] = </span><span class="s2">new </span><span class="s1">Finger(names[i],</span><span class="s2">this</span><span class="s1">.modules,</span><span class="s2">this</span><span class="s1">.AXIS,{x:</span><span class="s3">0</span><span class="s1">, y:</span><span class="s3">0</span><span class="s1">, z:</span><span class="s3">90</span><span class="s1">},i); 
+                    </span><span class="s0">//// если чётный</span><span class="s1"> 
+                    </span><span class="s0">//if (!(i % 2)){</span><span class="s1"> 
+                    </span><span class="s0">//    _this.button_clench = document.getElementById(&quot;finger&quot;+&quot;_clench&quot;);</span><span class="s1"> 
+                    </span><span class="s0">//    _this.button_clench.addEventListener(&quot;click&quot;, function () {</span><span class="s1"> 
+                    </span><span class="s0">//        _this.rotate(_this.axis.Z, 18);</span><span class="s1"> 
+                    </span><span class="s0">//    });</span><span class="s1"> 
+                    </span><span class="s0">//}</span><span class="s1"> 
+                    </span><span class="s0">//else{</span><span class="s1"> 
+                    </span><span class="s0">//    _this.button_clench = document.getElementById(&quot;finger&quot;+&quot;_unclench&quot;);</span><span class="s1"> 
+                    </span><span class="s0">//    _this.button_clench.addEventListener(&quot;click&quot;, function () {</span><span class="s1"> 
+                    </span><span class="s0">//        _this.rotate(_this.axis.Z, -18);</span><span class="s1"> 
+                    </span><span class="s0">//    });</span><span class="s1"> 
+                    </span><span class="s0">//}</span><span class="s1"> 
+                </span><span class="s2">break</span><span class="s1">; 
+        } 
+    } 
+}; 
+ 
+</span></pre>
+</body>
+</html>
