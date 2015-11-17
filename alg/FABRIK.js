@@ -13,14 +13,12 @@
         ],
         distBeetweenJoints = [], // дистанция между сопряжёнными узлами (длины звеньев от узла до ближайшего узла)
         distBeetweenJointsAndTarget = [], // отношение дистанций от узла до узла и от узла до цели
-        TargetPoint = [0,10,20], // цель, целевая точка t = [x,y,z]
+        TargetPoint = [0,100,0], // цель, целевая точка t = [x,y,z]
         distBeetweenStartPointAndTarget, // дистанция между стартовым узлом и целью, целевой точкой
 
         lambdaDistance = [], // отношение
 
         tol = 10, // максимально допустимое растояние между конечным узлом и целью
-    //b = 0, // переменная для хранения позиции узла 1, если цель достижима
-    //DIFa = 0, //дистанция между конечным узлом и целевой позицией
 
         sumOfInitialDistances = 0; // переменная для общей дистанции между узлами
 
@@ -40,15 +38,17 @@
 
     // Вычисляем длину между соседними узлами
     // метод массива .length возвращает количество его элементов
-    for(var i = 0; i < (arrayOfInitialPositions.length-1); i++){
+    for(var i = 0, len = arrayOfInitialPositions.length; i < len-1; i++){
         distBeetweenJoints[i] = distBetweenPoints(arrayOfInitialPositions[i], arrayOfInitialPositions[i+1]);
+        console.log("Расстояние между точками "+i+" и "+(i+1)+" = "+distBeetweenJoints[i]);
     }
     // расстояние между стартовым узлом и целевой точкой
     distBeetweenStartPointAndTarget = distBetweenPoints(arrayOfInitialPositions[0], TargetPoint);
+    console.log("Расстояние между стартовым узлом и целевой точкой "+distBeetweenStartPointAndTarget);
 
     // Сложение дистанций между узлами
-    distBeetweenJoints.forEach(function(item, i, array){sumOfInitialDistances += array[i]});
-
+    sumOfInitialDistances = distBeetweenJoints.reduce(function(sum, current){return sum + current});
+    console.log("Общее расстояние между узлами: "+sumOfInitialDistances);
     // Сравниваем общее расстояние между узлами(общую длину) и расстояние до цели
     // Если цель не достежима, то максимально приближаемся к ней
     // Если нет, то приближаемся к ней, пока не достигнем максимального отдаления
@@ -65,22 +65,20 @@
             // начало вычисления первого и второго слагаемых
             // для удобства формула была разделдена на 2 этапа - функции:
             // вычисление первого слагаемого и второго
-            var firstStep = [];
-            arrayOfInitialPositions[i].forEach(function(item, argument, array){ firstStep[argument] = array[i] * (1 -lambdaDistance[i]) });
-            console.log(firstStep);
+            var firstStep = arrayOfInitialPositions[i].map(function(item){ return item * (1 -lambdaDistance[i]) });
+            console.log("firstStep "+firstStep);
 
 
-            var secondStep = [];
-            TargetPoint.forEach(function(item, argument, array){ secondStep[argument] = array[i] * lambdaDistance[i] });
-            console.log(secondStep);
+            var secondStep = TargetPoint.map(function(item){ return item * lambdaDistance[i] });
+            console.log("secondStep "+secondStep);
             // конец вычисления первого и второго слагаемых
             for(var j = 0; j < firstStep.length; j++){
                 // новая позиция узлов для максимальной близости конечного к цели
                 arrayOfInitialPositions[i+1][j] = firstStep[j] + secondStep[j];
             }
 
-            console.log(arrayOfInitialPositions);
-        }
+            }
+        arrayOfInitialPositions.forEach(function(item, i){console.log("Новая позиция "+i+" = "+item);});
     }
     else
     {
