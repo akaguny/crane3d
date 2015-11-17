@@ -151,6 +151,7 @@
                 console.log(arrayOfInitialPositions);
             }
             DIFa = distBetweenPoints(arrayOfInitialPositions[arrayOfInitialPositions.length-1],TargetPoint);
+
         }
     }
 
