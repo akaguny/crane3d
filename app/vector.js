@@ -1,7 +1,14 @@
-// Code goes here
 "use strict";
+function Vector(){
+
+}
+// Функция вычисления вектора (его координат)
+Vector.vectorFromCoord = function(coord1, coord2) {
+    return coord1.map(function(item,i){return coord2[i]-item})
+};
+
 // Функция для вычисления угла между 2 векторами
-var angleBetweenTwoVectors = function(vector1, vector2) {
+Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     // скалярное произведение векторов
     var scalMultVectors = vector1.reduce(function(sum, current, i) {
         return sum + (current * vector2[i])
