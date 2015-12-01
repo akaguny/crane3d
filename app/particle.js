@@ -21,7 +21,7 @@ function Particle(name,modules, AXISES, limit ){
     // позиция центральной точки объекта get_object_center(obj, calc_bs_center, destopt)
     this.positionOld = this.modules.m_trans.get_object_center(this.element3D,0);
     this.positionNew = [0,0,0];
-    console.log(this.name, this.positionOld.map(function(item){return item * 100}));
+    //console.log(this.name, this.positionOld.map(function(item){return item * 100}));
 }
 
 // 1.1 Методы в прототип
