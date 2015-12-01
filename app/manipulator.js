@@ -9,6 +9,7 @@ function Manipulator(modules)
     var nodesNames = ["Node_0","Node_1","Node_2","Node_3","Node_4"];
     var targetPointName = ["TargetPoint"];
 
+    this.nodesNames = nodesNames;
     this.modules = modules;
     // Создадим хеш-таблицу(хеш/словарь/ассоцаативный массив, состоящий из
     // объектов соответствующих классов)
@@ -39,6 +40,19 @@ function Manipulator(modules)
 
     this.createObjectsByArray(nodesNames, "node");
     this.createObjectsByArray(targetPointName, "targetPoint");
+
+    var thisNodes = this.nodes;
+    console.dir(this.nodes);
+    var arrayOfInitialPosition = nodesNames.map(function (item,i) {
+        return thisNodes[item[positionOld]];
+    });
+    var _thisTargetPoint = this.targetPoint[names[i]][positionOld];
+    console.log(arrayOfInitialPosition);
+    FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint);
+//  for (var i = 0; i < this.nodesNames.length; i++){
+//      arrayOfInitialPosition[i] = this.nodes[this.nodesNames];
+//}
+//FABRIK.algorithm([this.nodes["Node_0"]["positionOld"], this.nodes["Node_1"]["positionOld"], this.nodes["Node_2"]["positionOld"], this.nodes["Node_3"]["positionOld"], this.nodes["Node_4"]["positionOld"]],this.targetPoint["targetPoint"]["positionOld"],100);
 }
 // Функция, реализующая алгоритм принимает массив координат точек узлов и массив координаты целевой точки
 //console.log("\n\n\n",[this.nodes["Node_0"]["positionOld"], this.nodes["Node_1"]["positionOld"], this.nodes["Node_2"]["positionOld"], this.nodes["Node_3"]["positionOld"], this.nodes["Node_4"]["positionOld"]],this.targetPoint["targetPoint"]["positionOld"],"\n\n\n")
@@ -51,27 +65,27 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
         switch (type){
             case "arm":
                 this.arms[names[i]] = new Arm(names[i],this.modules,this.AXIS,{x:90, y:90, z:180});
-                var arm = this.arms[names[i]];
-                arm.button_left =  document.getElementById(names[i]+"_left");
-                var _this = arm;
-                arm.button_left.addEventListener("click", function(){
-                    _this.rotate(_this.axis.Y, 18);
-                });
-
-                arm.button_right =  document.getElementById(names[i]+"_right");
-                arm.button_right.addEventListener("click", function(){
-                    _this.rotate(_this.axis.Y, -18)
-                });
-
-                arm.button_up =  document.getElementById(names[i]+"_up");
-                arm.button_up.addEventListener("click", function(){
-                    _this.rotate(_this.axis.Z, 18);
-                });
-
-                arm.button_down =  document.getElementById(names[i]+"_down");
-                arm.button_down.addEventListener("click", function(){
-                    _this.rotate(_this.axis.Z, -18)
-                });
+                //var arm = this.arms[names[i]];
+                //arm.button_left =  document.getElementById(names[i]+"_left");
+                //var _this = arm;
+                //arm.button_left.addEventListener("click", function(){
+                //    _this.rotate(_this.axis.Y, 18);
+                //});
+                //
+                //arm.button_right =  document.getElementById(names[i]+"_right");
+                //arm.button_right.addEventListener("click", function(){
+                //    _this.rotate(_this.axis.Y, -18)
+                //});
+                //
+                //arm.button_up =  document.getElementById(names[i]+"_up");
+                //arm.button_up.addEventListener("click", function(){
+                //    _this.rotate(_this.axis.Z, 18);
+                //});
+                //
+                //arm.button_down =  document.getElementById(names[i]+"_down");
+                //arm.button_down.addEventListener("click", function(){
+                //    _this.rotate(_this.axis.Z, -18)
+                //});
 
                 break;
             case "finger":
@@ -87,13 +101,3 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
         }
     }
 };
-var arrayOfInitialPosition = this.nodesNames.map(function (item) {
-    return this.nodes[names[i]][positionOld];
-});
-var _thisTargetPoint = this.targetPoint[names[i]][positionOld];
-console.log(arrayOfInitialPosition);
-FABRIK.prototype.algorithm(arrayOfInitialPosition,_thisTargetPoint);
-//  for (var i = 0; i < this.nodesNames.length; i++){
-//      arrayOfInitialPosition[i] = this.nodes[this.nodesNames];
-//}
-//FABRIK.algorithm([this.nodes["Node_0"]["positionOld"], this.nodes["Node_1"]["positionOld"], this.nodes["Node_2"]["positionOld"], this.nodes["Node_3"]["positionOld"], this.nodes["Node_4"]["positionOld"]],this.targetPoint["targetPoint"]["positionOld"],100);
