@@ -32,7 +32,3 @@ Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     return Math.acos(cosA);
 
 };
-// Тест
-var v1 = [4, 3, 4];
-var v2 = [4, 4, 4];
-console.log(angleBetweenTwoVectors(v1, v2) + " радиан");

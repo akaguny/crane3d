@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Created by alexey on 18.11.15.
  */
@@ -6,15 +7,14 @@ function FABRIK(){
 
 FABRIK.prototype.algorithm = function(arrayOfInitialPositions, TargetPoint, tol){
     // узел pn = [[x,y,z]]
-    var arrayOfInitialPositions,
+    var newArrayOfInitialPositions = [],
         distBeetweenJoints = [], // дистанция между сопряжёнными узлами (длины звеньев от узла до ближайшего узла)
         distBeetweenJointsAndTarget = [], // отношение дистанций от узла до узла и от узла до цели
-        TargetPoint, // цель, целевая точка t = [x,y,z]
+        TargetPoint = TargetPoint, // цель, целевая точка t = [x,y,z]
         distBeetweenStartPointAndTarget, // дистанция между стартовым узлом и целью, целевой точкой
         lambdaDistance = [], // отношение
-        tol, // максимально допустимое растояние между конечным узлом и целью
+        tol = tol, // максимально допустимое растояние между конечным узлом и целью
         sumOfInitialDistances = 0; // переменная для общей дистанции между узлами
-
     // Функция, вычисляющая расстояние между 2 точками
     // Расстояние между 2 точками выч. по формуле
     // (x1-x2)^2+(y1-y2)^2+(z1-z2)^2
@@ -66,15 +66,15 @@ FABRIK.prototype.algorithm = function(arrayOfInitialPositions, TargetPoint, tol)
                 // конец вычисления первого и второго слагаемых
                 for(var j = 0; j < firstStep.length; j++){
                     // новая позиция узлов для максимальной близости конечного к цели
-                    arrayOfInitialPositions[i+1][j] = firstStep[j] + secondStep[j];
+                    newArrayOfInitialPositions[i+1][j] = firstStep[j] + secondStep[j];
                 }
 
                 }
-            arrayOfInitialPositions.forEach(function(item, i){console.log("Новая позиция "+i+" = "+item);});
+            newArrayOfInitialPositions.forEach(function(item, i){console.log("Новая позиция "+i+" = "+item);});
         }
-        //else
-        //{
-        //    window.alert("Цель достижима!");
+        else
+        {
+        window.alert("Цель достижима!");
         //    // если цель достежима, то сохраним позицию нулевого узла
         //    var nullPoint = arrayOfInitialPositions[0];
         //    var DIFa = distBetweenPoints(arrayOfInitialPositions[arrayOfInitialPositions.length-1],TargetPoint);
@@ -142,7 +142,6 @@ FABRIK.prototype.algorithm = function(arrayOfInitialPositions, TargetPoint, tol)
         //        }
         //        DIFa = distBetweenPoints(arrayOfInitialPositions[arrayOfInitialPositions.length-1],TargetPoint);
         //
-        //    }
+        }
     };
 //newArrayOfInitialPositions
-console.log(FABRIK.vectorFromCoord([0,2,3],[0,4,6]));

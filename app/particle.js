@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Created by alexey on 14.10.15.
  */
@@ -17,6 +18,10 @@ function Particle(name,modules, AXISES, limit ){
     this.rotationLimit = limit;
     // вызываем хэшированную таблицу с осями
     this.axis = AXISES;
+    // позиция центральной точки объекта get_object_center(obj, calc_bs_center, destopt)
+    this.positionOld = this.modules.m_trans.get_object_center(this.element3D,0);
+    this.positionNew = [0,0,0];
+    console.log(this.name, this.positionOld.map(function(item){return item * 100}));
 }
 
 // 1.1 Методы в прототип
@@ -63,4 +68,3 @@ Particle.prototype.rotate = function(axises, deg)
         window.alert(this.name + ' не может быть повёрнут на ' +deg)
     }
 };
-

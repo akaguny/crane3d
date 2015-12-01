@@ -5,14 +5,20 @@
     <title>Интерактивное приложение - манипулятор</title>
     <!-- Загружаем минифицированный движок -->
     <script src="lib/b4w.min.js"></script>
+    <!-- Подгружаем класс vector.js -->
+    <script src="app/vector.js"></script>
+    <!-- Подгружаем класс fabrik.js -->
+    <script src="app/fabrik.js"></script>
     <!-- Подгружаем класс particle.js -->
     <script src="app/particle.js"></script>
     <!-- Подгружаем класс arm.js -->
     <script src="app/arm.js"></script>
     <!-- Подгружаем класс finger.js -->
     <script src="app/finger.js"></script>
-    <!-- Подгружаем класс hand.js -->
-    <script src="app/hand.js"></script>
+    <!-- Подгружаем класс nodes.js -->
+    <script src="app/nodes.js"></script>
+    <!-- Подгружаем класс targetPoint.js -->
+    <script src="app/targetpoint.js"></script>
     <!-- Подгружаем класс manipulator.js -->
     <script src="app/manipulator.js"></script>
     <!-- Загружаем наш скрипт -->
@@ -37,6 +43,8 @@
     <div id="content" class="flex flex-wrap-phone">
         <div id="canvas3d" class="w40 w100-phone h500px-min"></div>
         <div id="ui-div" class="w60 w100-phone pad10 t-black bg-gray100 h300px-min">
+            <p class="t-gray500 bold upper t14px"></p>
+            <button id="position1" class="button">Занять исходную позицию буквой Г</button>
             <p class="t-gray500 bold upper t14px">Arm_0</p>
             <button id="Arm_0_right" class="button">Arm_0_right</button>
             <button id="Arm_0_left" class="button">Arm_0_left</button>

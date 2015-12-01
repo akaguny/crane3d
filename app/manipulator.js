@@ -4,39 +4,47 @@
 function Manipulator(modules)
 {
     this.AXIS ={X:[1, 0, 0],Y:[0, 1, 0],Z:[0, 0, 1]};
-    var armsNames = ["Arm_0","Arm_1","Arm_2","Arm_3"];
-    this.fingersNames = ["finger_0","finger_1","finger_2","finger_3"];
-    var handNames = ["Hand_0"];
-    //var rotationAreaNames = ["rotationArea_0"];
+    var armsNames = ["Arm_0","Arm_1","Arm_2"];
+    var fingersNames = ["Finger_0","Finger_1","Finger_2","Finger_3"];
+    var nodesNames = ["Node_0","Node_1","Node_2","Node_3","Node_4"];
+    var targetPointName = ["TargetPoint"];
 
     this.modules = modules;
-    //this.scene = this.modules.m_scenes.get_active_scene;
     // Создадим хеш-таблицу(хеш/словарь/ассоцаативный массив, состоящий из
     // объектов соответствующих классов)
     this.arms = {};
     this.fingers = {};
-    this.hand = {};
-    //this.rotationAreaNames = {};
+    this.nodes = {};
+    this.targetPoint = {};
+
+    //console.log(this.targetPoint);
+    //console.log(this.arms);
+    //console.log("nodes");
+    //console.log(this.nodes);
 
     // Вызываем функцию для заполнения объекта arm
     // Первый аргумент - массив имён, второй - тип/имя объекта
     this.createObjectsByArray(armsNames, "arm");
-    console.log(this.arms);
 
     // После формирования объекта arms выставим начальную позицию манипулятора, повернув Arm_2 и ARM_3 на 90 градусов
-    this.arms.Arm_2.rotate(this.AXIS.Z, 60);
-    this.arms.Arm_3.rotate(this.AXIS.Z, 120);
+    //this.arms.Arm_1.rotate(this.AXIS.Z, 60);
+    //this.arms.Arm_2.rotate(this.AXIS.Z, 60);
 
-    this.createObjectsByArray(handNames, "hand");
-    console.log(this.hand);
+    this.createObjectsByArray(fingersNames, "finger");
+    // После формирования раскроем клешню
+    //this.fingers.Finger_0.rotateFinger(this.AXIS.Y,45);
+    //this.fingers.Finger_1.rotateFinger(this.AXIS.Y,45);
+    //this.fingers.Finger_2.rotateFinger(this.AXIS.Y,45);
+    //this.fingers.Finger_3.rotateFinger(this.AXIS.Y,45);
 
-    this.createObjectsByArray(this.fingersNames, "finger");
-    console.log(this.fingers);
+    this.createObjectsByArray(nodesNames, "node");
+    this.createObjectsByArray(targetPointName, "targetPoint");
 }
-
-Manipulator.prototype.clenchFingers = function (){
-
-};
+// Функция, реализующая алгоритм принимает массив координат точек узлов и массив координаты целевой точки
+//console.log("\n\n\n",[this.nodes["Node_0"]["positionOld"], this.nodes["Node_1"]["positionOld"], this.nodes["Node_2"]["positionOld"], this.nodes["Node_3"]["positionOld"], this.nodes["Node_4"]["positionOld"]],this.targetPoint["targetPoint"]["positionOld"],"\n\n\n")
+//Manipulator.prototype.clenchFingers = function (){
+//
+//};
 
 Manipulator.prototype.createObjectsByArray = function (names, type){
     for (var i = 0; i < names.length; i++){
@@ -44,12 +52,10 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
             case "arm":
                 this.arms[names[i]] = new Arm(names[i],this.modules,this.AXIS,{x:90, y:90, z:180});
                 var arm = this.arms[names[i]];
-                console.log(arm);
                 arm.button_left =  document.getElementById(names[i]+"_left");
                 var _this = arm;
                 arm.button_left.addEventListener("click", function(){
                     _this.rotate(_this.axis.Y, 18);
-                    console.log(_this);
                 });
 
                 arm.button_right =  document.getElementById(names[i]+"_right");
@@ -60,7 +66,6 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
                 arm.button_up =  document.getElementById(names[i]+"_up");
                 arm.button_up.addEventListener("click", function(){
                     _this.rotate(_this.axis.Z, 18);
-                    console.log(_this);
                 });
 
                 arm.button_down =  document.getElementById(names[i]+"_down");
@@ -69,44 +74,26 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
                 });
 
                 break;
-
-            case "hand":
-                this.hand[names[i]] = new Hand(names[i],this.modules,this.AXIS,{x:90, y:90, z:5});
-                var hand = this.hand[names[i]];
-                var _this = hand;
-                console.log(_this);
-
-                _this.button_left =  document.getElementById(names[i]+"_left");
-                _this.button_left.addEventListener("click", function(){
-                    _this.rotate(_this.axis.X, 18)
-                });
-
-                _this.button_right =  document.getElementById(names[i]+"_right");
-                _this.button_right.addEventListener("click", function(){
-                    _this.rotate(_this.axis.Y, -18)
-                });
-                break;
-            //case "rotationArea":
-            //    //this.rotationAreaNames[names[i]] = new Arm(names[i],this.modules,this.AXIS);
-            //    break;
             case "finger":
 
-                this.fingers[names[i]] = new Finger(names[i],this.modules,this.AXIS,{x:0, y:0, z:90},i);
-                    //// если чётный
-                    //if (!(i % 2)){
-                    //    _this.button_clench = document.getElementById("finger"+"_clench");
-                    //    _this.button_clench.addEventListener("click", function () {
-                    //        _this.rotate(_this.axis.Z, 18);
-                    //    });
-                    //}
-                    //else{
-                    //    _this.button_clench = document.getElementById("finger"+"_unclench");
-                    //    _this.button_clench.addEventListener("click", function () {
-                    //        _this.rotate(_this.axis.Z, -18);
-                    //    });
-                    //}
+                this.fingers[names[i]] = new Finger(names[i],this.modules,this.AXIS,{x:0, y:45, z:90},i);
+                break;
+            case "node":
+                this.nodes[names[i]] = new Nodes(names[i],this.modules,this.AXIS,{x:999, y:999, z:999});
+                break;
+            case "targetPoint":
+                this.targetPoint[[i]] = new TargetPoint(names[i],this.modules,this.AXIS,{x:999, y:999, z:999});
                 break;
         }
     }
 };
-
+var arrayOfInitialPosition = this.nodesNames.map(function (item) {
+    return this.nodes[names[i]][positionOld];
+});
+var _thisTargetPoint = this.targetPoint[names[i]][positionOld];
+console.log(arrayOfInitialPosition);
+FABRIK.prototype.algorithm(arrayOfInitialPosition,_thisTargetPoint);
+//  for (var i = 0; i < this.nodesNames.length; i++){
+//      arrayOfInitialPosition[i] = this.nodes[this.nodesNames];
+//}
+//FABRIK.algorithm([this.nodes["Node_0"]["positionOld"], this.nodes["Node_1"]["positionOld"], this.nodes["Node_2"]["positionOld"], this.nodes["Node_3"]["positionOld"], this.nodes["Node_4"]["positionOld"]],this.targetPoint["targetPoint"]["positionOld"],100);
