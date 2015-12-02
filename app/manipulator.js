@@ -41,18 +41,23 @@ function Manipulator(modules)
     this.createObjectsByArray(nodesNames, "node");
     this.createObjectsByArray(targetPointName, "targetPoint");
 
+    // Подготовим входные данные, для алгоритма
+    // (массивы координат узлов и массив координаты целевой точки)
     var thisNodes = this.nodes;
-    console.dir(this.nodes);
     var arrayOfInitialPosition = nodesNames.map(function (item,i) {
-        return thisNodes[item[positionOld]];
+        return thisNodes[item].positionOld;
     });
-    var _thisTargetPoint = this.targetPoint[names[i]][positionOld];
-    console.log(arrayOfInitialPosition);
-    FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint);
-//  for (var i = 0; i < this.nodesNames.length; i++){
-//      arrayOfInitialPosition[i] = this.nodes[this.nodesNames];
-//}
-//FABRIK.algorithm([this.nodes["Node_0"]["positionOld"], this.nodes["Node_1"]["positionOld"], this.nodes["Node_2"]["positionOld"], this.nodes["Node_3"]["positionOld"], this.nodes["Node_4"]["positionOld"]],this.targetPoint["targetPoint"]["positionOld"],100);
+    var _thisTargetPoint = this.targetPoint[0].positionOld;
+    // Инициализируем объект для того, что-бы воспользоваться его методами.
+    this.FABRIK = new FABRIK();
+    // передадим в фукнцию массивы координат узлов и массив координаты целевой точки и получим массив новых значений
+    var newArrayOfInitialPosition = this.FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint);
+    nodesNames.forEach(function (item,i) {
+        thisNodes[item].positionNew = newArrayOfInitialPosition[i];
+        console.log(item,thisNodes[item].positionNew);
+        thisNodes[item].move();
+    });
+
 }
 // Функция, реализующая алгоритм принимает массив координат точек узлов и массив координаты целевой точки
 //console.log("\n\n\n",[this.nodes["Node_0"]["positionOld"], this.nodes["Node_1"]["positionOld"], this.nodes["Node_2"]["positionOld"], this.nodes["Node_3"]["positionOld"], this.nodes["Node_4"]["positionOld"]],this.targetPoint["targetPoint"]["positionOld"],"\n\n\n")
@@ -93,7 +98,7 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
                 this.fingers[names[i]] = new Finger(names[i],this.modules,this.AXIS,{x:0, y:45, z:90},i);
                 break;
             case "node":
-                this.nodes[names[i]] = new Nodes(names[i],this.modules,this.AXIS,{x:999, y:999, z:999});
+                this.nodes[names[i]] = new Nodes(names[i],this.modules);
                 break;
             case "targetPoint":
                 this.targetPoint[[i]] = new TargetPoint(names[i],this.modules,this.AXIS,{x:999, y:999, z:999});

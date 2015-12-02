@@ -21,7 +21,6 @@ function Particle(name,modules, AXISES, limit ){
     // позиция центральной точки объекта get_object_center(obj, calc_bs_center, destopt)
     this.positionOld = this.modules.m_trans.get_object_center(this.element3D,0);
     this.positionNew = [0,0,0];
-    //console.log(this.name, this.positionOld.map(function(item){return item * 100}));
 }
 
 // 1.1 Методы в прототип
@@ -67,4 +66,9 @@ Particle.prototype.rotate = function(axises, deg)
     else{
         window.alert(this.name + ' не может быть повёрнут на ' +deg)
     }
+};
+// функция перемещения объекта, перемещает со старой позиции на новую
+Particle.prototype.move = function(){
+    this.modules.m_trans.set_translation(this.element3D,this.positionNew);
+    this.positionOld = this.modules.m_trans.get_object_center(this.element3D,0);
 };
