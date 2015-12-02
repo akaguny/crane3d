@@ -1,5 +1,7 @@
 "use strict";
 
+
+
 b4w.register("crane", function(exports, require) {
     var m_app = require("app");
     var m_data = require("data");
