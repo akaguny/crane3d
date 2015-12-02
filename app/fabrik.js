@@ -8,8 +8,9 @@ function FABRIK(){
 FABRIK.prototype.algorithm = function(arrayOfInitialPositions, TargetPoint, tol){
     // Инициализация переменных
     // узел pn = [[x,y,z]]
-    var //newArrayOfInitialPositions = arrayOfInitialPositions,
-        newArrayOfInitialPositions = arrayOfInitialPositions.map(function (item,i) {return item[i] = 0.0}), // обнулим входной массив
+    var newArrayOfInitialPositions = arrayOfInitialPositions,
+        // newArrayOfInitialPositions = [new Float32Array(arrayOfInitialPositions.length)[new Float32Array(TargetPoint.length)]],
+        // newArrayOfInitialPositions = new Float32Array(arrayOfInitialPositions.length),
         distBeetweenJoints = [], // дистанция между сопряжёнными узлами (длины звеньев от узла до ближайшего узла)
         distBeetweenJointsAndTarget = [], // отношение дистанций от узла до узла и от узла до цели
         TargetPoint = TargetPoint, // цель, целевая точка t = [x,y,z]
@@ -70,7 +71,10 @@ FABRIK.prototype.algorithm = function(arrayOfInitialPositions, TargetPoint, tol)
             for(var j = 0; j < firstStep.length; j++){
                 // новая позиция узлов для максимальной близости конечного к цели
                 console.log(firstStep[j] + secondStep[j]);
-                newArrayOfInitialPositions[i+1][j] = firstStep[j] + secondStep[j];
+                var sumOfFirstStepAndSecond = firstStep[j] + secondStep[j];
+                console.log("Интерация №",j,"cтарая координата",newArrayOfInitialPositions[i+1]);
+                newArrayOfInitialPositions[i+1][j] = sumOfFirstStepAndSecond;
+                console.log("Интерация №",j,"yовая координата",newArrayOfInitialPositions[i+1]);
             }
         }
         arrayOfInitialPositions.forEach(function(item, i){console.log("Старая позиция Node_"+i+" = "
