@@ -52,10 +52,12 @@ function Manipulator(modules)
     this.FABRIK = new FABRIK();
     // передадим в фукнцию массивы координат узлов и массив координаты целевой точки и получим массив новых значений
     var newArrayOfInitialPosition = this.FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint);
+    console.log("newArrayOfInitialPosition = FABRIK.algorithm ",newArrayOfInitialPosition);
     nodesNames.forEach(function (item,i) {
         thisNodes[item].positionNew = newArrayOfInitialPosition[i];
         console.log(item,thisNodes[item].positionNew);
         thisNodes[item].move();
+        console.log(item,thisNodes[item].positionOld);
     });
 
 }
