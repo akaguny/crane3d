@@ -69,12 +69,14 @@ Particle.prototype.rotate = function(axises, deg)
 };
 // функция перемещения объекта, перемещает со старой позиции на новую
 Particle.prototype.move = function(){
-    console.log(this.positionNew);
+    console.log("positionNew",this.positionNew);
+    console.log("positionOld",this.positionOld);
     var newPositionVec3 = new Float32Array();
-    newPositionVec3 = this.modules.m_vec3.set(this.positionNew[0],this.positionNew[1],this.positionNew[2]);
-    var _thisObject3D = this.element3D;
     console.log("newPositionVec3",newPositionVec3);
-    console.log("_thisObject3D",_thisObject3D);
+    newPositionVec3 = Vector.vectorFromCoord(this.positionNew,this.positionOld);
+    console.log("newPositionVec3",newPositionVec3);
+    var _thisObject3D = this.element3D;
     this.modules.m_trans.set_translation_v(_thisObject3D,newPositionVec3);
     this.positionOld = this.modules.m_trans.get_object_center(this.element3D,0);
+    console.log("после перемещения",this.positionOld);
 };

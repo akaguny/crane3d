@@ -5,7 +5,7 @@
 function FABRIK(){
 }
 
-FABRIK.prototype.algorithm = function(arrayOfInitialPositions, TargetPoint, tol){
+FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol){
     // Инициализация переменных
     // узел pn = [[x,y,z]]
     var newArrayOfInitialPositions = arrayOfInitialPositions,
@@ -81,6 +81,8 @@ FABRIK.prototype.algorithm = function(arrayOfInitialPositions, TargetPoint, tol)
             ,item);});
         newArrayOfInitialPositions.forEach(function(item, i){console.log("Новая позиция Node_"+i+" = "
             ,item);});
+        // результат работы алгоритма - массив новых значений координат, алгоритм не выполняет сам никаких перестановок, только просчёт
+        return newArrayOfInitialPositions;
     }
     else
     {
@@ -153,7 +155,5 @@ FABRIK.prototype.algorithm = function(arrayOfInitialPositions, TargetPoint, tol)
         //        DIFa = distBetweenPoints(arrayOfInitialPositions[arrayOfInitialPositions.length-1],TargetPoint);
         //
     }
-    // результат работы алгоритма - массив новых значений координат, алгоритм не выполняет сам никаких перестановок, только просчёт
-return newArrayOfInitialPositions;
 };
 //newArrayOfInitialPositions
