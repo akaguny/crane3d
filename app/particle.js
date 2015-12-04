@@ -71,12 +71,8 @@ Particle.prototype.rotate = function(axises, deg)
 Particle.prototype.move = function(){
     console.log("positionNew",this.positionNew);
     console.log("positionOld",this.positionOld);
-    var newPositionVec3 = new Float32Array();
-    console.log("newPositionVec3",newPositionVec3);
-    newPositionVec3 = Vector.vectorFromCoord(this.positionNew,this.positionOld);
-    console.log("newPositionVec3",newPositionVec3);
     var _thisObject3D = this.element3D;
-    this.modules.m_trans.set_translation_v(_thisObject3D,newPositionVec3);
+    this.modules.m_trans.set_translation(_thisObject3D,this.positionNew[0],this.positionNew[1],this.positionNew[2]);
     this.positionOld = this.modules.m_trans.get_object_center(this.element3D,0);
     console.log("после перемещения",this.positionOld);
 };

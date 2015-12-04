@@ -51,7 +51,7 @@ function Manipulator(modules)
 
     var newArrayOfInitialPosition = FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint);
 
-    //newArrayOfInitialPosition =
+    //newArrayOfInitialPosition[2] = [3.514451503753662, 0.23370684683322906, -0.002778708701953292];
     //    [[0.014770000241696835, 0.18672999739646012, -0.007819999940693378],
     //    [ 1.014678955078125, 0.2001519501209459, -0.006379630882292966 ],
     //        [ 2.014587879180908, 0.2135739028453027, -0.004939262289553881 ],
