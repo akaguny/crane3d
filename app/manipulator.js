@@ -49,7 +49,7 @@ function Manipulator(modules)
     });
     var _thisTargetPoint = this.targetPoint[0].positionOld;
 
-    var newArrayOfInitialPosition = FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint, 0.000001);
+    var newArrayOfInitialPosition = FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint, 0.1);
 
     nodesNames.forEach(function (item,i) {
         thisNodes[item].positionNew = newArrayOfInitialPosition[i];
