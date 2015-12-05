@@ -86,7 +86,7 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol){
         var nullPoint = arrayOfInitialPositions[0];
         var DIFa = distBetweenPoints(arrayOfInitialPositions[arrayOfInitialPositions.length - 1], TargetPoint);
         console.log("DIFa = " + DIFa);
-        while (DIFa > tol) {
+            do{
             // Этап 1: прямое следование
             // ставим конечный узел arrayOfInitialPositions[arrayOfInitialPositions.length] на позицию цели
             arrayOfInitialPositions[arrayOfInitialPositions.length - 1] = TargetPoint;
@@ -109,6 +109,7 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol){
                     arrayOfInitialPositions[i][j] = sumOfFirstStepAndSecond;
                 }
             }
+
             // Этап 2: обратное следование
             // Восстанавливаем корневому элементу его позицию
             arrayOfInitialPositions[0] = nullPoint;
@@ -135,7 +136,7 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol){
             //    }
             //}
             DIFa = distBetweenPoints(arrayOfInitialPositions[arrayOfInitialPositions.length - 1], TargetPoint);
-        }
+        } while (DIFa > tol);
         return arrayOfInitialPositions;
     }
 
