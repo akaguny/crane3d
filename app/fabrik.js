@@ -34,7 +34,7 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol){
     // метод массива .length возвращает количество его элементов
     for(var i = 0, len = arrayOfInitialPositions.length; i < len-1; i++){
         distBeetweenJoints[i] = distBetweenPoints(arrayOfInitialPositions[i], arrayOfInitialPositions[i+1]);
-        console.log("Расстояние между точками "+i+" и "+(i+1)+" = "+distBeetweenJoints[i]);
+        console.log("Расстояние между точками ",i," и ",(i+1)," = ",distBeetweenJoints[i]);
     }
     // расстояние между стартовым узлом и целевой точкой
     distBeetweenStartPointAndTarget = distBetweenPoints(arrayOfInitialPositions[0], TargetPoint);
@@ -95,11 +95,10 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol){
                 distBeetweenJointsAndTarget[i] = distBetweenPoints(arrayOfInitialPositions[i+1],arrayOfInitialPositions[i]);
                 // Отношение дистации между сопряжёнными узлами и дистанацией между узлом и целью
                 lambdaDistance[i] = distBeetweenJoints[i] / distBeetweenJointsAndTarget[i];
-
                 // начало вычисления первого и второго слагаемых
                 // для удобства формула была разделдена на 2 этапа - функции:
                 // вычисление первого слагаемого и второго
-                var firstStep = arrayOfInitialPositions[i].map(function(item,j,array){ return (array[i+1] * (1 -lambdaDistance[i])) });
+                var firstStep = arrayOfInitialPositions[i].map(function(item,j,array){ return (array[i+1][j] * (1 -lambdaDistance[i])) });
                 var secondStep = arrayOfInitialPositions[i].map(function(item){ return item * lambdaDistance[i] });
                 // конец вычисления первого и второго слагаемых
                 for(var j = 0; j < firstStep.length; j++){
@@ -115,6 +114,7 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol){
             for (var i = 0, len = arrayOfInitialPositions.length; i < (len - 1); i++) {
                 // Найдем дистанцию r[i] между целью t и узлом p[i]
                 distBeetweenJointsAndTarget[i] = distBetweenPoints(arrayOfInitialPositions[i+1],arrayOfInitialPositions[i]);
+                console.log(i,distBeetweenJointsAndTarget[i],"\n");
                 // Отношение дистации между сопряжёнными узлами и дистанацией между узлом и целью
                 lambdaDistance[i] = distBeetweenJoints[i] / distBeetweenJointsAndTarget[i];
 

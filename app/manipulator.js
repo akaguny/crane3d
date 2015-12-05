@@ -49,21 +49,11 @@ function Manipulator(modules)
     });
     var _thisTargetPoint = this.targetPoint[0].positionOld;
 
-    var newArrayOfInitialPosition = FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint);
+    var newArrayOfInitialPosition = FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint, 0.000001);
 
-    //newArrayOfInitialPosition[2] = [3.514451503753662, 0.23370684683322906, -0.002778708701953292];
-    //    [[0.014770000241696835, 0.18672999739646012, -0.007819999940693378],
-    //    [ 1.014678955078125, 0.2001519501209459, -0.006379630882292966 ],
-    //        [ 2.014587879180908, 0.2135739028453027, -0.004939262289553881 ],
-    //        [ 3.0144968032836914, 0.22699587047100067, -0.003498893231153488 ],
-    //        [ 3.514451503753662, 0.23370684683322006, -0.002778708701953292 ]
-    //    ]
-    //;
     nodesNames.forEach(function (item,i) {
         thisNodes[item].positionNew = newArrayOfInitialPosition[i];
-        //console.log(item,thisNodes[item].positionNew);
         thisNodes[item].move();
-        //console.log(item,thisNodes[item].positionOld);
     });
 
 
