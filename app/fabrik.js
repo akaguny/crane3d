@@ -129,8 +129,8 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol) {
                 // Найдем дистанцию r[i] между целью t и узлом p[i]
                 distBeetweenJointsAndTarget[i] = distBetweenPoints(arrayOfInitialPositions[i], arrayOfInitialPositions[i + 1]);
                 //    console.log(i,distBeetweenJointsAndTarget[i],"\n");
-                //    // Отношение дистации между сопряжёнными узлами и дистанацией между узлом и целью
-                //    lambdaDistance[i] = distBeetweenJoints[i] / distBeetweenJointsAndTarget[i];
+                    // Отношение дистации между сопряжёнными узлами и дистанацией между узлом и целью
+                    lambdaDistance[i] = distBeetweenJoints[i] / distBeetweenJointsAndTarget[i];
                 //
                 //    // начало вычисления первого и второго слагаемых
                 //    // для удобства формула была разделдена на 2 этапа - функции:
