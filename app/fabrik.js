@@ -90,6 +90,7 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol) {
         return newArrayOfInitialPositions;
     }
     else {
+        var count = 0;
         window.alert("Цель достижима!");
         // если цель достижима, то сохраним позицию нулевого узла
         var nullPoint = arrayOfInitialPositions[0];
@@ -125,36 +126,36 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol) {
             // Этап 2: обратное следование
             // Восстанавливаем корневому элементу его позицию
             arrayOfInitialPositions[0] = nullPoint;
-            for (var i = 0, len = arrayOfInitialPositions.length; i < (len - 2); i++) {
+            console.dir(arrayOfInitialPositions);
+            for (var i = 0, len = arrayOfInitialPositions.length - 1; i < (len - 1); i++) {
                 // Найдем дистанцию r[i] между целью t и узлом p[i]
-                distBeetweenJointsAndTarget[i] = distBetweenPoints(arrayOfInitialPositions[i], arrayOfInitialPositions[i + 1]);
-                //    console.log(i,distBeetweenJointsAndTarget[i],"\n");
-                    // Отношение дистации между сопряжёнными узлами и дистанацией между узлом и целью
+                distBeetweenJointsAndTarget[i] = distBetweenPoints(arrayOfInitialPositions[i + 1], arrayOfInitialPositions[i]);
+                    //console.log(i,distBeetweenJointsAndTarget[i],"\n");
+            //        // Отношение дистации между сопряжёнными узлами и дистанацией между узлом и целью
                     lambdaDistance[i] = distBeetweenJoints[i] / distBeetweenJointsAndTarget[i];
-                //
-                //    // начало вычисления первого и второго слагаемых
-                //    // для удобства формула была разделдена на 2 этапа - функции:
-                //    // вычисление первого слагаемого и второго
-                //    var firstStep = arrayOfInitialPositions[i].map(function(item){ return (item * (1 -lambdaDistance[i])) });
-                //    console.log(firstStep);
-                //    var secondStep = TargetPoint.map(function(item){ return item * lambdaDistance[i] });
-                //    console.log(secondStep);
-                //    // конец вычисления первого и второго слагаемых
-                //    for(var j = 0; j < firstStep.length; j++){
-                //        // новая позиция узлов для максимальной близости конечного к цели
-                //        console.log(firstStep[j] + secondStep[j]);
-                //        var sumOfFirstStepAndSecond = firstStep[j] + secondStep[j];
-                //        arrayOfInitialPositions[i+1][j] = sumOfFirstStepAndSecond;
-                //    }
-                //}
+
+                    // начало вычисления первого и второго слагаемых
+                    // для удобства формула была разделдена на 2 этапа - функции:
+                    // вычисление первого слагаемого и второго
+                    var firstStep = arrayOfInitialPositions[i].map(function(item){ return (item * (1 -lambdaDistance[i])) });
+                    console.log(firstStep);
+                    var secondStep = arrayOfInitialPositions[i].map(function(item,j,arr){ return (arrayOfInitialPositions[(i + 1)][j] * lambdaDistance[i]) });
+                    console.log(secondStep);
+                    // конец вычисления первого и второго слагаемых
+                    for(var j = 0; j < firstStep.length; j++){
+                        // новая позиция узлов для максимальной близости конечного к цели
+                        console.log("Привет!, это сумма firstStep и secondStep",firstStep[j] + secondStep[j]);
+                        //var sumOfFirstStepAndSecond = firstStep[j] + secondStep[j];
+                        arrayOfInitialPositions[i+1][j] = sumOfFirstStepAndSecond;
+                    }
+                }
+            console.log("интерация",count++);
                 DIFa = distBetweenPoints(arrayOfInitialPositions[arrayOfInitialPositions.length - 1], TargetPoint);
-            }
+            //console.log(DIFa);
         }
             while (DIFa > tol);
-            return arrayOfInitialPositions;
-
-
     }
+            return arrayOfInitialPositions;
 
 };
 //newArrayOfInitialPositions
