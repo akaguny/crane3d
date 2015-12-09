@@ -56,10 +56,13 @@ function Manipulator(modules)
         thisNodes[item].move();
     });
     // тестовые данные вычисления углов
-    for (var i = 0; i<newArrayOfInitialPosition.length - 1; i++)
+    for (var i = 0; i<newArrayOfInitialPosition.length - 2; i++)
     {
-    console.log("Угол между",i,"и",i+1," = ",Vector.angleBetweenTwoVectors(newArrayOfInitialPosition[i],newArrayOfInitialPosition[i+1],"vertical"),"angle");
-    console.log("Угол между",i,"и",i+1," = ",Vector.angleBetweenTwoVectors(newArrayOfInitialPosition[i],newArrayOfInitialPosition[i+1],"horizontal"),"angle");
+        var thisArm = this.arms[armsNames[i]];
+        console.log(thisArm);
+    console.log("Угол между",i,"и",i+1," = ",Vector.angleBetweenTwoVectors(newArrayOfInitialPosition[i],arrayOfInitialPosition[i],"vertical"),"angle");
+    console.log("Угол между",i,"и",i+1," = ",Vector.angleBetweenTwoVectors(newArrayOfInitialPosition[i],arrayOfInitialPosition[i],"horizontal"),"angle");
+        thisArm.rotate(this.AXIS.X,(Vector.angleBetweenTwoVectors(newArrayOfInitialPosition[i],arrayOfInitialPosition[i],"horizontal"))*Math.PI);
     }
 
 }
@@ -73,7 +76,7 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
     for (var i = 0; i < names.length; i++){
         switch (type){
             case "arm":
-                this.arms[names[i]] = new Arm(names[i],this.modules,this.AXIS,{x:90, y:90, z:180});
+                this.arms[names[i]] = new Arm(names[i],this.modules,this.AXIS,{x:9999, y:9999, z:9999});
                 //var arm = this.arms[names[i]];
                 //arm.button_left =  document.getElementById(names[i]+"_left");
                 //var _this = arm;
