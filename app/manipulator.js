@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Created by alexey on 12.10.15.
  */
@@ -6,7 +7,7 @@ function Manipulator(modules)
     this.AXIS ={X:[1, 0, 0],Y:[0, 1, 0],Z:[0, 0, 1]};
     var armsNames = ["Arm_0","Arm_1","Arm_2"];
     var fingersNames = ["Finger_0","Finger_1","Finger_2","Finger_3"];
-    var nodesNames = ["Node_0","Node_1","Node_2","Node_3","Node_4"];
+    var nodesNames = ["Node_0","Node_1","Node_2","Node_3"];
     var targetPointName = ["TargetPoint"];
 
     this.nodesNames = nodesNames;
@@ -47,23 +48,66 @@ function Manipulator(modules)
     var arrayOfInitialPosition = nodesNames.map(function (item,i) {
         return thisNodes[item].defaultPosition;
     });
+    console.dir(arrayOfInitialPosition);
     var _thisTargetPoint = this.targetPoint[0].defaultPosition;
 
     var newArrayOfInitialPosition = FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint, 0.1);
-
     nodesNames.forEach(function (item,i) {
         thisNodes[item].solvedPosition = newArrayOfInitialPosition[i];
         thisNodes[item].move();
     });
+       for(var i = 0, len = armsNames.length; i < len; i++) {
+           var vector1, vector2 = new Float32Array();
+           vector1 = Vector.vectorFromCoord(newArrayOfInitialPosition[i],newArrayOfInitialPosition[i+1]);
+           vector2 = Vector.vectorFromCoord(newArrayOfInitialPosition[i+1],newArrayOfInitialPosition[i+2]);
+           console.log(vector1,vector2);
+           thisNodes[nodesNames[i]].solvedRotation = Vector.angleBetweenTwoVectors(vector1,vector2);
+           console.dir(thisNodes[nodesNames[i]].solvedRotation);
+        }
+    //for(var i = 1, len = nodesNames.length; i < len - 1; i++) {
+    //    // в зависимости от плоскости убираем лишнюю часть вектора
+    //    var arrayXY = newArrayOfInitialPosition[i].map(function(item,j){
+    //        if (j == 2){
+    //            return 0
+    //        }
+    //        else {
+    //            return item
+    //        }
+    //    });
+    //    var arrayYZ = newArrayOfInitialPosition[i].map(function(item,j){
+    //        if (j == 2){
+    //            return 0
+    //        }
+    //        else {
+    //            return item
+    //        }
+    //    });
+    //    var arrayXZ = newArrayOfInitialPosition[i].map(function(item,j){
+    //        if (j == 2){
+    //            return 0
+    //        }
+    //        else {
+    //            return item
+    //        }
+    //    });
+    //    var set_solvedRotation = function (array){
+    //        var vector = new Vector3(array[1],array[2],array[3]);
+    //       return
+    //
+    //    };
+    //    thisNodes[nodesNames[i]].solvedRotation.horizontal = set_solvedRotation(arrayXY);
+    //    thisNodes[nodesNames[i]].solvedRotation.vertical = set_solvedRotation(arrayYZ);
+    //    thisNodes[nodesNames[i]].solvedRotation.circular = set_solvedRotation(arrayXZ);
+    //}
     // тестовые данные вычисления углов
-    for (var i = 0; i<newArrayOfInitialPosition.length - 2; i++)
-    {
-        var thisArm = this.arms[armsNames[i]];
-        console.log(thisArm);
-    console.log("Угол между",i,"и",i+1," = ",Vector.angleBetweenTwoVectors(newArrayOfInitialPosition[i],arrayOfInitialPosition[i],"vertical"),"angle");
-    console.log("Угол между",i,"и",i+1," = ",Vector.angleBetweenTwoVectors(newArrayOfInitialPosition[i],arrayOfInitialPosition[i],"horizontal"),"angle");
-        thisArm.rotate(this.AXIS.X,(Vector.angleBetweenTwoVectors(newArrayOfInitialPosition[i],arrayOfInitialPosition[i],"horizontal"))*Math.PI);
-    }
+    //for (var i = 0; i<newArrayOfInitialPosition.length - 2; i++)
+    //{
+    //    var thisArm = this.arms[armsNames[i]];
+    //    console.log(thisArm);
+    //console.log("Угол между",i,"и",i+1," = ",Vector.angleBetweenTwoVectors(newArrayOfInitialPosition[i],arrayOfInitialPosition[i],"vertical"),"angle");
+    //console.log("Угол между",i,"и",i+1," = ",Vector.angleBetweenTwoVectors(newArrayOfInitialPosition[i],arrayOfInitialPosition[i],"horizontal"),"angle");
+    //    thisArm.rotate(this.AXIS.X,(Vector.angleBetweenTwoVectors(newArrayOfInitialPosition[i],arrayOfInitialPosition[i],"horizontal"))*Math.PI);
+    //}
 
 }
 // Функция, реализующая алгоритм принимает массив координат точек узлов и массив координаты целевой точки

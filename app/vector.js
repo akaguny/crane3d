@@ -4,21 +4,14 @@ function Vector(){
 }
 // Функция вычисления вектора (его координат)
 Vector.vectorFromCoord = function(coord1, coord2) {
-    var vector = coord1.map(function(item,i){return coord2[i]-item});
-    return vector
+    return coord1.map(function(item,i){return coord2[i]-item});
 };
 
 // Функция для вычисления угла между 2 векторами
-Vector.angleBetweenTwoVectors = function(vector1, vector2,degreeOfFreedom) {
-    switch (degreeOfFreedom){
-        case "horizontal":
-            Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]]);
-            break;
-        case "vertical":
-            Vector.angleBetweenTwoVectors([vector1[1],vector1[2]],[vector2[1],vector2[2]]);
-            break;
-    }
+Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     // скалярное произведение векторов
+    var vector1 = vector1;
+    var vector2 = vector2;
     var scalMultVectors = vector1.reduce(function(sum, current, i) {
         return sum + (current * vector2[i])
     }, 0);
