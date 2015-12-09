@@ -3,15 +3,17 @@ function Vector(){
 
 }
 // Функция вычисления вектора (его координат)
-Vector.vectorFromCoord = function(coord1, coord2) {
-    return coord1.map(function(item,i){return coord2[i]-item});
+Vector.vectorFromCoord = function(coord1, coord2){
+    var coord1 = coord1, coord2 = coord2;
+    console.log("coord1",coord1,"coord2",coord2);
+    var vector = coord1.map(function(item,i){return coord2[i]-item});
+    return vector
 };
 
 // Функция для вычисления угла между 2 векторами
 Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     // скалярное произведение векторов
-    var vector1 = vector1;
-    var vector2 = vector2;
+    var vector1 = vector1, vector2 = vector2;
     var scalMultVectors = vector1.reduce(function(sum, current, i) {
         return sum + (current * vector2[i])
     }, 0);

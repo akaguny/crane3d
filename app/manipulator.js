@@ -56,10 +56,13 @@ function Manipulator(modules)
         thisNodes[item].solvedPosition = newArrayOfInitialPosition[i];
         thisNodes[item].move();
     });
-       for(var i = 0, len = armsNames.length; i < len; i++) {
+       for(var len = armsNames.length, i = len-1; i > 0; i--) {
            var vector1, vector2 = new Float32Array();
-           vector1 = Vector.vectorFromCoord(newArrayOfInitialPosition[i],newArrayOfInitialPosition[i+1]);
-           vector2 = Vector.vectorFromCoord(newArrayOfInitialPosition[i+1],newArrayOfInitialPosition[i+2]);
+           var array1 = newArrayOfInitialPosition[i], // массив координат текущего узла
+           array2 = newArrayOfInitialPosition[i-1], // массив координат предидущего узла
+           array3 = newArrayOfInitialPosition[i+1]; // массив координат следующего узла
+           vector1 = Vector.vectorFromCoord(array2,array1);
+           vector2 = Vector.vectorFromCoord(array1,array3);
            console.log(vector1,vector2);
            thisNodes[nodesNames[i]].solvedRotation = Vector.angleBetweenTwoVectors(vector1,vector2);
            console.dir(thisNodes[nodesNames[i]].solvedRotation);
