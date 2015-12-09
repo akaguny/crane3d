@@ -5,7 +5,6 @@ function Vector(){
 // Функция вычисления вектора (его координат)
 Vector.vectorFromCoord = function(coord1, coord2){
     var coord1 = coord1, coord2 = coord2;
-    console.log("coord1",coord1,"coord2",coord2);
     var vector = coord1.map(function(item,i){return coord2[i]-item});
     return vector
 };
@@ -32,8 +31,11 @@ Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     };
     // Вычисляем косинус угла между векторами
     var cosA = scalMultVectors / (moduleVector(vector1) * moduleVector(vector2));
-    console.log("cos(" + cosA + ")");
-    var angle = Math.acos(cosA);
-    return angle
+    var rad = Math.acos(cosA);
+    return rad
 
+};
+
+Vector.radToAngle = function(rad){
+    return rad * (180/Math.PI)
 };

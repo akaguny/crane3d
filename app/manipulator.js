@@ -10,7 +10,6 @@ function Manipulator(modules)
     var nodesNames = ["Node_0","Node_1","Node_2","Node_3"];
     var targetPointName = ["TargetPoint"];
 
-    this.nodesNames = nodesNames;
     this.modules = modules;
     // Создадим хеш-таблицу(хеш/словарь/ассоцаативный массив, состоящий из
     // объектов соответствующих классов)
@@ -63,9 +62,9 @@ function Manipulator(modules)
            array3 = newArrayOfInitialPosition[i+1]; // массив координат следующего узла
            vector1 = Vector.vectorFromCoord(array2,array1);
            vector2 = Vector.vectorFromCoord(array1,array3);
-           console.log(vector1,vector2);
-           thisNodes[nodesNames[i]].solvedRotation = Vector.angleBetweenTwoVectors(vector1,vector2);
-           console.dir(thisNodes[nodesNames[i]].solvedRotation);
+           thisNodes[nodesNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors(vector1,vector2));
+           thisNodes[nodesNames[i]].rotateToAngle(this.AXIS.X,thisNodes[nodesNames[i]].solvedRotation);
+           console.log(armsNames[i],thisNodes[nodesNames[i]].solvedRotation);
         }
     //for(var i = 1, len = nodesNames.length; i < len - 1; i++) {
     //    // в зависимости от плоскости убираем лишнюю часть вектора
@@ -123,7 +122,7 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
     for (var i = 0; i < names.length; i++){
         switch (type){
             case "arm":
-                this.arms[names[i]] = new Arm(names[i],this.modules,this.AXIS,{x:9999, y:9999, z:9999});
+                this.arms[names[i]] = new Arm(names[i],this.modules,this.AXIS,{x:180, y:180, z:180});
                 //var arm = this.arms[names[i]];
                 //arm.button_left =  document.getElementById(names[i]+"_left");
                 //var _this = arm;
