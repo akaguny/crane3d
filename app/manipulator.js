@@ -55,7 +55,12 @@ function Manipulator(modules)
         thisNodes[item].solvedPosition = newArrayOfInitialPosition[i];
         thisNodes[item].move();
     });
-
+    // тестовые данные вычисления углов
+    for (var i = 0; i<newArrayOfInitialPosition.length - 1; i++)
+    {
+    console.log("Угол между",i,"и",i+1," = ",Vector.angleBetweenTwoVectors(newArrayOfInitialPosition[i],newArrayOfInitialPosition[i+1],"vertical"),"angle");
+    console.log("Угол между",i,"и",i+1," = ",Vector.angleBetweenTwoVectors(newArrayOfInitialPosition[i],newArrayOfInitialPosition[i+1],"horizontal"),"angle");
+    }
 
 }
 // Функция, реализующая алгоритм принимает массив координат точек узлов и массив координаты целевой точки
