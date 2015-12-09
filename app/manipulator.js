@@ -45,21 +45,21 @@ function Manipulator(modules)
     // (массивы координат узлов и массив координаты целевой точки)
     var thisNodes = this.nodes;
     var arrayOfInitialPosition = nodesNames.map(function (item,i) {
-        return thisNodes[item].positionOld;
+        return thisNodes[item].defaultPosition;
     });
-    var _thisTargetPoint = this.targetPoint[0].positionOld;
+    var _thisTargetPoint = this.targetPoint[0].defaultPosition;
 
     var newArrayOfInitialPosition = FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint, 0.1);
 
     nodesNames.forEach(function (item,i) {
-        thisNodes[item].positionNew = newArrayOfInitialPosition[i];
+        thisNodes[item].solvedPosition = newArrayOfInitialPosition[i];
         thisNodes[item].move();
     });
 
 
 }
 // Функция, реализующая алгоритм принимает массив координат точек узлов и массив координаты целевой точки
-//console.log("\n\n\n",[this.nodes["Node_0"]["positionOld"], this.nodes["Node_1"]["positionOld"], this.nodes["Node_2"]["positionOld"], this.nodes["Node_3"]["positionOld"], this.nodes["Node_4"]["positionOld"]],this.targetPoint["targetPoint"]["positionOld"],"\n\n\n")
+//console.log("\n\n\n",[this.nodes["Node_0"]["defaultPosition"], this.nodes["Node_1"]["defaultPosition"], this.nodes["Node_2"]["defaultPosition"], this.nodes["Node_3"]["defaultPosition"], this.nodes["Node_4"]["defaultPosition"]],this.targetPoint["targetPoint"]["defaultPosition"],"\n\n\n")
 //Manipulator.prototype.clenchFingers = function (){
 //
 //};

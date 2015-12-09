@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 b4w.register("crane", function(exports, require) {
     var m_app = require("app");
     var m_data = require("data");
@@ -20,8 +18,7 @@ b4w.register("crane", function(exports, require) {
         m_scenes : m_scenes,
         m_trans : m_trans,
         m_quat : m_quat,
-        m_arm : m_arm,
-        m_vec3 : m_vec3
+        m_arm : m_arm
     };
 
 

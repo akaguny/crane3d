@@ -19,8 +19,11 @@ function Particle(name,modules, AXISES, limit ){
     // вызываем хэшированную таблицу с осями
     this.axis = AXISES;
     // позиция центральной точки объекта get_object_center(obj, calc_bs_center, destopt)
-    this.positionOld = this.modules.m_trans.get_object_center(this.element3D,0);
-    this.positionNew = [0,0,0];
+    this.defaultPosition = this.modules.m_trans.get_object_center(this.element3D,0);
+    this.solvedPosition = new Float32Array(3);
+    // предидущее состояние this.solvedPosition
+    this.storedPosition = new Float32Array(3);
+
 }
 
 // 1.1 Методы в прототип
@@ -69,10 +72,13 @@ Particle.prototype.rotate = function(axises, deg)
 };
 // функция перемещения объекта, перемещает со старой позиции на новую
 Particle.prototype.move = function(){
-    console.log("positionOld",this.positionOld);
-    console.log("positionNew",this.positionNew);
+    //console.log("defaultPosition",this.defaultPosition);
+    //console.log("solvedPosition",this.solvedPosition);
     var _thisObject3D = this.element3D;
-    this.modules.m_trans.set_translation(_thisObject3D,this.positionNew[0],this.positionNew[1],this.positionNew[2]);
-    this.positionOld = this.modules.m_trans.get_object_center(this.element3D,0);
-    console.log("после перемещения",this.positionOld);
+    // перемещение объекта set_translation(объект, x,y,z)
+    this.modules.m_trans.set_translation(_thisObject3D,this.solvedPosition[0],this.solvedPosition[1],this.solvedPosition[2]);
+    this.storedPosition = this.solvedPosition;
+    // для нового перемещения нужно будет текущее положение объекта, поэтомуц получим и сохраним его в свойстве
+    this.defaultPosition = this.modules.m_trans.get_object_center(this.element3D,0);
+    //console.log("после перемещения",this.defaultPosition);
 };
