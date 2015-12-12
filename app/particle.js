@@ -76,14 +76,9 @@ Particle.prototype.rotateToAngle = function(axises, angle)
 };
 // функция перемещения объекта, перемещает со старой позиции на новую
 Particle.prototype.move = function(){
-    console.log("\n Привет");
-    console.dir(this.storedPosition);
-    console.log("\n\n\n");
     var _thisObject3D = this.element3D;
     // перемещение объекта set_translation(объект, x,y,z) x,y,z - координаты в глобальной системе
     this.modules.m_trans.set_translation(_thisObject3D,this.solvedPosition[0],this.solvedPosition[1],this.solvedPosition[2]);
     // для нового перемещения нужно будет текущее положение объекта, поэтомуц получим и сохраним его в свойстве
     this.defaultPosition = this.modules.m_trans.get_object_center(_thisObject3D,0);
-    console.dir(this.defaultPosition);
-    console.log("\n Пока");
 };

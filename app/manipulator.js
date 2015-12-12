@@ -7,7 +7,7 @@ function Manipulator(modules)
     this.AXIS ={X:[1, 0, 0],Y:[0, 1, 0],Z:[0, 0, 1]};
     var armsNames = ["Arm_0","Arm_1","Arm_2"];
     var fingersNames = ["Finger_0","Finger_1","Finger_2","Finger_3"];
-    var nodesNames = ["Node_0","Node_1","Node_2","Node_3"];
+    var nodesNames = ["Node_0","Node_1","Node_2","Node_3","Node_4"];
     var targetPointName = ["TargetPoint"];
 
     this.modules = modules;
@@ -55,6 +55,7 @@ function Manipulator(modules)
         thisNodes[item].solvedPosition = newArrayOfInitialPosition[i];
         thisNodes[item].move();
     });
+    var thisArms = this.arms;
        for(var len = armsNames.length, i = len-1; i > 0; i--) {
            var vector1, vector2 = new Float32Array();
            var array1 = newArrayOfInitialPosition[i], // массив координат текущего узла
@@ -62,9 +63,9 @@ function Manipulator(modules)
            array3 = newArrayOfInitialPosition[i+1]; // массив координат следующего узла
            vector1 = Vector.vectorFromCoord(array2,array1);
            vector2 = Vector.vectorFromCoord(array1,array3);
-           thisNodes[nodesNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors(vector1,vector2));
-           thisNodes[nodesNames[i]].rotateToAngle(this.AXIS.X,thisNodes[nodesNames[i]].solvedRotation);
-           console.log(armsNames[i],thisNodes[nodesNames[i]].solvedRotation);
+           thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors(vector1,vector2));
+           thisArms[armsNames[i]].rotateToAngle(this.AXIS.X,thisArms[armsNames[i]].solvedRotation);
+           console.log(thisArms[i],thisArms[armsNames[i]].solvedRotation);
         }
     //for(var i = 1, len = nodesNames.length; i < len - 1; i++) {
     //    // в зависимости от плоскости убираем лишнюю часть вектора
