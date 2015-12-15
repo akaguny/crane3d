@@ -9,6 +9,21 @@ Vector.vectorFromCoord = function(coord1, coord2){
     return vector
 };
 
+// модуль вектора равен квадратному корню из суммы квадратов его координат
+Vector.module = function (vector) {
+    // Находим квадраты слагаемых
+    var step1 = vector.map(function(currentValue) {
+        return Math.pow(currentValue, 2)
+    });
+    // Складываем их
+    var step2 = step1.reduce(function(sum, current) {
+        return sum + current
+    });
+    // Вычисляем квадратный корень
+    var length = Math.sqrt(step2, 2);
+    return length;
+};
+
 // Функция для вычисления угла между 2 векторами
 Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     // скалярное произведение векторов
@@ -16,21 +31,8 @@ Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     var scalMultVectors = vector1.reduce(function(sum, current, i) {
         return sum + (current * vector2[i])
     }, 0);
-    // модуль вектора равен квадратному корню из суммы квадратов его координат
-    var moduleVector = function(v) {
-        // Находим квадраты слагаемых
-        var step1 = v.map(function(currentValue) {
-            return Math.pow(currentValue, 2)
-        });
-        // Складываем их
-        var step2 = step1.reduce(function(sum, current) {
-            return sum + current
-        });
-        // Вычисляем квадратный корень
-        return Math.sqrt(step2, 2)
-    };
     // Вычисляем косинус угла между векторами
-    var cosA = scalMultVectors / (moduleVector(vector1) * moduleVector(vector2));
+    var cosA = scalMultVectors / (Vector.module(vector1) * Vector.module(vector2));
     var rad = Math.acos(cosA);
     return rad
 
@@ -38,4 +40,8 @@ Vector.angleBetweenTwoVectors = function(vector1, vector2) {
 
 Vector.radToAngle = function(rad){
     return rad * (180/Math.PI)
+};
+
+Vector.normalize = function (vector) {
+    return normalizeVector
 };

@@ -5,7 +5,7 @@
 function Manipulator(modules)
 {
     this.AXIS ={X:[1, 0, 0],Y:[0, 1, 0],Z:[0, 0, 1]};
-    var armsNames = ["Arm_0","Arm_1","Arm_2"];
+    var armsNames = ["Arm_0","Arm_1","Arm_2","Arm_3"];
     var fingersNames = ["Finger_0","Finger_1","Finger_2","Finger_3"];
     var nodesNames = ["Node_0","Node_1","Node_2","Node_3","Node_4"];
     var targetPointName = ["TargetPoint"];
@@ -65,7 +65,7 @@ function Manipulator(modules)
            vector2 = Vector.vectorFromCoord(array1,array3);
            thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors(vector1,vector2));
            thisArms[armsNames[i]].rotateToAngle(this.AXIS.X,thisArms[armsNames[i]].solvedRotation);
-           console.log(thisArms[i],thisArms[armsNames[i]].solvedRotation);
+           console.log(thisArms[armsNames[i]].name,thisArms[armsNames[i]].solvedRotation);
         }
     //for(var i = 1, len = nodesNames.length; i < len - 1; i++) {
     //    // в зависимости от плоскости убираем лишнюю часть вектора
