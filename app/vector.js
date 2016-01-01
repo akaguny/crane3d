@@ -33,7 +33,7 @@ Vector.scalMultVectors = function (vector1,vector2) {
 
 };
 
-// Функция для вычисления угла между 2 векторами0
+// Функция для вычисления угла между 2 векторами
 Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     // скалярное произведение векторов
     // Вычисляем косинус угла между векторами
