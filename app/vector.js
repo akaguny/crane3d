@@ -38,6 +38,7 @@ Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     // скалярное произведение векторов
     // Вычисляем косинус угла между векторами
     var cosA = Vector.scalMultVectors(vector1, vector2) / (Vector.module(vector1) * Vector.module(vector2));
+    console.log(cosA);
     var rad = Math.acos(cosA);
     return rad
 
