@@ -63,10 +63,11 @@ function Manipulator(modules)
            array3 = newArrayOfInitialPosition[i+1]; // массив координат следующего узла p[i+1]
            vector1 = Vector.vectorFromCoord(array2,jointPoint); // формируем первый вектор
            vector2 = Vector.vectorFromCoord(jointPoint,array3); // формируем второй вектор (это и есть наше звено)
-           thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors(vector1,vector2));
+           thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors(Vector.normalize(vector1),Vector.normalize(vector2)));
            thisArms[armsNames[i]].rotateToAngle(this.AXIS.X,thisArms[armsNames[i]].solvedRotation);
            console.log(thisArms[armsNames[i]].name,thisArms[armsNames[i]].solvedRotation);
         }
+    console.dir(this.arms);
     //for(var i = 1, len = nodesNames.length; i < len - 1; i++) {
     //    // в зависимости от плоскости убираем лишнюю часть вектора
     //    var arrayXY = newArrayOfInitialPosition[i].map(function(item,j){

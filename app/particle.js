@@ -22,9 +22,8 @@ function Particle(name,modules, AXISES, limit ){
     this.defaultPosition = this.modules.m_trans.get_object_center(this.element3D,0);
     this.solvedPosition = new Float32Array(3);
     // предидущее состояние this.solvedPosition
-    this.storedPosition = this.defaultPosition;
+    //this.storedPosition = this.defaultPosition;
     //
-    this.defaultRotation = 0;
     this.solvedRotation = 0;
 
 }
