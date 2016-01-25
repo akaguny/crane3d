@@ -63,7 +63,7 @@ function Manipulator(modules)
             array3 = newArrayOfInitialPosition[i+1]; // массив координат следующего узла p[i+1]
         vector1 = Vector.vectorFromCoord(array2,jointPoint); // формируем первый вектор
         vector2 = Vector.vectorFromCoord(jointPoint,array3); // формируем второй вектор (это и есть наше звено)
-        thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors(vector2,vector1));
+        thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors(Vector.normalize(vector2),Vector.normalize(vector1)));
         thisArms[armsNames[i]].rotateToAngle(this.AXIS.X,thisArms[armsNames[i]].solvedRotation);
         console.log(thisArms[armsNames[i]].name,thisArms[armsNames[i]].solvedRotation); // Выводит имя и угол поворота звена
     }
