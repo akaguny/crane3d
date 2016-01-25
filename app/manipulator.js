@@ -56,17 +56,17 @@ function Manipulator(modules)
         thisNodes[item].move();
     });
     var thisArms = this.arms;
-       for(var len = armsNames.length, i = len-1; i > 0; i--) {
-           var vector1, vector2 = new Float32Array();
-           var jointPoint = newArrayOfInitialPosition[i],// массив координат общего узла p[i]
-           array2 = newArrayOfInitialPosition[i-1], // массив координат предидущего узла p[i-1]
-           array3 = newArrayOfInitialPosition[i+1]; // массив координат следующего узла p[i+1]
-           vector1 = Vector.vectorFromCoord(array2,jointPoint); // формируем первый вектор
-           vector2 = Vector.vectorFromCoord(jointPoint,array3); // формируем второй вектор (это и есть наше звено)
-           thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors(vector1,vector2));
-           thisArms[armsNames[i]].rotateToAngle(this.AXIS.X,thisArms[armsNames[i]].solvedRotation);
-           console.log(thisArms[armsNames[i]].name,thisArms[armsNames[i]].solvedRotation);
-        }
+    for(var len = armsNames.length, i = 1; i < len; i++) { // предполагается, что точек на 1 больше, чем armsNames
+        var vector1, vector2 = [];
+        var jointPoint = newArrayOfInitialPosition[i],// массив координат общего узла p[i]
+            array2 = newArrayOfInitialPosition[i-1], // массив координат предидущего узла p[i-1]
+            array3 = newArrayOfInitialPosition[i+1]; // массив координат следующего узла p[i+1]
+        vector1 = Vector.vectorFromCoord(array2,jointPoint); // формируем первый вектор
+        vector2 = Vector.vectorFromCoord(jointPoint,array3); // формируем второй вектор (это и есть наше звено)
+        thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors(vector2,vector1));
+        thisArms[armsNames[i]].rotateToAngle(this.AXIS.X,thisArms[armsNames[i]].solvedRotation);
+        console.log(thisArms[armsNames[i]].name,thisArms[armsNames[i]].solvedRotation); // Выводит имя и угол поворота звена
+    }
     console.dir(this.arms);
     //for(var i = 1, len = nodesNames.length; i < len - 1; i++) {
     //    // в зависимости от плоскости убираем лишнюю часть вектора
