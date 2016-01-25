@@ -23,8 +23,17 @@ Vector.module = function (vector) {
     var length = Math.sqrt(step2, 2);
     return length;
 };
+// Векторное произведение векторов (результат вектор)
+Vector.vecMultVectors = function (vector1, vector2) {
+    var result = [], a = vector1, b = vector2;
+    result[0] = a[1] * b[2] - a[2] * b[1];
+    result[1] = a[2] * b[0] - a[0] * b[2];
+    result[2] = a[0] * b[1] - a[1] * b[0];
+    console.log(result);
+    return result
+};
 
-// Скалярное произведение векторов
+// Скалярное произведение векторов (результат число)
 Vector.scalMultVectors = function (vector1,vector2) {
     var result = vector1.reduce(function(sum, current, i) {
         return sum + (current * vector2[i])
@@ -37,10 +46,7 @@ Vector.scalMultVectors = function (vector1,vector2) {
 Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     // скалярное произведение векторов
     // Вычисляем косинус угла между векторами
-    var cosA = Vector.scalMultVectors(vector1, vector2) / (Vector.module(vector1) * Vector.module(vector2));
-    var rad = Math.acos(cosA);
-    return rad
-
+    return Math.atan2(Vector.module(Vector.vecMultVectors(vector1,vector2)),Vector.scalMultVectors(vector1,vector2));
 };
 
 // Перевод из радиан в градусы
