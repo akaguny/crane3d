@@ -68,7 +68,7 @@ Particle.prototype.rotateToAngle = function(axises, angle)
 
     // получим текущую ось и прибавим к ней текущий угол поворота
     //this.rotationSum[Particle.getCurrentAxis(axises)] += angle;
-    console.log(this.rotationSum);
+    console.dir(this.rotationSum);
     //}
     //else{
     //    window.alert(this.name + ' не может быть повёрнут на ' +angle)
