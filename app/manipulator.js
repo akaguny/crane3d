@@ -57,15 +57,14 @@ function Manipulator(modules)
     });
     var thisArms = this.arms;
     for(var len = armsNames.length, i = 1; i < len; i++) { // предполагается, что точек на 1 больше, чем armsNames
-        var vector1, vector2 = [];
-        var jointPoint = newArrayOfInitialPosition[i],// массив координат общего узла p[i]
-            array2 = newArrayOfInitialPosition[i-1], // массив координат предидущего узла p[i-1]
-            array3 = newArrayOfInitialPosition[i+1]; // массив координат следующего узла p[i+1]
-        vector1 = Vector.vectorFromCoord(array2,jointPoint); // формируем первый вектор
-        vector2 = Vector.vectorFromCoord(jointPoint,array3); // формируем второй вектор (это и есть наше звено)
-        thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors(Vector.normalize(vector2),Vector.normalize(vector1)));
-        thisArms[armsNames[i]].rotateToAngle(this.AXIS.X,thisArms[armsNames[i]].solvedRotation);
-        console.log(thisArms[armsNames[i]].name,thisArms[armsNames[i]].solvedRotation); // Выводит имя и угол поворота звена
+        var jointPoint = Vector.fromArray(newArrayOfInitialPosition[i]),// массив координат общего узла p[i]
+            vector1 = Vector.fromArray(newArrayOfInitialPosition[i-1]), // массив координат предидущего узла p[i-1]
+            vector2 = Vector.fromArray(newArrayOfInitialPosition[i+1]); // массив координат следующего узла p[i+1]
+        var armVector1 = vector1.subtract(jointPoint); // формируем первый вектор
+        var armVector2 = jointPoint.subtract(vector2); // формируем второй вектор (это и есть наше звено)
+        var angle = armVector1.angleTo(armVector2);
+        thisArms[armsNames[i]].rotateToAngle(this.AXIS.X,Vector.radToDeg(-angle));
+        console.log(thisArms[armsNames[i]].name,Vector.radToDeg(angle)); // Выводит имя и угол поворота звена
     }
     console.dir(this.arms);
     //for(var i = 1, len = nodesNames.length; i < len - 1; i++) {

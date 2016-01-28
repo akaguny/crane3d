@@ -54,6 +54,24 @@ Particle.getCurrentAxis = function(axises){
         undefined;
 };
 
+Particle.prototype.rotateToRad = function(axises, angle)
+{
+    // проучить общее вращение по оси, ограничение по оси
+    // если сумма общего вращения и текущего вращения не превышает лимит по оси, то выполнить перемещение
+    //if ((this.rotationSum[Particle.getCurrentAxis(axises)]+ angle)<=this.rotationLimit[Particle.getCurrentAxis(axises)]){
+    this.modules.m_quat.setAxisAngle(axises, Particle.degToRad(angle), this.quatNew);
+    this.modules.m_trans.get_rotation(this.element3D, this.quatOld);
+    this.modules.m_quat.multiply(this.quatNew, this.quatOld, this.quatNew);
+    this.modules.m_trans.set_rotation_v(this.element3D, this.quatNew);
+
+    // получим текущую ось и прибавим к ней текущий угол поворота
+    //this.rotationSum[Particle.getCurrentAxis(axises)] += angle;
+    //console.log(this.rotationSum);
+    //}
+    //else{
+    //    window.alert(this.name + ' не может быть повёрнут на ' +angle)
+    //}
+};
 
 Particle.prototype.rotateToAngle = function(axises, angle)
 {
