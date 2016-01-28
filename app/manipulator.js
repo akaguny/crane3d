@@ -67,13 +67,18 @@ function Manipulator(modules)
            //thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors(vector1,vector2));
            thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[1],vector1[2]],[vector2[1],vector2[2]]));
            thisArms[armsNames[i]].rotateToAngle(this.AXIS.X,thisArms[armsNames[i]].solvedRotation);
-           console.log(thisArms[armsNames[i]].name,thisArms[armsNames[i]].solvedRotation);
+           thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]]));
+           thisArms[armsNames[i]].rotateToAngle(this.AXIS.Y,thisArms[armsNames[i]].solvedRotation);
+           thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]]));
+           thisArms[armsNames[i]].rotateToAngle(this.AXIS.Z,thisArms[armsNames[i]].solvedRotation);
+
+
+           console.log("Угол поворота в плоскости ZY\n",
+               thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[1],vector1[2]],[vector2[1],vector2[2]])));
            console.log("Угол поворота в плоскости XY\n",
                thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]])));
-           console.log("Угол поворота в плоскости YZ\n",
-               thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[1],vector1[2]],[vector2[1],vector2[2]])));
-           console.log("Угол поворота в плоскости XZ\n",
-               thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]])));
+           //console.log("Угол поворота в плоскости XZ\n",
+           //    thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]])));
         }
     //for(var i = 1, len = nodesNames.length; i < len - 1; i++) {
     //    // в зависимости от плоскости убираем лишнюю часть вектора
