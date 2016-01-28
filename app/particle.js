@@ -19,9 +19,13 @@ function Particle(name,modules, AXISES, limit ){
     // вызываем хэшированную таблицу с осями
     this.axis = AXISES;
     // позиция центральной точки объекта get_object_center(obj, calc_bs_center, destopt)
-    this.positionOld = this.modules.m_trans.get_object_center(this.element3D,0);
-    this.positionNew = [0,0,0];
-    console.log(this.name, this.positionOld.map(function(item){return item * 100}));
+    this.defaultPosition = this.modules.m_trans.get_object_center(this.element3D,0);
+    this.solvedPosition = new Float32Array(3);
+    // предидущее состояние this.solvedPosition
+    //this.storedPosition = this.defaultPosition;
+    //
+    this.solvedRotation = 0;
+
 }
 
 // 1.1 Методы в прототип
@@ -50,21 +54,48 @@ Particle.getCurrentAxis = function(axises){
         undefined;
 };
 
-Particle.prototype.rotate = function(axises, deg)
+Particle.prototype.rotateToRad = function(axises, angle)
 {
     // проучить общее вращение по оси, ограничение по оси
     // если сумма общего вращения и текущего вращения не превышает лимит по оси, то выполнить перемещение
-    if ((this.rotationSum[Particle.getCurrentAxis(axises)]+ deg)<=this.rotationLimit[Particle.getCurrentAxis(axises)]){
-    this.modules.m_quat.setAxisAngle(axises, Particle.degToRad(deg), this.quatNew);
+    //if ((this.rotationSum[Particle.getCurrentAxis(axises)]+ angle)<=this.rotationLimit[Particle.getCurrentAxis(axises)]){
+    this.modules.m_quat.setAxisAngle(axises, Particle.degToRad(angle), this.quatNew);
     this.modules.m_trans.get_rotation(this.element3D, this.quatOld);
     this.modules.m_quat.multiply(this.quatNew, this.quatOld, this.quatNew);
     this.modules.m_trans.set_rotation_v(this.element3D, this.quatNew);
 
     // получим текущую ось и прибавим к ней текущий угол поворота
-    this.rotationSum[Particle.getCurrentAxis(axises)] += deg;
+    //this.rotationSum[Particle.getCurrentAxis(axises)] += angle;
+    //console.log(this.rotationSum);
+    //}
+    //else{
+    //    window.alert(this.name + ' не может быть повёрнут на ' +angle)
+    //}
+};
+
+Particle.prototype.rotateToAngle = function(axises, angle)
+{
+    // проучить общее вращение по оси, ограничение по оси
+    // если сумма общего вращения и текущего вращения не превышает лимит по оси, то выполнить перемещение
+    //if ((this.rotationSum[Particle.getCurrentAxis(axises)]+ angle)<=this.rotationLimit[Particle.getCurrentAxis(axises)]){
+    this.modules.m_quat.setAxisAngle(axises, Particle.degToRad(angle), this.quatNew);
+    this.modules.m_trans.get_rotation(this.element3D, this.quatOld);
+    this.modules.m_quat.multiply(this.quatNew, this.quatOld, this.quatNew);
+    this.modules.m_trans.set_rotation_v(this.element3D, this.quatNew);
+
+    // получим текущую ось и прибавим к ней текущий угол поворота
+    //this.rotationSum[Particle.getCurrentAxis(axises)] += angle;
     console.log(this.rotationSum);
-    }
-    else{
-        window.alert(this.name + ' не может быть повёрнут на ' +deg)
-    }
+    //}
+    //else{
+    //    window.alert(this.name + ' не может быть повёрнут на ' +angle)
+    //}
+};
+// функция перемещения объекта, перемещает со старой позиции на новую
+Particle.prototype.move = function(){
+    var _thisObject3D = this.element3D;
+    // перемещение объекта set_translation(объект, x,y,z) x,y,z - координаты в глобальной системе
+    this.modules.m_trans.set_translation(_thisObject3D,this.solvedPosition[0],this.solvedPosition[1],this.solvedPosition[2]);
+    // для нового перемещения нужно будет текущее положение объекта, поэтомуц получим и сохраним его в свойстве
+    this.defaultPosition = this.modules.m_trans.get_object_center(_thisObject3D,0);
 };

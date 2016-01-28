@@ -1,7 +1,6 @@
 "use strict";
 
 b4w.register("crane", function(exports, require) {
-
     var m_app = require("app");
     var m_data = require("data");
     var m_main = require("main");
@@ -9,6 +8,7 @@ b4w.register("crane", function(exports, require) {
     var m_trans = require("transform");
     var m_quat = require("quat");
     var m_arm = require("armature");
+    var m_vec3 = require("vec3");
 
     var modules =
     {
