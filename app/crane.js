@@ -69,6 +69,7 @@ b4w.register("crane", function(exports, require) {
         //});
         m_app.enable_controls();
         m_app.enable_camera_controls();
+        craneGUI();
     }
 
 

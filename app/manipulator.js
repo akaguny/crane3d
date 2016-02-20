@@ -5,6 +5,7 @@
 function Manipulator(modules)
 {
     this.AXIS ={X:[1, 0, 0],Y:[0, 1, 0],Z:[0, 0, 1]};
+    // Массив имён 3D объектов
     var armsNames = ["Arm_0","Arm_1","Arm_2","Arm_3"];
     var fingersNames = ["Finger_0","Finger_1","Finger_2","Finger_3"];
     var nodesNames = ["Node_0","Node_1","Node_2","Node_3","Node_4"];
@@ -18,10 +19,7 @@ function Manipulator(modules)
     this.nodes = {};
     this.targetPoint = {};
 
-    //console.log(this.targetPoint);
-    //console.log(this.arms);
-    //console.log("nodes");
-    //console.log(this.nodes);
+
 
     // Вызываем функцию для заполнения объекта arm
     // Первый аргумент - массив имён, второй - тип/имя объекта

@@ -23,15 +23,42 @@
     <script src="app/targetpoint.js"></script>
     <!-- Подгружаем класс manipulator.js -->
     <script src="app/manipulator.js"></script>
+    <!-- Загружаем GUI -->
+    <script src="app/gui.js"></script>
     <!-- Загружаем наш скрипт -->
     <script src="app/crane.js"></script>
     <!-- UniCss http://unicss.maxsite.com.ua -->
     <link rel="stylesheet" href="css/style.css"/>
     <style>
         #canvas3d{position:absolute;left:0;top:0;width:100%;height:100%;z-index:0;}
+        #gui{position: absolute;left:0;top:0;z-index: 999;}
     </style>
 </head>
 <body >
+<div id="gui">
+    <form name="">
+        <fildset>
+            <legend>
+                set_TargetPointCoord_X
+            </legend>
+            <label>
+                <input type="text" id="TargetPointCoord_X">
+            </label>
+            <legend>
+                set_TargetPointCoord_Y
+            </legend>
+            <label>
+                <input type="text" id="TargetPointCoord_Y">
+            </label>
+            <legend>
+                set_TargetPointCoord_Z
+            </legend>
+            <label>
+                <input type="text" id="TargetPointCoord_Z">
+            </label>
+        </fildset>
+    </form>
+</div>
 <div id="canvas3d">
 </div>
 </body>
