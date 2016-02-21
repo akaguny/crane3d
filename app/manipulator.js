@@ -167,7 +167,8 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
                 break;
             case "targetPoint":
                 this.targetPoint[[i]] = new TargetPoint(names[i],this.modules,this.AXIS,{x:999, y:999, z:999});
+                this.targetPoint[[i]].set_CurrentTargetPointCoord();
                 break;
-        }
+                    }
     }
 };

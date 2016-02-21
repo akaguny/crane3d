@@ -2,7 +2,7 @@
  * Created by alexey on 20.02.16.
  */
 craneGUI = function() {
-    var currentTargetPointCoord = TargetPoint.solvedPosition,
+    var currentTargetPointCoord = TargetPoint.get_defaultPosition(),
         newTargetPointCoord = [],
         saveTargetPointCoord = [],
         inputTargetPointCoord = [
@@ -28,7 +28,7 @@ craneGUI = function() {
         var _this = inputTargetPointCoord[i];
         _this.value = currentTargetPointCoord[i];
 // Регистрируем событие
-        _this.	addEventListener("blur", set_newTargetPointCoord,false);
+        _this.addEventListener("blur", set_newTargetPointCoord,false);
     }
 
 // функция получения значения из input

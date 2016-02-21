@@ -68,7 +68,7 @@ Particle.prototype.rotateToAngle = function(axises, angle)
 
     // получим текущую ось и прибавим к ней текущий угол поворота
     //this.rotationSum[Particle.getCurrentAxis(axises)] += angle;
-    console.dir(this.rotationSum);
+    //console.dir(this.rotationSum);
     //}
     //else{
     //    window.alert(this.name + ' не может быть повёрнут на ' +angle)
@@ -81,4 +81,8 @@ Particle.prototype.move = function(){
     this.modules.m_trans.set_translation(_thisObject3D,this.solvedPosition[0],this.solvedPosition[1],this.solvedPosition[2]);
     // для нового перемещения нужно будет текущее положение объекта, поэтомуц получим и сохраним его в свойстве
     this.defaultPosition = this.modules.m_trans.get_object_center(_thisObject3D,0);
+};
+
+Particle.prototype.get_defaultPosition = function(){
+  return this.defaultPosition
 };
