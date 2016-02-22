@@ -20,7 +20,7 @@ function Particle(name,modules, AXISES, limit ){
     this.axis = AXISES;
     // позиция центральной точки объекта get_object_center(obj, calc_bs_center, destopt)
     this.defaultPosition = this.modules.m_trans.get_object_center(this.element3D,0);
-    this.solvedPosition = new Float32Array(3);
+    this.solvedPosition = this.defaultPosition;
     // предидущее состояние this.solvedPosition
     this.storedPosition = this.defaultPosition;
     //

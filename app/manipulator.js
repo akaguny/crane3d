@@ -11,6 +11,9 @@ function Manipulator(modules)
     var nodesNames = ["Node_0","Node_1","Node_2","Node_3","Node_4"];
     var targetPointName = ["TargetPoint"];
 
+    // Массив ID html форм
+    var guiHtmlId = ["TargetPointCoord_X","TargetPointCoord_Y","TargetPointCoord_Z"];
+
     this.modules = modules;
     // Создадим хеш-таблицу(хеш/словарь/ассоцаативный массив, состоящий из
     // объектов соответствующих классов)
@@ -18,6 +21,9 @@ function Manipulator(modules)
     this.fingers = {};
     this.nodes = {};
     this.targetPoint = {};
+    // массив с объектами
+    this.gui = [];
+
 
 
 
@@ -38,7 +44,18 @@ function Manipulator(modules)
 
     this.createObjectsByArray(nodesNames, "node");
     this.createObjectsByArray(targetPointName, "targetPoint");
-
+    this.createObjectsByArray(guiHtmlId, "gui");
+    // установить текущие значения координат TargetPoint
+    var _thisTargetPoint = this.targetPoint[0];
+    console.log(this.gui);
+    this.gui.forEach(function (item,i) {
+        item.set_value(_thisTargetPoint.defaultPosition[i]);
+        item.addEventListener("blur",function() {
+            _thisTargetPoint.solvedPosition[i] = item.get_value();
+            console.log(item.get_value());
+            _thisTargetPoint.move();
+            })
+    });
     // Подготовим входные данные, для алгоритма
     // (массивы координат узлов и массив координаты целевой точки)
     var thisNodes = this.nodes;
@@ -46,9 +63,8 @@ function Manipulator(modules)
         return thisNodes[item].defaultPosition;
     });
     console.dir(arrayOfInitialPosition);
-    var _thisTargetPoint = this.targetPoint[0].defaultPosition;
 
-    var newArrayOfInitialPosition = FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint, 0.1);
+    var newArrayOfInitialPosition = FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint.defaultPosition, 0.1);
     nodesNames.forEach(function (item,i) {
         thisNodes[item].solvedPosition = newArrayOfInitialPosition[i];
         thisNodes[item].move();
@@ -167,8 +183,11 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
                 break;
             case "targetPoint":
                 this.targetPoint[[i]] = new TargetPoint(names[i],this.modules,this.AXIS,{x:999, y:999, z:999});
-                this.targetPoint[[i]].set_CurrentTargetPointCoord();
+                break;
+            case "gui":
+                this.gui[i] = new CraneGUI(names[i]);
                 break;
                     }
+
     }
 };
