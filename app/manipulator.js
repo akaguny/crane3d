@@ -57,10 +57,11 @@ function Manipulator(modules)
         item.set_value(_thisTargetPoint.defaultPosition[i]);
         item.addEventListener("blur",function() {
             _thisTargetPoint.solvedPosition[i] = item.get_value();
-            console.log(item.get_value());
-            _thisTargetPoint.move();
-            that.recalculatePosition(nodesNames, nodes, _thisTargetPoint);
-
+            if (_thisTargetPoint.solvedPosition[i] !== _thisTargetPoint.defaultPosition[i]) {
+                console.log(item.get_value());
+                _thisTargetPoint.move();
+                that.recalculatePosition(nodesNames, nodes, _thisTargetPoint);
+            }
             })
     });
     // Подготовим входные данные, для алгоритма
