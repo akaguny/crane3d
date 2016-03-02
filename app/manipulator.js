@@ -6,7 +6,7 @@ function Manipulator(modules)
 {
     this.AXIS ={X:[1, 0, 0],Y:[0, 1, 0],Z:[0, 0, 1]};
     // Массив имён 3D объектов
-    var armsNames = ["Arm_0","Arm_1","Arm_2","Arm_3"];
+    this.armsNames = ["Arm_0","Arm_1","Arm_2","Arm_3"];
     var fingersNames = ["Finger_0","Finger_1","Finger_2","Finger_3"];
     var nodesNames = ["Node_0","Node_1","Node_2","Node_3","Node_4"];
     var targetPointName = ["TargetPoint"];
@@ -19,7 +19,11 @@ function Manipulator(modules)
     // объектов соответствующих классов)
     this.arms = {};
     this.fingers = {};
+
+
     this.nodes = {};
+    var nodes = this.nodes;
+
     this.targetPoint = {};
     // массив с объектами
     this.gui = [];
@@ -29,7 +33,7 @@ function Manipulator(modules)
 
     // Вызываем функцию для заполнения объекта arm
     // Первый аргумент - массив имён, второй - тип/имя объекта
-    this.createObjectsByArray(armsNames, "arm");
+    this.createObjectsByArray(this.armsNames, "arm");
 
     // После формирования объекта arms выставим начальную позицию манипулятора, повернув Arm_2 и ARM_3 на 90 градусов
     //this.arms.Arm_1.rotate(this.AXIS.Z, 60);
@@ -48,28 +52,35 @@ function Manipulator(modules)
     // установить текущие значения координат TargetPoint
     var _thisTargetPoint = this.targetPoint[0];
     console.log(this.gui);
+    var that = this;
     this.gui.forEach(function (item,i) {
         item.set_value(_thisTargetPoint.defaultPosition[i]);
         item.addEventListener("blur",function() {
             _thisTargetPoint.solvedPosition[i] = item.get_value();
             console.log(item.get_value());
             _thisTargetPoint.move();
+            that.recalculatePosition(nodesNames, nodes, _thisTargetPoint);
+
             })
     });
     // Подготовим входные данные, для алгоритма
     // (массивы координат узлов и массив координаты целевой точки)
-    var thisNodes = this.nodes;
+    this.recalculatePosition(nodesNames, nodes, _thisTargetPoint);
+
+
+
+/*    var thisNodes = this.nodes;
     var arrayOfInitialPosition = nodesNames.map(function (item,i) {
         return thisNodes[item].defaultPosition;
     });
     console.dir(arrayOfInitialPosition);
 
     var newArrayOfInitialPosition = FABRIK.algorithm(arrayOfInitialPosition,_thisTargetPoint.defaultPosition, 0.1);
-    nodesNames.forEach(function (item,i) {
-        thisNodes[item].solvedPosition = newArrayOfInitialPosition[i];
-        thisNodes[item].move();
-    });
-    var thisArms = this.arms;
+    this.movePoints(nodesNames, thisNodes, newArrayOfInitialPosition);
+    this.moveOnAnglesByVectors(this.arms, this.armsNames, newArrayOfInitialPosition);*/
+
+
+/*    var thisArms = this.arms;
        for(var len = armsNames.length, i = len-1; i > 0; i--) {
            var vector1, vector2 = new Float32Array();
            var array1 = newArrayOfInitialPosition[i], // массив координат текущего узла
@@ -93,7 +104,7 @@ function Manipulator(modules)
                thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]])));
            //console.log("Угол поворота в плоскости XZ\n",
            //    thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]])));
-        }
+        }*/
     //for(var i = 1, len = nodesNames.length; i < len - 1; i++) {
     //    // в зависимости от плоскости убираем лишнюю часть вектора
     //    var arrayXY = newArrayOfInitialPosition[i].map(function(item,j){
@@ -145,6 +156,58 @@ function Manipulator(modules)
 //Manipulator.prototype.clenchFingers = function (){
 //
 //};
+
+
+Manipulator.prototype.recalculatePosition = function (nodesNames, thisNodes, _thisTargetPoint) {
+
+    var arrayOfInitialPosition = nodesNames.map(function (item,i) {
+        return thisNodes[item].defaultPosition;
+    });
+    console.dir(arrayOfInitialPosition);
+
+    var newArrayOfInitialPosition = FABRIK.algorithm(arrayOfInitialPosition, _thisTargetPoint.defaultPosition, 0.1);
+    this.movePoints(nodesNames, thisNodes, newArrayOfInitialPosition);
+    this.moveOnAnglesByVectors(this.arms, this.armsNames, newArrayOfInitialPosition);
+};
+
+Manipulator.prototype.movePoints = function(nodesNames, thisNodes, newArrayOfInitialPosition){
+    nodesNames.forEach(function (item,i) {
+        thisNodes[item].solvedPosition = newArrayOfInitialPosition[i];
+        thisNodes[item].move();
+    });
+
+};
+
+
+Manipulator.prototype.moveOnAnglesByVectors = function(thisArms, armsNames, newArrayOfInitialPosition){
+
+    /*var thisArms = this.arms;*/
+    for(var len = armsNames.length, i = len-1; i > 0; i--) {
+        var vector1, vector2 = new Float32Array();
+        var array1 = newArrayOfInitialPosition[i], // массив координат текущего узла
+            array2 = newArrayOfInitialPosition[i-1], // массив координат предидущего узла
+            array3 = newArrayOfInitialPosition[i+1]; // массив координат следующего узла
+        vector1 = Vector.vectorFromCoord(array2,array1);
+        vector2 = Vector.vectorFromCoord(array1,array3);
+        console.dir(vector1,vector2);
+        //thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors(vector1,vector2));
+        thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[1],vector1[2]],[vector2[1],vector2[2]]));
+        thisArms[armsNames[i]].rotateToAngle(this.AXIS.X,thisArms[armsNames[i]].solvedRotation);
+        thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]]));
+        thisArms[armsNames[i]].rotateToAngle(this.AXIS.Y,thisArms[armsNames[i]].solvedRotation);
+        thisArms[armsNames[i]].solvedRotation = Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]]));
+        thisArms[armsNames[i]].rotateToAngle(this.AXIS.Z,thisArms[armsNames[i]].solvedRotation);
+
+
+        console.log("Угол поворота в плоскости ZY\n",
+            thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[1],vector1[2]],[vector2[1],vector2[2]])));
+        console.log("Угол поворота в плоскости XY\n",
+            thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]])));
+        //console.log("Угол поворота в плоскости XZ\n",
+        //    thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]])));
+    }
+};
+
 
 Manipulator.prototype.createObjectsByArray = function (names, type){
     for (var i = 0; i < names.length; i++){
