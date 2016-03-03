@@ -166,9 +166,15 @@ Manipulator.prototype.recalculatePosition = function (nodesNames, thisNodes, _th
 
     var newArrayOfInitialPosition = FABRIK.algorithm(arrayOfInitialPosition, _thisTargetPoint.defaultPosition, 0);
     this.movePoints(nodesNames, thisNodes, newArrayOfInitialPosition);
-    this.moveOnAnglesByVectors(this.arms, this.armsNames, newArrayOfInitialPosition);
+    this.anglesByVectors(this.arms, this.armsNames, newArrayOfInitialPosition);
 };
-var planeNames = ["ZY","XY","XZ"];
+var planeNames = ["ZY","XY","XZ"],
+    planeAngle = {},
+    planeAxis = {
+        ZY:this.AXIS.X,
+        XY:this.AXIS.Y,
+        XZ:this.AXIS.Z
+    };
 Manipulator.prototype.movePoints = function(nodesNames, thisNodes, newArrayOfInitialPosition){
     nodesNames.forEach(function (item,i) {
         thisNodes[item].solvedPosition = newArrayOfInitialPosition[i];
@@ -178,7 +184,7 @@ Manipulator.prototype.movePoints = function(nodesNames, thisNodes, newArrayOfIni
 };
 
 
-Manipulator.prototype.moveOnAnglesByVectors = function(thisArms, armsNames, newArrayOfInitialPosition){
+Manipulator.prototype.anglesByVectors = function(thisArms, armsNames, newArrayOfInitialPosition){
 
     for(var len = armsNames.length, i = len-1; i > 0; i--) {
         var vector1, vector2 = new Float32Array();
@@ -188,52 +194,30 @@ Manipulator.prototype.moveOnAnglesByVectors = function(thisArms, armsNames, newA
         vector1 = Vector.vectorFromCoord(array2,array1);
         vector2 = Vector.vectorFromCoord(array1,array3);
         console.dir(vector1,vector2);
-
-        var angleZY = Vector.angleBetweenTwoVectors([vector1[1],vector1[2]],[vector2[1],vector2[2]]);
-        var angleXY = Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]]);
-        var angleXZ = Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]]);
+        planeAngle.ZY = Vector.angleBetweenTwoVectors([vector1[1],vector1[2]],[vector2[1],vector2[2]]);
+        planeAngle.XY = Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]]);
+        planeAngle.XZ = Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]]);
         //var angleZY = Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[1],vector1[2]],[vector2[1],vector2[2]]));
         //var angleXY = Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]]));
         //var angleXZ = Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]]));
-        this.rotateOnAnglesInPlane(thisArms[armsNames[i]],angleZY,angleXY,angleXZ);
+        var _this = this;
+        planeNames.forEach(function (item,j) {
+            _this.rotateOnAnglesInPlane(item,thisArms[armsNames[i]],planeAngle[item]);
+        });
+        //this.rotateOnAnglesInPlane(thisArms[armsNames[i]],angleZY,angleXY,angleXZ);
     }
 };
 // Поворот на угол в плоскости
-Manipulator.prototype.rotateOnAnglesInPlane = function(thisArm,angleZY,angleXY,angleXZ) {
-    // ZY
-    if ((angleZY > 0)&&(thisArm.solvedRotation.ZY > 0))
+Manipulator.prototype.rotateOnAnglesInPlane = function(plane,thisArm,angle) {
+    if ((angle > 0)&&(thisArm.solvedRotation.[plane] > 0))
     {
-        thisArm.solvedRotation.ZY = angleZY - thisArm.solvedRotation.ZY;
+        thisArm.solvedRotation.[plane] = angle - thisArm.solvedRotation.[plane];
     }
     else{
-        thisArm.solvedRotation.ZY += angleZY;
+        thisArm.solvedRotation.[plane] += angle;
     }
-
-    // XY
-    if ((angleXY > 0)&&(thisArm.solvedRotation.XY > 0))
-    {
-        thisArm.solvedRotation.XY = angleXY - thisArm.solvedRotation.XY;
-    }
-    else{
-        thisArm.solvedRotation.XY += angleXY;
-    }
-    // XZ
-    if ((angleXZ > 0)&&(thisArm.solvedRotation.XZ > 0))
-    {
-        thisArm.solvedRotation.XZ = angleXZ - thisArm.solvedRotation.XZ;
-    }
-    else{
-        thisArm.solvedRotation.XZ += angleXZ;
-    }
-    //thisArm.solvedRotation.XY = angleXY;
-    //thisArm.solvedRotation.XZ = angleXZ;
-
-    thisArm.rotateToAngle(this.AXIS.X,Vector.radToAngle(thisArm.solvedRotation.ZY));
-    thisArm.rotateToAngle(this.AXIS.Y,Vector.radToAngle(thisArm.solvedRotation.XY));
-    thisArm.rotateToAngle(this.AXIS.Z,Vector.radToAngle(thisArm.solvedRotation.XZ));
-
-
-    console.log("Угол поворота в плоскости ZY\n",
+    thisArm.rotateToAngle(planeAxis.[plane],Vector.radToAngle(thisArm.solvedRotation.[plane]));
+    console.log("Угол поворота в плоскости",plane,"\n",
         "thisArm.solvedRotation.ZY",thisArm.solvedRotation.ZY,"deg",Vector.radToAngle(thisArm.solvedRotation.ZY));
     //console.log("Угол поворота в плоскости XY\n",
     //    thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]])));
