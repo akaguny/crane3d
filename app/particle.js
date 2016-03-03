@@ -25,7 +25,7 @@ function Particle(name,modules, AXISES, limit ){
     this.storedPosition = this.defaultPosition;
     //
     this.defaultRotation = 0;
-    this.solvedRotation = 0;
+    this.solvedRotation = {ZY:0,XY:0,XZ:0};
 
 }
 
@@ -65,7 +65,7 @@ Particle.prototype.rotateToAngle = function(axises, angle)
     this.modules.m_trans.get_rotation(this.element3D, this.quatOld);
     this.modules.m_quat.multiply(this.quatNew, this.quatOld, this.quatNew);
     this.modules.m_trans.set_rotation_v(this.element3D, this.quatNew);
-
+    console.log(this.quatNew);
     // получим текущую ось и прибавим к ней текущий угол поворота
     //this.rotationSum[Particle.getCurrentAxis(axises)] += angle;
     //console.dir(this.rotationSum);
@@ -85,4 +85,7 @@ Particle.prototype.move = function(){
 
 Particle.prototype.get_defaultPosition = function(){
   return this.defaultPosition
+};
+Particle.prototype.get_currentPosition = function(){
+    return this.modules.m_trans.get_object_center(this.element3D,0)
 };
