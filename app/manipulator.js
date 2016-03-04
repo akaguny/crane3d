@@ -20,16 +20,20 @@ function Manipulator(modules)
     this.arms = {};
     this.fingers = {};
 
-
     this.nodes = {};
     var nodes = this.nodes;
 
     this.targetPoint = {};
     // массив с объектами
     this.gui = [];
-
-
-
+    //// Описание плоскостей
+    //this.planeNames = ["ZY","XY","XZ"];
+    //    this.planeAngle = {};
+    //    this.planeAxis = {
+    //        ZY:this.AXIS.X,
+    //        XY:this.AXIS.Y,
+    //        XZ:this.AXIS.Z
+    //    };
 
     // Вызываем функцию для заполнения объекта arm
     // Первый аргумент - массив имён, второй - тип/имя объекта
@@ -159,7 +163,7 @@ function Manipulator(modules)
 
 Manipulator.prototype.recalculatePosition = function (nodesNames, thisNodes, _thisTargetPoint) {
 
-    var arrayOfInitialPosition = nodesNames.map(function (item,i) {
+    var arrayOfInitialPosition = nodesNames.map(function (item) {
         return thisNodes[item].defaultPosition;
     });
     console.dir(arrayOfInitialPosition);
@@ -168,13 +172,7 @@ Manipulator.prototype.recalculatePosition = function (nodesNames, thisNodes, _th
     this.movePoints(nodesNames, thisNodes, newArrayOfInitialPosition);
     this.anglesByVectors(this.arms, this.armsNames, newArrayOfInitialPosition);
 };
-var planeNames = ["ZY","XY","XZ"],
-    planeAngle = {},
-    planeAxis = {
-        ZY:this.AXIS.X,
-        XY:this.AXIS.Y,
-        XZ:this.AXIS.Z
-    };
+
 Manipulator.prototype.movePoints = function(nodesNames, thisNodes, newArrayOfInitialPosition){
     nodesNames.forEach(function (item,i) {
         thisNodes[item].solvedPosition = newArrayOfInitialPosition[i];
@@ -185,7 +183,13 @@ Manipulator.prototype.movePoints = function(nodesNames, thisNodes, newArrayOfIni
 
 
 Manipulator.prototype.anglesByVectors = function(thisArms, armsNames, newArrayOfInitialPosition){
-
+    var planeNames = ["ZY","XY","XZ"],
+        planeAngle = {},
+        planeAxis = {
+            ZY:this.AXIS.X,
+            XY:this.AXIS.Y,
+            XZ:this.AXIS.Z
+        };
     for(var len = armsNames.length, i = len-1; i > 0; i--) {
         var vector1, vector2 = new Float32Array();
         var array1 = newArrayOfInitialPosition[i], // массив координат текущего узла
@@ -201,22 +205,22 @@ Manipulator.prototype.anglesByVectors = function(thisArms, armsNames, newArrayOf
         //var angleXY = Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]]));
         //var angleXZ = Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]]));
         var _this = this;
-        planeNames.forEach(function (item,j) {
-            _this.rotateOnAnglesInPlane(item,thisArms[armsNames[i]],planeAngle[item]);
+        planeNames.forEach(function (item) {
+            _this.rotateOnAnglesInPlane(item,thisArms[armsNames[i]],planeAngle[item],planeAxis);
         });
         //this.rotateOnAnglesInPlane(thisArms[armsNames[i]],angleZY,angleXY,angleXZ);
     }
 };
 // Поворот на угол в плоскости
-Manipulator.prototype.rotateOnAnglesInPlane = function(plane,thisArm,angle) {
-    if ((angle > 0)&&(thisArm.solvedRotation.[plane] > 0))
+Manipulator.prototype.rotateOnAnglesInPlane = function(plane,thisArm,angle,planeAxis) {
+    if ((angle > 0)&&(thisArm.solvedRotation.plane > 0))
     {
-        thisArm.solvedRotation.[plane] = angle - thisArm.solvedRotation.[plane];
+        thisArm.solvedRotation.plane = angle - thisArm.solvedRotation[plane];
     }
     else{
-        thisArm.solvedRotation.[plane] += angle;
+        thisArm.solvedRotation[plane] += angle;
     }
-    thisArm.rotateToAngle(planeAxis.[plane],Vector.radToAngle(thisArm.solvedRotation.[plane]));
+    thisArm.rotateToAngle(planeAxis[plane],Vector.radToAngle(thisArm.solvedRotation[plane]));
     console.log("Угол поворота в плоскости",plane,"\n",
         "thisArm.solvedRotation.ZY",thisArm.solvedRotation.ZY,"deg",Vector.radToAngle(thisArm.solvedRotation.ZY));
     //console.log("Угол поворота в плоскости XY\n",
