@@ -222,7 +222,7 @@ Manipulator.prototype.rotateOnAnglesInPlane = function(plane,thisArm,angle,plane
     }
     thisArm.rotateToAngle(planeAxis[plane],Vector.radToAngle(thisArm.solvedRotation[plane]));
     console.log("Угол поворота в плоскости",plane,"\n",
-        "thisArm.solvedRotation.ZY",thisArm.solvedRotation.ZY,"deg",Vector.radToAngle(thisArm.solvedRotation.ZY));
+        thisArm.name,thisArm.solvedRotation.ZY,"deg",Vector.radToAngle(thisArm.solvedRotation.ZY));
     //console.log("Угол поворота в плоскости XY\n",
     //    thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]])));
     //console.log("Угол поворота в плоскости XZ\n",
