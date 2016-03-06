@@ -4,9 +4,7 @@ function Vector(){
 }
 // Функция вычисления вектора (его координат)
 Vector.vectorFromCoord = function(coord1, coord2){
-    var coord1 = coord1, coord2 = coord2;
-    var vector = coord1.map(function(item,i){return coord2[i]-item});
-    return vector
+    return coord1.map(function(item,i){return coord2[i]-item});
 };
 
 // модуль(length) вектора равен квадратному корню из суммы квадратов его координат
@@ -56,5 +54,5 @@ Vector.radToAngle = function(rad){
 };
 
 Vector.normalize = function (vector) {
-    return normalizeVector
+    return Math.sqrt(vector[0]*vector[0]+vector[1]+vector[1])
 };

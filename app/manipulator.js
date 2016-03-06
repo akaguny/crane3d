@@ -218,19 +218,23 @@ Manipulator.prototype.anglesByVectors = function(thisArms, armsNames, newArrayOf
 };
 // Поворот на угол в плоскости
 Manipulator.prototype.rotateOnAnglesInPlane = function(plane,thisArm,angle,planeAxis,armname) {
-    if ((angle > 0)&&(thisArm.solvedRotation.plane > 0))
-    {
-        thisArm.solvedRotation.plane = angle - thisArm.solvedRotation[plane];
+    if (angle === thisArm.solvedRotation[plane]){
+        var angleDeg = 0;
     }
-    else{
-        thisArm.solvedRotation[plane] += angle;
+    else {
+        if ((angle > 0) && (thisArm.solvedRotation.plane > 0)) {
+            thisArm.solvedRotation[plane] = angle - thisArm.solvedRotation[plane];
+        }
+        else {
+            thisArm.solvedRotation[plane] += angle;
+        }
+        var angleDeg = Vector.radToAngle(thisArm.solvedRotation[plane]);
     }
-    var angleDeg = Vector.radToAngle(thisArm.solvedRotation[plane]);
     thisArm.rotateToAngle(planeAxis[plane],angleDeg);
     //console.log(armname+'_Angle'+plane);
     this.guiAdditional[armname+'_Angle'+plane].set_value(angleDeg);
-    console.log("Угол поворота в плоскости",plane,"\n",
-        thisArm.name,thisArm.solvedRotation.ZY,"deg",angleDeg);
+    //console.log("Угол поворота в плоскости",plane,"\n",
+    //    thisArm.name,thisArm.solvedRotation.ZY,"deg",angleDeg);
     //console.log("Угол поворота в плоскости XY\n",
     //    thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]])));
     //console.log("Угол поворота в плоскости XZ\n",
