@@ -5,8 +5,8 @@
     <title>Интерактивное приложение - манипулятор</title>
     <!-- Загружаем минифицированный движок -->
     <script src="lib/b4w.min.js"></script>
-    <!-- Загружаем библиотеку для работы с векторами и матрицами -->
-    <script src="lib/gl-matrix.js"></script>
+    <!--&lt;!&ndash; Загружаем библиотеку для работы с векторами и матрицами &ndash;&gt;-->
+    <!--<script src="lib/gl-matrix.js"></script>-->
         <!-- Подгружаем класс vector.js -->
     <script src="app/vector.js"></script>
     <!-- Подгружаем класс fabrik.js -->
@@ -32,6 +32,7 @@
     <style>
         #canvas3d{position:absolute;left:0;top:0;width:100%;height:100%}
         #gui{position: absolute;left:0;top:0}
+        #guiAngles{position: absolute;right: 0;bottom: 0}
     </style>
 </head>
 <body >
@@ -58,6 +59,48 @@
             </legend>
             <label>
                 <input type="text" id="TargetPointCoord_Z">
+            </label>
+        </fildset>
+    </form>
+</div>
+<div id="guiAngles">
+    <form name="">
+        <fildset>
+            <legend>
+                Arm_1
+            </legend>
+            <label>
+                <input type="text" id="Arm_1_AngleZY">
+            </label>
+            <label>
+                <input type="text" id="Arm_1_AngleXY">
+            </label>
+            <label>
+                <input type="text" id="Arm_1_AngleXZ">
+            </label>
+            <legend>
+                Arm_2
+            </legend>
+            <label>
+                <input type="text" id="Arm_2_AngleZY">
+            </label>
+            <label>
+                <input type="text" id="Arm_2_AngleXY">
+            </label>
+            <label>
+                <input type="text" id="Arm_2_AngleXZ">
+            </label>
+            <legend>
+                Arm_3
+            </legend>
+            <label>
+                <input type="text" id="Arm_3_AngleZY">
+            </label>
+            <label>
+                <input type="text" id="Arm_3_AngleXY">
+            </label>
+            <label>
+                <input type="text" id="Arm_3_AngleXZ">
             </label>
         </fildset>
     </form>

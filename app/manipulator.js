@@ -13,6 +13,9 @@ function Manipulator(modules)
 
     // Массив ID html форм
     var guiHtmlId = ["TargetPointCoord_X","TargetPointCoord_Y","TargetPointCoord_Z"];
+    var guiAnglesHtmlId = ["Arm_1_AngleZY","Arm_1_AngleXY","Arm_1_AngleXZ",
+            "Arm_2_AngleZY","Arm_2_AngleXY","Arm_2_AngleXZ",
+            "Arm_3_AngleZY","Arm_3_AngleXY","Arm_3_AngleXZ"];
 
     this.modules = modules;
     // Создадим хеш-таблицу(хеш/словарь/ассоцаативный массив, состоящий из
@@ -26,6 +29,7 @@ function Manipulator(modules)
     this.targetPoint = {};
     // массив с объектами
     this.gui = [];
+    this.guiAdditional = {};
     //// Описание плоскостей
     //this.planeNames = ["ZY","XY","XZ"];
     //    this.planeAngle = {};
@@ -53,6 +57,7 @@ function Manipulator(modules)
     this.createObjectsByArray(nodesNames, "node");
     this.createObjectsByArray(targetPointName, "targetPoint");
     this.createObjectsByArray(guiHtmlId, "gui");
+    this.createObjectsByArray(guiAnglesHtmlId, "guiAdditional");
     // установить текущие значения координат TargetPoint
     var _thisTargetPoint = this.targetPoint[0];
     console.log(this.gui);
@@ -206,13 +211,13 @@ Manipulator.prototype.anglesByVectors = function(thisArms, armsNames, newArrayOf
         //var angleXZ = Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]]));
         var _this = this;
         planeNames.forEach(function (item) {
-            _this.rotateOnAnglesInPlane(item,thisArms[armsNames[i]],planeAngle[item],planeAxis);
+            _this.rotateOnAnglesInPlane(item,thisArms[armsNames[i]],planeAngle[item],planeAxis,armsNames[i]);
         });
         //this.rotateOnAnglesInPlane(thisArms[armsNames[i]],angleZY,angleXY,angleXZ);
     }
 };
 // Поворот на угол в плоскости
-Manipulator.prototype.rotateOnAnglesInPlane = function(plane,thisArm,angle,planeAxis) {
+Manipulator.prototype.rotateOnAnglesInPlane = function(plane,thisArm,angle,planeAxis,armname) {
     if ((angle > 0)&&(thisArm.solvedRotation.plane > 0))
     {
         thisArm.solvedRotation.plane = angle - thisArm.solvedRotation[plane];
@@ -220,9 +225,12 @@ Manipulator.prototype.rotateOnAnglesInPlane = function(plane,thisArm,angle,plane
     else{
         thisArm.solvedRotation[plane] += angle;
     }
-    thisArm.rotateToAngle(planeAxis[plane],Vector.radToAngle(thisArm.solvedRotation[plane]));
+    var angleDeg = Vector.radToAngle(thisArm.solvedRotation[plane]);
+    thisArm.rotateToAngle(planeAxis[plane],angleDeg);
+    //console.log(armname+'_Angle'+plane);
+    this.guiAdditional[armname+'_Angle'+plane].set_value(angleDeg);
     console.log("Угол поворота в плоскости",plane,"\n",
-        thisArm.name,thisArm.solvedRotation.ZY,"deg",Vector.radToAngle(thisArm.solvedRotation.ZY));
+        thisArm.name,thisArm.solvedRotation.ZY,"deg",angleDeg);
     //console.log("Угол поворота в плоскости XY\n",
     //    thisArms[armsNames[i]].name,Vector.radToAngle(Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]])));
     //console.log("Угол поворота в плоскости XZ\n",
@@ -270,6 +278,9 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
                 break;
             case "gui":
                 this.gui[i] = new CraneGUI(names[i]);
+                break;
+            case "guiAdditional":
+                this.guiAdditional[names[i]] = new CraneGUI(names[i]);
                 break;
                     }
 
