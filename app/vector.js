@@ -18,7 +18,7 @@ Vector.module = function (vector) {
         return sum + current
     });
     // Вычисляем квадратный корень
-    var length = Math.sqrt(step2, 2);
+    var length = Math.sqrt(step2);
     return length;
 };
 
@@ -37,10 +37,13 @@ Vector.scalMultVectors = function (vector1,vector2) {
         return sum + (current * vector2[i])
     }, 0);
 };
-
+Vector.normalize = function (vector) {
+    return Math.sqrt(((vector[0]*vector[0]/Vector.module(vector))+(vector[1]*vector[1]/Vector.module(vector))))
+};
 // Функция для вычисления угла между 2 векторами
 Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     // скалярное произведение векторов
+    //var vector1 = Vector.normalize(vector1), vector2 = Vector.normalize(vector2);
     var vector1 = vector1, vector2 = vector2;
     // Вычисляем косинус угла между векторами
     //var cosA = Vector.scalMultVectors / (Vector.module(vector1) * Vector.module(vector2));
@@ -53,6 +56,3 @@ Vector.radToAngle = function(rad){
     return rad * (180/Math.PI)
 };
 
-Vector.normalize = function (vector) {
-    return Math.sqrt(vector[0]*vector[0]+vector[1]+vector[1])
-};

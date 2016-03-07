@@ -34,24 +34,24 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol) {
     // метод массива .length возвращает количество его элементов
     for (var i = 0, len = arrayOfInitialPositions.length; i < len - 1; i++) {
         distBeetweenJoints[i] = distBetweenPoints(arrayOfInitialPositions[i], arrayOfInitialPositions[i + 1]);
-        console.log("Расстояние между точками ", i, " и ", (i + 1), " = ", distBeetweenJoints[i]);
+        //console.log("Расстояние между точками ", i, " и ", (i + 1), " = ", distBeetweenJoints[i]);
     }
     // расстояние между стартовым узлом и целевой точкой
     distBeetweenStartPointAndTarget = distBetweenPoints(arrayOfInitialPositions[0], TargetPoint);
-    console.log("Расстояние между стартовым узлом и целевой точкой " + distBeetweenStartPointAndTarget);
+    //console.log("Расстояние между стартовым узлом и целевой точкой " + distBeetweenStartPointAndTarget);
 
     // Сложение дистанций между узлами
     sumOfInitialDistances = distBeetweenJoints.reduce(function (sum, current) {
         return sum + current
     });
-    console.log("Общее расстояние между узлами: " + sumOfInitialDistances);
+    //console.log("Общее расстояние между узлами: " + sumOfInitialDistances);
     // Сравниваем общее расстояние между узлами(общую длину) и расстояние до цели
     // Если цель не достежима, то максимально приближаемся к ней
     // Если нет, то приближаемся к ней, пока не достигнем максимального отдаления
     // заданное переменной tolerance
     if (distBeetweenStartPointAndTarget > sumOfInitialDistances) {
         var newArrayOfInitialPositions = arrayOfInitialPositions;
-        window.alert("Цель не достижима!");
+        //window.alert("Цель не достижима!");
         for (var i = 0, len = arrayOfInitialPositions.length; i < (len - 1); i++) {
 
             // Найдем дистанцию r[i] между целью t и узлом p[i]
@@ -68,12 +68,12 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol) {
             var secondStep = TargetPoint.map(function (item) {
                 return item * lambdaDistance[i]
             });
-            console.log("firstStep ", firstStep);
-            console.log("secondStep ", secondStep);
+            //console.log("firstStep ", firstStep);
+            //console.log("secondStep ", secondStep);
             // конец вычисления первого и второго слагаемых
             for (var j = 0; j < firstStep.length; j++) {
                 // новая позиция узлов для максимальной близости конечного к цели
-                console.log(firstStep[j] + secondStep[j]);
+                //console.log(firstStep[j] + secondStep[j]);
                 var sumOfFirstStepAndSecond = firstStep[j] + secondStep[j];
                 newArrayOfInitialPositions[i + 1][j] = sumOfFirstStepAndSecond;
             }
@@ -91,11 +91,11 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol) {
     }
     else {
         var count = 1;
-        window.alert("Цель достижима!");
+        //window.alert("Цель достижима!");
         // если цель достижима, то сохраним позицию нулевого узла
         var nullPoint = arrayOfInitialPositions[0];
         var DIFa = distBetweenPoints(arrayOfInitialPositions[arrayOfInitialPositions.length - 1], TargetPoint);
-        console.log("DIFa = " + DIFa);
+        //console.log("DIFa = " + DIFa);
         do {
             // Этап 1: прямое следование
             // ставим конечный узел arrayOfInitialPositions[arrayOfInitialPositions.length] на позицию цели
@@ -149,7 +149,7 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol) {
                         arrayOfInitialPositions[i+1][j] = sumOfFirstStepAndSecond;
                     }
                 }
-            console.log("интераций на решение задачи",count++);
+            //console.log("интераций на решение задачи",count++);
                 DIFa = distBetweenPoints(arrayOfInitialPositions[arrayOfInitialPositions.length - 1], TargetPoint);
             //console.log(DIFa);
         }
