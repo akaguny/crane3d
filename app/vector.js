@@ -55,4 +55,8 @@ Vector.angleBetweenTwoVectors = function(vector1, vector2) {
 Vector.radToAngle = function(rad){
     return rad * (180/Math.PI)
 };
+// degToRad градусы в радианы
+Vector.degToRad = function (deg){
+    return (deg * (Math.PI / 180));
+};
 
