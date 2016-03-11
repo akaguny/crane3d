@@ -11,7 +11,6 @@ function Particle(name,modules, AXISES, limit ){
     this.modules = modules; // указывает на переменную modules в crane.js, а переменная объект, являющееся хэш таблицей
     // элементы которой указывают на модули движка
     this.element3D = this.modules.m_scenes.get_object_by_name(name);
-
     this.quatNew = new Float32Array(4);
     this.quatOld = new Float32Array(4);
     this.rotationSum = {x:0, y:0, z:0};
@@ -28,7 +27,11 @@ function Particle(name,modules, AXISES, limit ){
     this.solvedRotation = {ZY:0,XY:0,XZ:0};
 
 }
+Particle.prototype.hide = function(){
 
+    this.modules.m_scenes.hide_object(this.element3D);
+
+};
 // 1.1 Методы в прототип
 // функция eventListener - находит html элемент, вешает на него событие
 Particle.prototype.eventListener = function (name,button,event,func){
@@ -63,6 +66,7 @@ Particle.prototype.move = function(){
     var _thisObject3D = this.element3D;
     // перемещение объекта set_translation(объект, x,y,z) x,y,z - координаты в глобальной системе
     this.modules.m_trans.set_translation(_thisObject3D,this.solvedPosition[0],this.solvedPosition[1],this.solvedPosition[2]);
+    //console.log("\n",this.modules.m_trans.get_translation(_thisObject3D),"\n");
     // для нового перемещения нужно будет текущее положение объекта, поэтомуц получим и сохраним его в свойстве
     this.defaultPosition = this.modules.m_trans.get_object_center(_thisObject3D,0);
 };

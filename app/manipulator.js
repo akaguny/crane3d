@@ -48,9 +48,11 @@ function Manipulator(modules)
     this.createObjectsByArray(guiAnglesHtmlId, "guiAdditional");
     // установить текущие значения координат TargetPoint
     var TargetPoint = this.targetPoint[0];
-    console.log(this.gui);
     // сохраняем контект
     var self = this;
+    function demonstrate() {
+        self.demonstrate(nodesNames, self.nodes, TargetPoint)
+    }
     this.gui.forEach(function (item,i) {
         item.set_value(TargetPoint.defaultPosition[i]);
         item.addEventListener("blur",function() {
@@ -58,18 +60,31 @@ function Manipulator(modules)
                 TargetPoint.solvedPosition[i] = item.get_value();
                 TargetPoint.move();
                 self.recalculatePosition(nodesNames, self.nodes, TargetPoint);
+                setTimeout(demonstrate,1000);
                 item.set_value(TargetPoint.solvedPosition[i]);
             }
             })
     });
-    this.recalculatePosition(nodesNames, self.nodes, TargetPoint);
+    //this.recalculatePosition(nodesNames, self.nodes, TargetPoint);
+    //(function(){
+    //    window.setTimeout(self.demonstrate(nodesNames,self.nodes,TargetPoint,5),1)
+    //    window.setTimeout(window.alert("kaput"),0)
+    //}());
 }
 // Функция, реализующая алгоритм принимает массив координат точек узлов и массив координаты целевой точки
 //console.log("\n\n\n",[this.nodes["Node_0"]["defaultPosition"], this.nodes["Node_1"]["defaultPosition"], this.nodes["Node_2"]["defaultPosition"], this.nodes["Node_3"]["defaultPosition"], this.nodes["Node_4"]["defaultPosition"]],this.targetPoint["targetPoint"]["defaultPosition"],"\n\n\n")
 //Manipulator.prototype.clenchFingers = function (){
 //
 //};
-
+Manipulator.prototype.demonstrate = function(nodesNames, nodes,TargetPoint){
+    var self = this;
+      for (var i = -0.9; i < 1;i+=0.01){
+          TargetPoint.solvedPosition = [i*3, i+1, i-1];
+          console.log(TargetPoint.solvedPosition);
+          setTimeout(function() {TargetPoint.move();
+              self.recalculatePosition(nodesNames, nodes, TargetPoint);},1000);
+      }
+};
 
 Manipulator.prototype.recalculatePosition = function (nodesNames, thisNodes, _thisTargetPoint) {
     console.log("Начальные позиции");
@@ -118,7 +133,7 @@ Manipulator.prototype.anglesByVectors = function(thisArms, armsNames, newArrayOf
         var _this = this;
         console.log("Новые углы(в рад)");
         planeNames.forEach(function (item) {
-            _this.rotateOnAnglesInPlane(item,thisArms[armsNames[i]],planeAngle[item],planeAxis,armsNames[i]);
+            //_this.rotateOnAnglesInPlane(item,thisArms[armsNames[i]],planeAngle[item],planeAxis,armsNames[i]);
         });
     }
 };
@@ -152,6 +167,7 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
         switch (type){
             case "arm":
                 this.arms[names[i]] = new Arm(names[i],this.modules,this.AXIS,{x:180, y:180, z:180});
+                this.arms[names[i]].hide();
                 break;
             case "finger":
 

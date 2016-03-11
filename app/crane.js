@@ -6,9 +6,10 @@ b4w.register("crane", function(exports, require) {
     var m_main = require("main");
     var m_scenes = require("scenes");
     var m_trans = require("transform");
+    var m_vec3 = require("vec3");
+    var m_vec4 = require("vec4");
     var m_quat = require("quat");
     var m_arm = require("armature");
-    var m_vec3 = require("vec3");
 
     var modules =
     {
@@ -17,9 +18,10 @@ b4w.register("crane", function(exports, require) {
         m_main : m_main,
         m_scenes : m_scenes,
         m_trans : m_trans,
+        m_vec3:m_vec3,
+        m_vec4:m_vec4,
         m_quat : m_quat,
-        m_arm : m_arm,
-        m_vec3:m_vec3
+        m_arm : m_arm
     };
 
 
