@@ -125,7 +125,7 @@ FABRIK.algorithm = function(arrayOfInitialPositions, TargetPoint, tol) {
 
             // Этап 2: обратное следование
             // Восстанавливаем корневому элементу его позицию
-            arrayOfInitialPositions[0] = nullPoint;
+            arrayOfInitialPositions[0] = [0, 0, 0];
             //console.dir(arrayOfInitialPositions);
             for (var i = 0, len = arrayOfInitialPositions.length - 1; i < (len - 1); i++) {
                 // Найдем дистанцию r[i] между целью t и узлом p[i]
