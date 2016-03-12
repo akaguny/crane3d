@@ -6,11 +6,11 @@ function CraneGUI(id) {
 }
 
 CraneGUI.prototype.set_value = function (value) {
-    //if (this.type === "INPUT")
+    if (this.type === "INPUT")
         this.htmlElement.value = value;
 };
 CraneGUI.prototype.get_value = function () {
-    //if (this.type === "INPUT")
+    if (this.type === "INPUT")
     return +this.htmlElement.value
 };
 CraneGUI.prototype.addEventListener = function (event,func) {

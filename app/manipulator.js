@@ -17,7 +17,7 @@ function Manipulator(modules)
     var guiAnglesHtmlId = ["Arm_1_AngleZY","Arm_1_AngleXY","Arm_1_AngleXZ",
             "Arm_2_AngleZY","Arm_2_AngleXY","Arm_2_AngleXZ",
             "Arm_3_AngleZY","Arm_3_AngleXY","Arm_3_AngleXZ"];
-
+    var guiDemoHtmlId = "demoRun";
     this.modules = modules;
     // Хеш-таблицы(хеш/словарь/ассоцаативный массив),из
     // объектов соответствующих классов)
@@ -31,6 +31,7 @@ function Manipulator(modules)
     // массив с объектами
     this.gui = [];
     this.guiAdditional = {};
+    this.guiDemo = {};
 
     // Вызываем функцию для заполнения объекта arm
     // Первый аргумент - массив имён, второй - тип/имя объекта
@@ -46,13 +47,11 @@ function Manipulator(modules)
     this.createObjectsByArray(targetPointName, "targetPoint");
     this.createObjectsByArray(guiHtmlId, "gui");
     this.createObjectsByArray(guiAnglesHtmlId, "guiAdditional");
+    this.createObjectsByArray(guiDemoHtmlId, "guiDemo");
     // установить текущие значения координат TargetPoint
     var TargetPoint = this.targetPoint[0];
     // сохраняем контект
     var self = this;
-    function demonstrate() {
-        self.demonstrate(nodesNames, self.nodes, TargetPoint)
-    }
     this.gui.forEach(function (item,i) {
         item.set_value(TargetPoint.defaultPosition[i]);
         item.addEventListener("blur",function() {
@@ -60,30 +59,42 @@ function Manipulator(modules)
                 TargetPoint.solvedPosition[i] = item.get_value();
                 TargetPoint.move();
                 self.recalculatePosition(nodesNames, self.nodes, TargetPoint);
-                setTimeout(demonstrate,1000);
+                //setTimeout(demonstrate,1000);
                 item.set_value(TargetPoint.solvedPosition[i]);
             }
             })
     });
-    //this.recalculatePosition(nodesNames, self.nodes, TargetPoint);
-    //(function(){
-    //    window.setTimeout(self.demonstrate(nodesNames,self.nodes,TargetPoint,5),1)
-    //    window.setTimeout(window.alert("kaput"),0)
-    //}());
+    //function demonstrate() {
+    //    self.demonstrate(nodesNames, self.nodes, TargetPoint)
+    //}
+    this.guiDemo.addEventListener("click",function(){
+        var delay = 1500;
+        self.demonstrate(self,nodesNames,self.nodes, TargetPoint,delay);
+    });
 }
 // Функция, реализующая алгоритм принимает массив координат точек узлов и массив координаты целевой точки
 //console.log("\n\n\n",[this.nodes["Node_0"]["defaultPosition"], this.nodes["Node_1"]["defaultPosition"], this.nodes["Node_2"]["defaultPosition"], this.nodes["Node_3"]["defaultPosition"], this.nodes["Node_4"]["defaultPosition"]],this.targetPoint["targetPoint"]["defaultPosition"],"\n\n\n")
 //Manipulator.prototype.clenchFingers = function (){
 //
 //};
-Manipulator.prototype.demonstrate = function(nodesNames, nodes,TargetPoint){
-    var self = this;
-      for (var i = -0.9; i < 1;i+=0.01){
-          TargetPoint.solvedPosition = [i*3, i+1, i-1];
-          console.log(TargetPoint.solvedPosition);
-          setTimeout(function() {TargetPoint.move();
-              self.recalculatePosition(nodesNames, nodes, TargetPoint);},1000);
-      }
+Manipulator.prototype.demonstrate = function(self,nodesNames, nodes,TargetPoint,delay){
+    window.alert("HI");
+    var demoTargetPointCoordinates = [[0,2,-2],[1,2.5,-2],[1.5,2.3,-1.8],[1,3,-1],[1.7,2.1,-1.5],[0.8,2,-2]];
+    function runWithTimouts(delay,i,demoTargetPointCoordinates){
+        setTimeout(function () {
+            TargetPoint.solvedPosition = demoTargetPointCoordinates;
+            TargetPoint.move();
+        }, delay*i*1.2);
+        console.log(TargetPoint);
+
+        setTimeout(function () {
+            self.recalculatePosition(nodesNames, nodes, TargetPoint);
+        }, delay*i*1.4);
+        console.log("delay*i",delay*i,"\n","delay*i*i",delay*i*i)
+    }
+    for (var i = 0,len = demoTargetPointCoordinates.length;i<len;i++) {
+        runWithTimouts(delay,i,demoTargetPointCoordinates[i])
+    }
 };
 
 Manipulator.prototype.recalculatePosition = function (nodesNames, thisNodes, _thisTargetPoint) {
@@ -184,6 +195,9 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
                 break;
             case "guiAdditional":
                 this.guiAdditional[names[i]] = new CraneGUI(names[i]);
+                break;
+            case "guiDemo":
+                this.guiDemo = new CraneGUI(names);
                 break;
                     }
 
