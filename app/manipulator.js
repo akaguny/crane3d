@@ -130,21 +130,22 @@ Manipulator.prototype.anglesByVectors = function(thisArms, armsNames, newArrayOf
         };
     for(var len = armsNames.length, i = len-1; i > 0; i--) {
         var vector1, vector2 = new Float32Array();
-        var array1 = newArrayOfInitialPosition[i], // массив координат текущего узла
-            array2 = newArrayOfInitialPosition[i-1], // массив координат предидущего узла
-            array3 = newArrayOfInitialPosition[i+1]; // массив координат следующего узла
-        vector1 = Vector.vectorFromCoord(array2,array1);
-        vector2 = Vector.vectorFromCoord(array1,array3);
+        var previousArray = newArrayOfInitialPosition[i-1], // массив координат предидущего узла
+            currentArray = newArrayOfInitialPosition[i], // массив координат текущего узла
+            nextArray = newArrayOfInitialPosition[i+1]; // массив координат следующего узла
+        vector1 = Vector.vectorFromCoord(currentArray,previousArray);
+        vector2 = Vector.vectorFromCoord(nextArray,currentArray);
         console.log("2 вектора, формирующие угол");
-        console.log(vector1[0],vector1[1],vector1[2]);
-        console.log(vector2[0],vector2[1],vector2[2]);
-        planeAngle.ZY = Vector.angleBetweenTwoVectors([vector1[1],vector1[2]],[vector2[1],vector2[2]]);
-        planeAngle.XY = Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]]);
-        planeAngle.XZ = Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]]);
+        console.log(vector1,vector2);
+        //console.log(vector2[0],vector2[1],vector2[2]);
+        //planeAngle.ZY = Vector.angleBetweenTwoVectors([vector1[1],vector1[2]],[vector2[1],vector2[2]]);
+        //planeAngle.XY = Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]]);
+        //planeAngle.XZ = Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]]);
+        console.log(armsNames[i],"Angle\n", Vector.radToAngle(Vector.angleBetweenTwoVectors(vector1,vector2)));
         var _this = this;
         console.log("Новые углы(в рад)");
         planeNames.forEach(function (item) {
-            _this.rotateOnAnglesInPlane(item,thisArms[armsNames[i]],planeAngle[item],planeAxis,armsNames[i]);
+            //_this.rotateOnAnglesInPlane(item,thisArms[armsNames[i]],planeAngle[item],planeAxis,armsNames[i]);
         });
     }
 };
