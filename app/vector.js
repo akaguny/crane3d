@@ -49,7 +49,6 @@ Vector.norm = function (vector) {
 };
 // Функция для вычисления угла между 2 векторами
 Vector.angleBetweenTwoVectors = function(vector1, vector2) {
-    console.log(vector2);
     // скалярное произведение векторов
     //var vector1 = Vector.normalize(vector1), vector2 = Vector.normalize(vector2);
     //var vector1 = vector1, vector2 = vector2;
@@ -58,7 +57,6 @@ Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     //var rad = Math.acos(cosA);
     //return Math.atan2(Math.pow(Vector.module(Vector.vecMultVectors(vector1,vector2)),2),Vector.scalMultVectors(vector1,vector2))
     //return Math.atan2(vector1[0]*vector2[1]-vector2[0]*vector1[1],vector1[0]*vector2[0]+vector1[1]*vector2[1])
-    console.log(Vector.dot(vector1,vector2));
     return Math.atan2(Vector.norm(Vector.cross(vector1,vector2)),Vector.dot(vector1,vector2))
 };
 
