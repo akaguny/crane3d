@@ -43,8 +43,13 @@ Vector.dot = function (vector1,vector2) {
 Vector.norm = function (vector) {
     //return Math.sqrt(((vector[0]*vector[0]/Vector.module(vector))+(vector[1]*vector[1]/Vector.module(vector))))
     return vector.reduce(function(sum,current){
-        return sum + current*current
+        return sum += current*current;
     });
+    //var sum = vector.reduce(function(sum,current){
+    //    return sum += current*current;
+    //});
+    /// Vector.module(vector)
+    //return Math.sqrt(sum)
 
 };
 // Функция для вычисления угла между 2 векторами
