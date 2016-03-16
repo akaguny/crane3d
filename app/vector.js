@@ -23,33 +23,38 @@ Vector.module = function (vector) {
 };
 
 // Векторное произведение векторов
-//Vector.vecMultVectors = function(a, b) {
-//    var c =[];
-//    c[0] = a[1] * b[2] - a[2] * b[1]; //x
-//    c[1] = a[2] * b[0] - a[0] * b[2]; //y
-//    c[2] = a[0] * b[1] - a[1] * b[0]; //z
-//    console.log(c);
-//    return c;
-//};
+Vector.cross = function(vec1, vec2) {
+    // Todo: универсальная функция
+    var c =[];
+    c[0] = vec1[1] * vec2[2] - vec1[2] * vec2[1]; //x
+    c[1] = vec1[2] * vec2[0] - vec1[0] * vec2[2]; //y
+    c[2] = vec1[0] * vec2[1] - vec1[1] * vec2[0]; //z
+    console.log(c);
+    return c;
+};
 // Скалярное произведение векторов
-Vector.scalMultVectors = function (vector1,vector2) {
+Vector.dot = function (vector1,vector2) {
     return vector1.reduce(function(sum, current, i) {
         return sum + (current * vector2[i])
     }, 0);
 };
-Vector.normalize = function (vector) {
-    return Math.sqrt(((vector[0]*vector[0]/Vector.module(vector))+(vector[1]*vector[1]/Vector.module(vector))))
+Vector.norm = function (vector) {
+    return vector.reduce(function(sum,current){
+        return sum + current*current
+    });
+    //return Math.sqrt(((vector[0]*vector[0]/Vector.module(vector))+(vector[1]*vector[1]/Vector.module(vector))))
 };
 // Функция для вычисления угла между 2 векторами
 Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     // скалярное произведение векторов
     //var vector1 = Vector.normalize(vector1), vector2 = Vector.normalize(vector2);
-    var vector1 = vector1, vector2 = vector2;
+    //var vector1 = vector1, vector2 = vector2;
     // Вычисляем косинус угла между векторами
     //var cosA = Vector.scalMultVectors / (Vector.module(vector1) * Vector.module(vector2));
     //var rad = Math.acos(cosA);
     //return Math.atan2(Math.pow(Vector.module(Vector.vecMultVectors(vector1,vector2)),2),Vector.scalMultVectors(vector1,vector2))
-    return Math.atan2(vector1[0]*vector2[1]-vector2[0]*vector1[1],vector1[0]*vector2[0]+vector1[1]*vector2[1])
+    return Math.atan2(Vector.norm(Vector.cross(vector1,vector2),Vector.dot(vector1,vector2)))
+    //return Math.atan2(vector1[0]*vector2[1]-vector2[0]*vector1[1],vector1[0]*vector2[0]+vector1[1]*vector2[1])
 };
 
 Vector.radToAngle = function(rad){
