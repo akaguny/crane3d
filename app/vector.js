@@ -24,12 +24,16 @@ Vector.module = function (vector) {
 
 // Векторное произведение векторов
 Vector.cross = function(vec1, vec2) {
-    // Todo: универсальная функция
+    //// Todo: универсальная функция
+    //var c =[];
+    //c[0] = vec1[1] * vec2[2] - vec1[2] * vec2[1]; //x
+    //c[1] = vec1[2] * vec2[0] - vec1[0] * vec2[2]; //y
+    //c[2] = vec1[0] * vec2[1] - vec1[1] * vec2[0]; //z
+    //return c;
     var c =[];
-    c[0] = vec1[1] * vec2[2] - vec1[2] * vec2[1]; //x
-    c[1] = vec1[2] * vec2[0] - vec1[0] * vec2[2]; //y
+    c[0] = vec1[1] * 0 - 0 * vec2[1]; //x
+    c[1] = 0 * vec2[0] - vec1[0] * 0; //y
     c[2] = vec1[0] * vec2[1] - vec1[1] * vec2[0]; //z
-    console.log(c);
     return c;
 };
 // Скалярное произведение векторов
@@ -53,8 +57,8 @@ Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     //var cosA = Vector.scalMultVectors / (Vector.module(vector1) * Vector.module(vector2));
     //var rad = Math.acos(cosA);
     //return Math.atan2(Math.pow(Vector.module(Vector.vecMultVectors(vector1,vector2)),2),Vector.scalMultVectors(vector1,vector2))
-    return Math.atan2(Vector.norm(Vector.cross(vector1,vector2),Vector.dot(vector1,vector2)))
     //return Math.atan2(vector1[0]*vector2[1]-vector2[0]*vector1[1],vector1[0]*vector2[0]+vector1[1]*vector2[1])
+    return Math.atan2(Vector.norm(Vector.cross(vector1,vector2)),Vector.dot(vector1,vector2))
 };
 
 Vector.radToAngle = function(rad){

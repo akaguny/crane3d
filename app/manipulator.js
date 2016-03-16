@@ -144,30 +144,33 @@ Manipulator.prototype.anglesByVectors = function(thisArms, armsNames, newArrayOf
         var _this = this;
         console.log("Новые углы(в рад)");
         planeNames.forEach(function (item) {
-            //_this.rotateOnAnglesInPlane(item,thisArms[armsNames[i]],planeAngle[item],planeAxis,armsNames[i]);
+            _this.rotateOnAnglesInPlane(item,thisArms[armsNames[i]],planeAngle[item],planeAxis,armsNames[i]);
         });
     }
 };
 // Поворот на угол в плоскости
 Manipulator.prototype.rotateOnAnglesInPlane = function(plane,arm,angle,planeAxis,armname) {
-    if (angle === arm.solvedRotation[plane]){
-        var angleDeg = 0;
-    }
-    else {
-        if ((angle > 0) && (arm.solvedRotation[plane] > 0)) {
-            if(angle > arm.solvedRotation[plane]) {
-                arm.solvedRotation[plane] = angle - arm.solvedRotation[plane];
-            }
-            else{
-                arm.solvedRotation[plane] -= angle;
-            }
-        }
-        else {
-            arm.solvedRotation[plane] += angle;
-        }
+    //arm.solvedRotation[plane] = 0;
+    //if (angle === arm.solvedRotation[plane]){
+    //    var angleDeg = 0;
+    //}
+    //else {
+    //    if ((angle > 0) && (arm.solvedRotation[plane] > 0)) {
+    //        if(angle > arm.solvedRotation[plane]) {
+    //            arm.solvedRotation[plane] = angle - arm.solvedRotation[plane];
+    //        }
+    //        else{
+    //            arm.solvedRotation[plane] -= angle;
+    //        }
+    //    }
+    //    else {
+    //        arm.solvedRotation[plane] += angle;
+    //    }
+        arm.solvedRotation[plane] = angle;
         var angleDeg = Vector.radToAngle(arm.solvedRotation[plane]);
+    console.log(angleDeg);
         arm.rotateToAngle(planeAxis[plane],angleDeg);
-    }
+    //}
     console.log(armname+'_Angle'+plane,arm.solvedRotation[plane]);
     this.guiAdditional[armname+'_Angle'+plane].set_value(angleDeg);
 };
@@ -178,7 +181,7 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
         switch (type){
             case "arm":
                 this.arms[names[i]] = new Arm(names[i],this.modules,this.AXIS,{x:180, y:180, z:180});
-                this.arms[names[i]].hide();
+                //this.arms[names[i]].hide(); // скрытие
                 break;
             case "finger":
 
