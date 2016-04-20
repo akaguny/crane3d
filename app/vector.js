@@ -65,7 +65,30 @@ Vector.angleBetweenTwoVectors = function(vector1, vector2) {
     return Math.atan2(Vector.norm(Vector.cross(vector1,vector2)),Vector.dot(vector1,vector2))
 };
 
-
+// формулы и алгоритм http://www.cleverstudents.ru/vectors/condition_of_vectors_perpendicularity.html#finding_perpendicular_vector
+Vector.perpendicularTo2dRadiusVector = function(r_vector){
+    if (r_vector[0].length == 2) { // двумерный
+        var x2 = 3;
+        var y2 = [];
+        r_vector[0][1] != 0 ?
+            y2 = r_vector.map(function (item) {
+                return -(item[0] * x2) / item[1]
+            }) :
+            y2 = r_vector.map(function (item, i) {
+                return i != 0 ? -(item[0] * x2) / item[1] : 0
+            });
+        log(y2)
+        var perpendicularsR_Vectors = r_vector.map(function (item, i) {
+            return [x2, y2[i]]
+        });
+        perpendicularsR_Vectors.unshift([3, 0]); // добавляем горизонтальынй перпендикуляр если первоначальный вектор(плечо)
+        // может изменять свое положение относительно оси y
+        return perpendicularsR_Vectors
+    }
+    else {
+        console.warn("r_vector > 3")
+    }
+};
 Vector.radToAngle = function(rad){
     return rad * (180/Math.PI)
 };
