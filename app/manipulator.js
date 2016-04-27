@@ -72,11 +72,6 @@ function Manipulator(modules)
         self.demonstrate(self,nodesNames,self.nodes, TargetPoint,delay);
     });
 }
-// Функция, реализующая алгоритм принимает массив координат точек узлов и массив координаты целевой точки
-//console.log("\n\n\n",[this.nodes["Node_0"]["defaultPosition"], this.nodes["Node_1"]["defaultPosition"], this.nodes["Node_2"]["defaultPosition"], this.nodes["Node_3"]["defaultPosition"], this.nodes["Node_4"]["defaultPosition"]],this.targetPoint["targetPoint"]["defaultPosition"],"\n\n\n")
-//Manipulator.prototype.clenchFingers = function (){
-//
-//};
 Manipulator.prototype.demonstrate = function(self,nodesNames, nodes,TargetPoint,delay){
     window.alert("HI");
     var demoTargetPointCoordinates = [[0,2,-2],[1,2.5,-2],[1.5,2.3,-1.8],[1,3,-1],[1.7,2.1,-1.5],[0.8,2,-2]];
@@ -128,26 +123,17 @@ Manipulator.prototype.anglesByVectors = function(thisArms, armsNames, newArrayOf
             XY:this.AXIS.Y,
             XZ:this.AXIS.Z
         };
-    for(var len = armsNames.length, i = len-1; i > 0; i--) {
-        var vector1, vector2 = new Float32Array();
-        var previousArray = newArrayOfInitialPosition[i-1], // массив координат предидущего узла
-            currentArray = newArrayOfInitialPosition[i], // массив координат текущего узла
-            nextArray = newArrayOfInitialPosition[i+1]; // массив координат следующего узла
-        vector1 = Vector.vectorFromCoord(currentArray,previousArray);
-        vector2 = Vector.vectorFromCoord(nextArray,currentArray);
-        console.log("2 вектора, формирующие угол");
-        console.log(vector1,vector2);
-        //console.log(vector2[0],vector2[1],vector2[2]);
-        //planeAngle.ZY = Vector.angleBetweenTwoVectors([vector1[1],vector1[2]],[vector2[1],vector2[2]]);
-        //planeAngle.XY = Vector.angleBetweenTwoVectors([vector1[0],vector1[1]],[vector2[0],vector2[1]]);
-        //planeAngle.XZ = Vector.angleBetweenTwoVectors([vector1[0],vector1[2]],[vector2[0],vector2[2]]);
-        console.log(armsNames[i],"Angle\n", Vector.radToAngle(Vector.angleBetweenTwoVectors(vector1,vector2.map(function(item){return item * -1}))));
+    var copyNewArrayOfInitialPosition = newArrayOfInitialPosition.map(function(item){return item.slice()});// сохраняем исходный массив
+
+    copyNewArrayOfInitialPosition = copyNewArrayOfInitialPosition.map(function(item,i,arr) {
+        var array = Array.apply([],item);
+        array.splice(0,1);
+        return array
+    });// обрезка i=1 эл-та копии Также это
+        var anglesZY = AnglesByDots.calculateAngleByDots(copyNewArrayOfInitialPosition);
         var _this = this;
-        console.log("Новые углы(в рад)");
-        planeNames.forEach(function (item) {
-            //_this.rotateOnAnglesInPlane(item,thisArms[armsNames[i]],planeAngle[item],planeAxis,armsNames[i]);
-        });
-    }
+        anglesZY.forEach(function(item,i){_this.rotateOnAnglesInPlane("ZY",thisArms[armsNames[i]],item,planeAxis,armsNames[i]);});
+
 };
 // Поворот на угол в плоскости
 Manipulator.prototype.rotateOnAnglesInPlane = function(plane,arm,angle,planeAxis,armname) {
@@ -168,12 +154,14 @@ Manipulator.prototype.rotateOnAnglesInPlane = function(plane,arm,angle,planeAxis
     //        arm.solvedRotation[plane] += angle;
     //    }
         arm.solvedRotation[plane] = angle;
-        var angleDeg = Vector.radToAngle(arm.solvedRotation[plane]);
-    console.log(angleDeg);
+        //var angleDeg = Vector.radToAngle(arm.solvedRotation[plane]);
+        var angleDeg = arm.solvedRotation[plane];
+    //console.log(angleDeg);
         arm.rotateToAngle(planeAxis[plane],angleDeg);
     //}
     console.log(armname+'_Angle'+plane,arm.solvedRotation[plane]);
-    this.guiAdditional[armname+'_Angle'+plane].set_value(angleDeg);
+    //this.guiAdditional[armname+'_Angle'+plane].set_value(angleDeg); // Todo: это для заполнения углов в gui(демонстрации)
+    // Uncaught TypeError: Cannot read property 'set_value' of undefined
 };
 
 
@@ -185,7 +173,6 @@ Manipulator.prototype.createObjectsByArray = function (names, type){
                 //this.arms[names[i]].hide(); // скрытие
                 break;
             case "finger":
-
                 this.fingers[names[i]] = new Finger(names[i],this.modules,this.AXIS,{x:0, y:45, z:90},i);
                 break;
             case "node":
